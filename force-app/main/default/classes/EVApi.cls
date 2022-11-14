@@ -95,11 +95,11 @@ public with sharing class EVApi {
      @testVisible
     private static HttpRequest getRequest(String url) {
         string instanceName= ApexPages.currentPage().getParameters().get('instanceName').escapeHtml4();
-        bsource__BriefingSourceSettingsList__c objSettings = bsource__BriefingSourceSettingsList__c.getValues(instanceName);
+        bsource__BriefingSourceSettingsLists__c objSettings = bsource__BriefingSourceSettingsLists__c.getValues(instanceName);
         return getRequest(objSettings, url);
     }
      @testVisible
-    private static HttpRequest getRequest(bsource__BriefingSourceSettingsList__c briefingSourceSettings, String url) {
+    private static HttpRequest getRequest(bsource__BriefingSourceSettingsLists__c briefingSourceSettings, String url) {
         String password = EncodingUtil.base64Encode(Blob.valueOf(briefingSourceSettings.API_Username__c + ':' + briefingSourceSettings.bsource__API_Password__c));        
         
         HttpRequest httpReq = new HttpRequest();
@@ -160,7 +160,7 @@ public with sharing class EVApi {
         
     }
  
-    public static Map<String,List<parseJSON.FormFields>> getFields(bsource__BriefingSourceSettingsList__c briefingSourceSettings) {
+    public static Map<String,List<parseJSON.FormFields>> getFields(bsource__BriefingSourceSettingsLists__c briefingSourceSettings) {
         system.debug('inside getFields init');
         //Decimal minutes = 0;
         String token = '',refreshToken = '';
@@ -170,7 +170,7 @@ public with sharing class EVApi {
         system.debug('briefingSourceSettings>>'+briefingSourceSettings);
         String InstanceName = briefingSourceSettings.Name;
         Briefing_Source_Settings__mdt objMetadata = getCustomMetadata(InstanceName);
-        bsource__BriefingSourceSettingsList__c bss = bsource__BriefingSourceSettingsList__c.getValues(InstanceName); 
+        bsource__BriefingSourceSettingsLists__c bss = bsource__BriefingSourceSettingsLists__c.getValues(InstanceName); 
         if(!Test.isRunningTest()){
             if(minutes == 0 || minutes > 45 || bss.bsource__API_Username__c != briefingSourceSettings.bsource__API_Username__c && objMetadata.bsource__Access_Token__c!= null){
                 HttpResponse httpResponse = getToken(briefingSourceSettings);
@@ -224,7 +224,7 @@ public with sharing class EVApi {
         }
     }
     
-    public static HttpResponse getToken(bsource__BriefingSourceSettingsList__c briefingSourceSettings){
+    public static HttpResponse getToken(bsource__BriefingSourceSettingsLists__c briefingSourceSettings){
         system.debug('inside get token');
         //briefingSourceSettings = bsource__BriefingSourceSettings__c.getOrgDefaults();
         String endPoint = briefingSourceSettings.bsource__API_Endpoint__c;
@@ -252,7 +252,7 @@ public with sharing class EVApi {
         
         return response;
     }
-    private static HttpRequest createFieldRequest(bsource__BriefingSourceSettingsList__c briefingSourceSettings,String token,String Url) {                     
+    private static HttpRequest createFieldRequest(bsource__BriefingSourceSettingsLists__c briefingSourceSettings,String token,String Url) {                     
         HttpRequest httpReq = new HttpRequest();
         httpReq.setEndpoint(briefingSourceSettings.bsource__API_Endpoint__c+Url);
         //httpReq.setEndpoint('https://sfdc-v3.briefingsource.com'+Url);
@@ -260,7 +260,7 @@ public with sharing class EVApi {
         //httpReq.setMethod('GET');
         return httpReq;
     }
-    public static Decimal getRefreshedTime(bsource__BriefingSourceSettingsList__c objMetadata){
+    public static Decimal getRefreshedTime(bsource__BriefingSourceSettingsLists__c objMetadata){
         Decimal minutes = 0;
         if(objMetadata.bsource__Refreshed_Time__c != null){
             dateTime endDate = system.now();
@@ -335,11 +335,11 @@ public with sharing class EVApi {
     }
     public static List<Center> getCenters() {
         string instanceName= ApexPages.currentPage().getParameters().get('instanceName').escapeHtml4();
-        bsource__BriefingSourceSettingsList__c objSettings = bsource__BriefingSourceSettingsList__c.getValues(instanceName);
+        bsource__BriefingSourceSettingsLists__c objSettings = bsource__BriefingSourceSettingsLists__c.getValues(instanceName);
         return getCenters(objSettings);
     }
     
-    public static List<Center> getCenters(bsource__BriefingSourceSettingsList__c briefingSourceSettings) {
+    public static List<Center> getCenters(bsource__BriefingSourceSettingsLists__c briefingSourceSettings) {
         System.debug('briefingSourceSettings------>'+briefingSourceSettings);
         Briefing_Source_Settings__mdt objMetadata = getCustomMetadata(briefingSourceSettings.Name);
         Decimal minutes = getRefreshedTime(objMetadata);

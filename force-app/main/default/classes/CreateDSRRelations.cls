@@ -140,7 +140,7 @@ public with sharing class CreateDSRRelations {
         
         
         List<String> combinedCampList = new List<String>();  
-        bsource__Campaign_Ids_List__c customSettings = bsource__Campaign_Ids_List__c.getValues(instanceName); 
+        bsource__Campaign_Ids_Lists__c customSettings = bsource__Campaign_Ids_Lists__c.getValues(instanceName); 
         if(customSettings!= null && customSettings.bsource__Campaign_Id__c != null && customSettings.bsource__Campaign_Id__c != ''){
             defaultCampaignId = customSettings.bsource__Campaign_Id__c.split(',');
         } 

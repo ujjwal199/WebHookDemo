@@ -8,7 +8,7 @@ public class NewDSRCreationFlowControllerTest {
         acc.Name = 'Name';
         insert acc;
         Id recId=acc.Id;
-        bsource__BriefingSourceSettingsList__c briefingSourceSettings = bsource__BriefingSourceSettingsList__c.getOrgDefaults();
+        bsource__BriefingSourceSettingsLists__c briefingSourceSettings = bsource__BriefingSourceSettingsLists__c.getOrgDefaults();
         briefingSourceSettings.API_Endpoint__c = 'https://sfdc.briefingsource.com/integration/api/';
         briefingSourceSettings.bsource__API_Username__c='test';
         briefingSourceSettings.bsource__API_Password__c='test';
@@ -21,13 +21,13 @@ public class NewDSRCreationFlowControllerTest {
         Campaign c = new Campaign(Name='Test');
         insert c;
         
-        bsource__Campaign_Ids_List__c objCampaignId = new bsource__Campaign_Ids_List__c();
+        bsource__Campaign_Ids_Lists__c objCampaignId = new bsource__Campaign_Ids_Lists__c();
         objCampaignId.bsource__Campaign_Id__c =c.Id;
         objCampaignId.Name = 'test';   
         insert objCampaignId;
         
         
-        bsource__Show_Contact_List__c objShowContacts = new bsource__Show_Contact_List__c();
+        bsource__Show_Contact_Lists__c objShowContacts = new bsource__Show_Contact_Lists__c();
         objShowContacts.bsource__Show_Contact_Checkbox__c = false;
         objShowContacts.Name = 'test';
         insert objShowContacts;
@@ -48,7 +48,7 @@ public class NewDSRCreationFlowControllerTest {
         oppty.StageName='Qualification';
         oppty.CloseDate=system.today();
         Insert oppty;
-        bsource__BriefingSourceSettingsList__c briefingSourceSettings = bsource__BriefingSourceSettingsList__c.getOrgDefaults();
+        bsource__BriefingSourceSettingsLists__c briefingSourceSettings = bsource__BriefingSourceSettingsLists__c.getOrgDefaults();
         briefingSourceSettings.API_Endpoint__c = 'https://sfdc.briefingsource.com/integration/api/';
         briefingSourceSettings.bsource__API_Username__c='test';
         briefingSourceSettings.bsource__API_Password__c='test';
@@ -59,12 +59,12 @@ public class NewDSRCreationFlowControllerTest {
         briefingSourceSettings.bsource__Is_CanvasApp__c = true;
         insert briefingSourceSettings;
         
-        bsource__Campaign_Ids_List__c objCampaignId = new bsource__Campaign_Ids_List__c();
+        bsource__Campaign_Ids_Lists__c objCampaignId = new bsource__Campaign_Ids_Lists__c();
         objCampaignId.bsource__Campaign_Id__c ='';
         objCampaignId.Name = 'test';   
         insert objCampaignId;
         
-        bsource__Show_Contact_List__c objShowContacts = new bsource__Show_Contact_List__c();
+        bsource__Show_Contact_Lists__c objShowContacts = new bsource__Show_Contact_Lists__c();
         objShowContacts.bsource__Show_Contact_Checkbox__c = true;
         objShowContacts.Name = 'test';
         insert objShowContacts;
@@ -90,7 +90,7 @@ public class NewDSRCreationFlowControllerTest {
     
     @isTest
     public static void saveDSRObject_Account(){
-        bsource__BriefingSourceSettingsList__c briefingSourceSettings = bsource__BriefingSourceSettingsList__c.getOrgDefaults();
+        bsource__BriefingSourceSettingsLists__c briefingSourceSettings = bsource__BriefingSourceSettingsLists__c.getOrgDefaults();
         briefingSourceSettings.API_Endpoint__c = 'https://sfdc.briefingsource.com/integration/api/';
         briefingSourceSettings.bsource__API_Username__c='test';
         briefingSourceSettings.bsource__API_Password__c='test';
@@ -102,7 +102,7 @@ public class NewDSRCreationFlowControllerTest {
         insert briefingSourceSettings;
         Campaign c = new Campaign(Name='Test');
         insert c;
-        bsource__Campaign_Ids_List__c objCampaignId = new bsource__Campaign_Ids_List__c();
+        bsource__Campaign_Ids_Lists__c objCampaignId = new bsource__Campaign_Ids_Lists__c();
         objCampaignId.bsource__Campaign_Id__c ='';
         objCampaignId.Name = 'test';   
         insert objCampaignId;
@@ -126,7 +126,7 @@ public class NewDSRCreationFlowControllerTest {
     }
     @isTest 
     public static void saveDSRObject_Opportunity(){
-        bsource__BriefingSourceSettingsList__c briefingSourceSettings = bsource__BriefingSourceSettingsList__c.getOrgDefaults();
+        bsource__BriefingSourceSettingsLists__c briefingSourceSettings = bsource__BriefingSourceSettingsLists__c.getOrgDefaults();
         briefingSourceSettings.API_Endpoint__c = 'https://sfdc.briefingsource.com/integration/api/';
         briefingSourceSettings.bsource__API_Username__c='test';
         briefingSourceSettings.bsource__API_Password__c='test';
@@ -138,12 +138,12 @@ public class NewDSRCreationFlowControllerTest {
         insert briefingSourceSettings;
         Campaign c = new Campaign(Name='Test');
         insert c;
-        bsource__Campaign_Ids_List__c objCampaignId = new bsource__Campaign_Ids_List__c();
+        bsource__Campaign_Ids_Lists__c objCampaignId = new bsource__Campaign_Ids_Lists__c();
         objCampaignId.bsource__Campaign_Id__c =c.Id;
         objCampaignId.Name = 'test';   
         insert objCampaignId;
         
-        bsource__Show_Contact_List__c objShowContacts = new bsource__Show_Contact_List__c();
+        bsource__Show_Contact_Lists__c objShowContacts = new bsource__Show_Contact_Lists__c();
         objShowContacts.bsource__Show_Contact_Checkbox__c = false;
         objShowContacts.Name = 'test';
         insert objShowContacts;
@@ -175,12 +175,12 @@ public class NewDSRCreationFlowControllerTest {
         Insert oppty;
         
         
-        bsource__Campaign_Ids_List__c objCampaignId = new bsource__Campaign_Ids_List__c();
+        bsource__Campaign_Ids_Lists__c objCampaignId = new bsource__Campaign_Ids_Lists__c();
         objCampaignId.bsource__Campaign_Id__c ='';
         objCampaignId.Name = 'test';   
         insert objCampaignId;
         
-        bsource__Show_Contact_List__c objShowContacts = new bsource__Show_Contact_List__c();
+        bsource__Show_Contact_Lists__c objShowContacts = new bsource__Show_Contact_Lists__c();
         objShowContacts.bsource__Show_Contact_Checkbox__c = true;
         objShowContacts.Name = 'test';
         insert objShowContacts;
@@ -197,7 +197,7 @@ public class NewDSRCreationFlowControllerTest {
     @isTest
     public static void showToastMsgTest(){
         String instanceName = apexpages.currentpage().getparameters().get('InstanceName');
-        //bsource__BriefingSourceSettingsList__c BriefingSourceSettingsList = [Select id, bsource__API_Username__c, bsource__API_Password__c, bsource__Client_Id__c from bsource__BriefingSourceSettingsList__c order by createddate desc limit 1 ]; 
+        //bsource__BriefingSourceSettingsLists__c BriefingSourceSettingsList = [Select id, bsource__API_Username__c, bsource__API_Password__c, bsource__Client_Id__c from bsource__BriefingSourceSettingsLists__c order by createddate desc limit 1 ]; 
          // Perform test below
         NewDSRCreationFlowController.showToastMsg();
         system.assert(instanceName !='', 'Record found');

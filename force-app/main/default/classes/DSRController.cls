@@ -17,13 +17,13 @@ public with sharing virtual class DSRController {
     public String canvasAppDomain {
         get {
             string instanceName = ApexPages.currentPage().getParameters().get('instanceName').escapeHtml4();
-            bsource__BriefingSourceSettingsList__c briefingSourceSettings = bsource__BriefingSourceSettingsList__c.getAll().get(instanceName);
+            bsource__BriefingSourceSettingsLists__c briefingSourceSettings = bsource__BriefingSourceSettingsLists__c.getAll().get(instanceName);
 
 
             System.debug('briefingSourceSettings777'+briefingSourceSettings);
             System.debug('briefingSourceSettings'+briefingSourceSettings.API_Endpoint__c);
 
-            //bsource__BriefingSourceSettingsList__c briefingSourceSettings = bsource__BriefingSourceSettingsList__c.getValues('Tushar7');
+            //bsource__BriefingSourceSettingsLists__c briefingSourceSettings = bsource__BriefingSourceSettingsLists__c.getValues('Tushar7');
             //BriefingSourceSettings__c briefingSourceSettings = BriefingSourceSettings__c.getOrgDefaults();
              if (briefingSourceSettings.API_Endpoint__c != null) {
                 canvasAppDomain = briefingSourceSettings.API_Endpoint__c.substringBetween('//', '.');
@@ -38,7 +38,7 @@ public with sharing virtual class DSRController {
     public DSRController() {
         try{
            string instanceName= ApexPages.currentPage().getParameters().get('instanceName').escapeHtml4();
-            bsource__BriefingSourceSettingsList__c objSettings = bsource__BriefingSourceSettingsList__c.getValues(instanceName);
+            bsource__BriefingSourceSettingsLists__c objSettings = bsource__BriefingSourceSettingsLists__c.getValues(instanceName);
            // bsource__BriefingSourceSettings__c objSettings = bsource__BriefingSourceSettings__c.getOrgDefaults();
             if(objSettings != null && String.isBlank(objSettings.bsource__API_Endpoint__c) 
                && String.isBlank(objSettings.bsource__API_Username__c)
@@ -88,7 +88,7 @@ public with sharing virtual class DSRController {
     public void initPage() {
         try{
            string instanceName= ApexPages.currentPage().getParameters().get('instanceName').escapeHtml4();
-            bsource__BriefingSourceSettingsList__c objSettings = bsource__BriefingSourceSettingsList__c.getValues(instanceName);
+            bsource__BriefingSourceSettingsLists__c objSettings = bsource__BriefingSourceSettingsLists__c.getValues(instanceName);
             //bsource__BriefingSourceSettings__c objSettings = bsource__BriefingSourceSettings__c.getOrgDefaults();
             if(objSettings != null 
                && String.isBlank(objSettings.bsource__API_Endpoint__c) 

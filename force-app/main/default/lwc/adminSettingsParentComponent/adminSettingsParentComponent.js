@@ -1,5 +1,5 @@
 import { LightningElement, track, wire,api } from 'lwc';
-import getInstanceName from '@salesforce/apex/SettingsController.getInstanceName';
+import getInstanceName2 from '@salesforce/apex/SettingsController.getInstanceName2';
 import whiteListRemoteSiteSetting from '@salesforce/apex/SettingsController.whiteListRemoteSiteSetting';
 import updateRemoteSiteSetting from '@salesforce/apex/SettingsController.updateRemoteSiteSetting';
 import Disconnected from '@salesforce/apex/SettingsController.Disconnected';
@@ -16,7 +16,7 @@ export default class AdminSettingsParentComponent extends LightningElement {
 	@api sessionId;
 	connectedCallback(){
 		console.log('sessionId',this.sessionId)
-		getInstanceName()
+		getInstanceName2()
 		.then((result) => {
 			let i = 0;
 			let active = false;

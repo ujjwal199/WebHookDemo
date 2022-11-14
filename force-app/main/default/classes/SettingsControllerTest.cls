@@ -1,14 +1,14 @@
 @isTest
 public class SettingsControllerTest {
     public static testmethod void testMethod1() {
-        bsource__Briefing_Source_Field_Mapping_List__c BriefingMap =  new bsource__Briefing_Source_Field_Mapping_List__c();
+        bsource__Briefing_Source_Field_Mapping_Lists__c BriefingMap =  new bsource__Briefing_Source_Field_Mapping_Lists__c();
         BriefingMap.Name ='Test';
         BriefingMap.bsource__Instance_Name__c = 'Test1'; // Extra code added 
         BriefingMap.Briefing_Source_Field__c ='test';
         BriefingMap.Salesforce_Field__c = 'Test2';
         Insert  BriefingMap;
         
-        bsource__BriefingSourceSettingsList__c briefingSourceSettings = bsource__BriefingSourceSettingsList__c.getOrgDefaults();
+        bsource__BriefingSourceSettingsLists__c briefingSourceSettings = bsource__BriefingSourceSettingsLists__c.getOrgDefaults();
         briefingSourceSettings.API_Endpoint__c = 'https://sfdc.briefingsource.com/integration/api/';
         briefingSourceSettings.bsource__API_Username__c='test';
         briefingSourceSettings.bsource__API_Password__c='test';
@@ -29,12 +29,12 @@ public class SettingsControllerTest {
         insert BriefingSourceFieldMappings;
         
         
-        bsource__Show_Contact_List__c objShowContacts = new bsource__Show_Contact_List__c();
+        bsource__Show_Contact_Lists__c objShowContacts = new bsource__Show_Contact_Lists__c();
         objShowContacts.bsource__Show_Contact_Checkbox__c = false;
         objShowContacts.Name = 'test';
         insert objShowContacts;
         
-        bsource__Campaign_Ids_List__c objCampaignId = new bsource__Campaign_Ids_List__c();
+        bsource__Campaign_Ids_Lists__c objCampaignId = new bsource__Campaign_Ids_Lists__c();
         objCampaignId.bsource__Campaign_Id__c ='';
         objCampaignId.Name = 'test';   
         insert objCampaignId;
@@ -111,11 +111,11 @@ public class SettingsControllerTest {
     }
     public class briefingSourceInfoWrapper{
         
-        public bsource__BriefingSourceSettingsList__c BriefingSourceSettingsList{get;set;}
+        public bsource__BriefingSourceSettingsLists__c BriefingSourceSettingsList{get;set;}
         
-        public bsource__Campaign_Ids_List__c CampaignIds{get;set;}
+        public bsource__Campaign_Ids_Lists__c CampaignIds{get;set;}
         
-        public bsource__Show_Contact_List__c ShowContact{get;set;}
+        public bsource__Show_Contact_Lists__c ShowContact{get;set;}
     }
     
     @isTest
@@ -160,13 +160,13 @@ public class SettingsControllerTest {
         System.assertEquals('test','test','Exception');
     }
     public static testmethod void testMethod2() {
-        bsource__Briefing_Source_Field_Mapping_List__c BriefingMap =  new bsource__Briefing_Source_Field_Mapping_List__c();
+        bsource__Briefing_Source_Field_Mapping_Lists__c BriefingMap =  new bsource__Briefing_Source_Field_Mapping_Lists__c();
         BriefingMap.Name ='Test';
         BriefingMap.Briefing_Source_Field__c ='test';
         BriefingMap.Salesforce_Field__c = 'Test2';
         Insert  BriefingMap;
         
-        bsource__BriefingSourceSettingsList__c briefingSourceSettings = bsource__BriefingSourceSettingsList__c.getOrgDefaults();
+        bsource__BriefingSourceSettingsLists__c briefingSourceSettings = bsource__BriefingSourceSettingsLists__c.getOrgDefaults();
         briefingSourceSettings.API_Endpoint__c = 'https://sfdc.briefingsource.com/integration/api/';
         briefingSourceSettings.bsource__API_Username__c='test';
         briefingSourceSettings.bsource__API_Password__c='test';
@@ -178,12 +178,12 @@ public class SettingsControllerTest {
         insert briefingSourceSettings;
         SettingsController.getFields('test');
         
-        bsource__Show_Contact_List__c objShowContacts = new bsource__Show_Contact_List__c();
+        bsource__Show_Contact_Lists__c objShowContacts = new bsource__Show_Contact_Lists__c();
         objShowContacts.bsource__Show_Contact_Checkbox__c = false;
         objShowContacts.Name = 'test';
         insert objShowContacts;
         
-        bsource__Campaign_Ids_List__c objCampaignId = new bsource__Campaign_Ids_List__c();
+        bsource__Campaign_Ids_Lists__c objCampaignId = new bsource__Campaign_Ids_Lists__c();
         objCampaignId.bsource__Campaign_Id__c ='';
         objCampaignId.Name = 'test';   
         insert objCampaignId;

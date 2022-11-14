@@ -43,7 +43,7 @@ private class BriefingSourceCanvasLifecyleHandlerTest {
 		briefingSourceFieldMapping.Salesforce_Field__c = 'account.Name';
 		briefingSourceFieldMapping.Briefing_Source_Field__c = 'accountName';
 		upsert briefingSourceFieldMapping;
-        bsource__Briefing_Source_Field_Mapping_List__c BriefingMap =  new bsource__Briefing_Source_Field_Mapping_List__c();
+        bsource__Briefing_Source_Field_Mapping_Lists__c BriefingMap =  new bsource__Briefing_Source_Field_Mapping_Lists__c();
         BriefingMap.Name ='Test';
         BriefingMap.Briefing_Source_Field__c ='test';
         BriefingMap.Salesforce_Field__c = 'Test2';

@@ -6,7 +6,7 @@ private class AccountDSRControllerTest {
 		account.Name = 'Test';
 		insert account;
         
-        bsource__BriefingSourceSettingsList__c briefingSourceSettings = bsource__BriefingSourceSettingsList__c.getOrgDefaults();
+        bsource__BriefingSourceSettingsLists__c briefingSourceSettings = bsource__BriefingSourceSettingsLists__c.getOrgDefaults();
         briefingSourceSettings.API_Endpoint__c = 'https://sfdc.briefingsource.com/integration/api/';
         briefingSourceSettings.bsource__API_Username__c='test';
         briefingSourceSettings.bsource__API_Password__c='test';
@@ -87,7 +87,7 @@ private class AccountDSRControllerTest {
 		account.Name = 'Test';
 		insert account;
         
-        bsource__BriefingSourceSettingsList__c briefingSourceSettings = bsource__BriefingSourceSettingsList__c.getOrgDefaults();
+        bsource__BriefingSourceSettingsLists__c briefingSourceSettings = bsource__BriefingSourceSettingsLists__c.getOrgDefaults();
         briefingSourceSettings.API_Endpoint__c = 'https://sfdc.briefingsource.com/integration/api/';
         briefingSourceSettings.bsource__API_Username__c='test';
         briefingSourceSettings.bsource__API_Password__c='test';
@@ -139,7 +139,7 @@ private class AccountDSRControllerTest {
 		account.Name = 'Test';
 		insert account;
         
-        bsource__BriefingSourceSettingsList__c briefingSourceSettings = bsource__BriefingSourceSettingsList__c.getOrgDefaults();
+        bsource__BriefingSourceSettingsLists__c briefingSourceSettings = bsource__BriefingSourceSettingsLists__c.getOrgDefaults();
         briefingSourceSettings.API_Endpoint__c = '';
         briefingSourceSettings.bsource__API_Username__c='';
         briefingSourceSettings.bsource__API_Password__c='';

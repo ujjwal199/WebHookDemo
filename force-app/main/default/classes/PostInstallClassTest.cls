@@ -13,14 +13,14 @@ public class PostInstallClassTest {
         objBriefingSourceSettings.bsource__IsCanvasApp__c = true;
         insert objBriefingSourceSettings;
         
-        bsource__Briefing_Source_Field_Mapping_List__c BriefingMap =  new bsource__Briefing_Source_Field_Mapping_List__c();
+        bsource__Briefing_Source_Field_Mapping_Lists__c BriefingMap =  new bsource__Briefing_Source_Field_Mapping_Lists__c();
         BriefingMap.Name ='Test';
         BriefingMap.Briefing_Source_Field__c ='test';
         BriefingMap.Salesforce_Field__c = 'Test2';
         Insert  BriefingMap;
         
         /* Prev. active 
-        bsource__BriefingSourceSettingsList__c briefingSourceSettings = bsource__BriefingSourceSettingsList__c.getOrgDefaults();
+        bsource__BriefingSourceSettingsLists__c briefingSourceSettings = bsource__BriefingSourceSettingsLists__c.getOrgDefaults();
         briefingSourceSettings.API_Endpoint__c = 'https://sfdc.briefingsource.com/integration/api/';
         briefingSourceSettings.bsource__API_Username__c='https://sfdc.briefingsource.com';
         briefingSourceSettings.bsource__API_Password__c='test';
@@ -32,7 +32,7 @@ public class PostInstallClassTest {
         insert briefingSourceSettings;
 		*/
         
-        bsource__Show_Contact_List__c objShowContacts = new bsource__Show_Contact_List__c();
+        bsource__Show_Contact_Lists__c objShowContacts = new bsource__Show_Contact_Lists__c();
         objShowContacts.bsource__Show_Contact_Checkbox__c = false;
         objShowContacts.Name = 'test';
         insert objShowContacts;
@@ -47,7 +47,7 @@ public class PostInstallClassTest {
         objCampaignId.Name = 'test';   
         insert objCampaignId;
         
-        bsource__Campaign_Ids_List__c objCampaignIds = new bsource__Campaign_Ids_List__c();
+        bsource__Campaign_Ids_Lists__c objCampaignIds = new bsource__Campaign_Ids_Lists__c();
         objCampaignIds.bsource__Campaign_Id__c ='';
         objCampaignIds.Name = 'test';   
         insert objCampaignIds;

@@ -86,7 +86,7 @@ public class EVApi_Test {
     }
     
     static testmethod void testGetCenters() {
-        bsource__BriefingSourceSettingsList__c briefingSourceSettings = bsource__BriefingSourceSettingsList__c.getOrgDefaults();
+        bsource__BriefingSourceSettingsLists__c briefingSourceSettings = bsource__BriefingSourceSettingsLists__c.getOrgDefaults();
         briefingSourceSettings.API_Endpoint__c = 'https://sfdc.briefingsource.com/integration/api/';
         briefingSourceSettings.bsource__API_Username__c='test';
         briefingSourceSettings.bsource__API_Password__c='test';
@@ -119,7 +119,7 @@ public class EVApi_Test {
     }
     
     static testmethod void testGetCenters1() {
-        bsource__BriefingSourceSettingsList__c briefingSourceSettings = bsource__BriefingSourceSettingsList__c.getOrgDefaults();
+        bsource__BriefingSourceSettingsLists__c briefingSourceSettings = bsource__BriefingSourceSettingsLists__c.getOrgDefaults();
         briefingSourceSettings.API_Endpoint__c = 'https://sfdc.briefingsource.com/integration/api/';
         briefingSourceSettings.bsource__API_Username__c='test';
         briefingSourceSettings.bsource__API_Password__c='test';
@@ -157,7 +157,7 @@ public class EVApi_Test {
         
     }
     static testmethod void testGetCenters3() {
-        bsource__BriefingSourceSettingsList__c briefingSourceSettings = bsource__BriefingSourceSettingsList__c.getOrgDefaults();
+        bsource__BriefingSourceSettingsLists__c briefingSourceSettings = bsource__BriefingSourceSettingsLists__c.getOrgDefaults();
         briefingSourceSettings.API_Endpoint__c = 'https://sfdc.briefingsource.com/integration/api/';
         briefingSourceSettings.bsource__API_Username__c='test';
         briefingSourceSettings.bsource__API_Password__c='test';
@@ -191,7 +191,7 @@ public class EVApi_Test {
         
     }
     static testmethod void testGetCenters4() {
-        bsource__BriefingSourceSettingsList__c briefingSourceSettings = bsource__BriefingSourceSettingsList__c.getOrgDefaults();
+        bsource__BriefingSourceSettingsLists__c briefingSourceSettings = bsource__BriefingSourceSettingsLists__c.getOrgDefaults();
         briefingSourceSettings.API_Endpoint__c = 'https://sfdc.briefingsource.com/integration/api/';
         briefingSourceSettings.bsource__API_Username__c='test';
         briefingSourceSettings.bsource__API_Password__c='test';

@@ -590,7 +590,7 @@ centerOptions.add(new SelectOption(String.valueOf(center.id), center.name));
     //Boolean to indicate the new wizard
     public boolean getIsClassicWizard(){
         string instanceName= ApexPages.currentPage().getParameters().get('instanceName').escapeHtml4();
-            bsource__BriefingSourceSettingsList__c bss = bsource__BriefingSourceSettingsList__c.getValues(instanceName);
+            bsource__BriefingSourceSettingsLists__c bss = bsource__BriefingSourceSettingsLists__c.getValues(instanceName);
         //bsource__BriefingSourceSettings__c  bss = bsource__BriefingSourceSettings__c.getOrgDefaults();
         boolean isClassicWizard = true;
         if(bss.bsource__Is_CanvasApp__c){
@@ -625,7 +625,7 @@ centerOptions.add(new SelectOption(String.valueOf(center.id), center.name));
     public String getCanvasAppDomain(){
         String appDomain;
         string instanceName= ApexPages.currentPage().getParameters().get('instanceName').escapeHtml4();
-            bsource__BriefingSourceSettingsList__c bss = bsource__BriefingSourceSettingsList__c.getValues(instanceName);
+            bsource__BriefingSourceSettingsLists__c bss = bsource__BriefingSourceSettingsLists__c.getValues(instanceName);
        // bsource__BriefingSourceSettings__c  bss = bsource__BriefingSourceSettings__c.getOrgDefaults();
         if(bss.bsource__API_Endpoint__c != null){
             appDomain = bss.bsource__API_Endpoint__c.substringBetween('//','.');

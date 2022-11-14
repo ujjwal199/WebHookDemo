@@ -5,7 +5,7 @@ public with sharing class BriefingSourceCanvasLifecyleHandler implements Canvas.
     }
     
     public void onRender(Canvas.RenderContext renderContext) {
-        List<bsource__Briefing_Source_Field_Mapping_List__c> BriefingSourceFieldMappingLists = new List<bsource__Briefing_Source_Field_Mapping_List__c>();
+        List<bsource__Briefing_Source_Field_Mapping_Lists__c> BriefingSourceFieldMappingLists = new List<bsource__Briefing_Source_Field_Mapping_Lists__c>();
         Canvas.EnvironmentContext environmentContext = renderContext.getEnvironmentContext();
         if(Schema.sObjectType.Account.isAccessible() && Schema.sObjectType.Opportunity.isAccessible()
            && Schema.sObjectType.Briefing_Source_Field_Mapping__c.isAccessible()){
@@ -26,14 +26,14 @@ public with sharing class BriefingSourceCanvasLifecyleHandler implements Canvas.
                Set<String> uniqueFieldNames = new Set<String>();
                uniqueFieldNames.add('id');
                
-               // List<bsource__Briefing_Source_Field_Mapping_List__c> BriefingSourceFieldMappingLists = bsource__Briefing_Source_Field_Mapping_List__c.getAll().values();
-               if( bsource__Briefing_Source_Field_Mapping_List__c.SObjectType.getDescribe().isAccessible() &&
-                  Schema.SObjectType.bsource__Briefing_Source_Field_Mapping_List__c.fields.Briefing_Source_Field__c.isAccessible() &&
-                  Schema.SObjectType.bsource__Briefing_Source_Field_Mapping_List__c.fields.Salesforce_Field__c.isAccessible()){
+               // List<bsource__Briefing_Source_Field_Mapping_Lists__c> BriefingSourceFieldMappingLists = bsource__Briefing_Source_Field_Mapping_Lists__c.getAll().values();
+               if( bsource__Briefing_Source_Field_Mapping_Lists__c.SObjectType.getDescribe().isAccessible() &&
+                  Schema.SObjectType.bsource__Briefing_Source_Field_Mapping_Lists__c.fields.Briefing_Source_Field__c.isAccessible() &&
+                  Schema.SObjectType.bsource__Briefing_Source_Field_Mapping_Lists__c.fields.Salesforce_Field__c.isAccessible()){
                       BriefingSourceFieldMappingLists = [SELECT ID,bsource__Salesforce_Field__c,bsource__Briefing_Source_Field__c,bsource__Instance_Name__c 
-                                                         FROM bsource__Briefing_Source_Field_Mapping_List__c WHERE bsource__Instance_Name__c =:instanceName];
+                                                         FROM bsource__Briefing_Source_Field_Mapping_Lists__c WHERE bsource__Instance_Name__c =:instanceName];
                   }
-               for (bsource__Briefing_Source_Field_Mapping_List__c briefingSourceFieldMapping : BriefingSourceFieldMappingLists) {
+               for (bsource__Briefing_Source_Field_Mapping_Lists__c briefingSourceFieldMapping : BriefingSourceFieldMappingLists) {
                    String salesforceField = briefingSourceFieldMapping.bsource__Salesforce_Field__c.toLowerCase();
                    if (objectName == 'Account') {
                        salesforceField = salesforceField.replace('account.', '');
@@ -54,7 +54,7 @@ public with sharing class BriefingSourceCanvasLifecyleHandler implements Canvas.
                //  List<bsource__Briefing_Source_Field_Mapping_List__c> BriefingSourceFieldMappingList = bsource__Briefing_Source_Field_Mapping_List__c.getAll().values();
                //List<bsource__Briefing_Source_Field_Mapping_List__c> BriefingSourceFieldMappingList =  [SELECT ID,bsource__Salesforce_Field__c,bsource__Briefing_Source_Field__c,bsource__Instance_Name__c 
                                                                                                  //      FROM bsource__Briefing_Source_Field_Mapping_List__c WHERE bsource__Instance_Name__c =:instanceName];
-               for (bsource__Briefing_Source_Field_Mapping_List__c briefingSourceFieldMapping : BriefingSourceFieldMappingLists) {
+               for (bsource__Briefing_Source_Field_Mapping_Lists__c briefingSourceFieldMapping : BriefingSourceFieldMappingLists) {
                    String salesforceField = briefingSourceFieldMapping.Salesforce_Field__c.toLowerCase();
                    
                    if (objectName == 'Account') {

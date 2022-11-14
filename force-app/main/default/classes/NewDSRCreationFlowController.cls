@@ -16,7 +16,7 @@ public with sharing class NewDSRCreationFlowController {
         Map<String,String> objectMap = new Map<String,String>();
         List<String> campaignIdAdmin = new List<String>();
         if(recId != null){
-            bsource__BriefingSourceSettingsList__c BriefingSourceSettingsList = bsource__BriefingSourceSettingsList__c.getValues(InstanceName); 
+            bsource__BriefingSourceSettingsLists__c BriefingSourceSettingsList = bsource__BriefingSourceSettingsLists__c.getValues(InstanceName); 
             if(BriefingSourceSettingsList!= null && BriefingSourceSettingsList.Name != null){
                 objectMap.put('instanceName','true');
                 
@@ -32,14 +32,14 @@ public with sharing class NewDSRCreationFlowController {
                     objectMap.put('recordName',accName);
                 }
                 
-                bsource__Campaign_Ids_List__c customSettings = bsource__Campaign_Ids_List__c.getValues(InstanceName); 
+                bsource__Campaign_Ids_Lists__c customSettings = bsource__Campaign_Ids_Lists__c.getValues(InstanceName); 
                 if(customSettings!= null && customSettings.bsource__Show_Campaign_Checkbox__c == true){
                     objectMap.put('campaignIdAdmin','true');
                 }
                 else{
                     objectMap.put('campaignIdAdmin','false');
                 }
-                bsource__Show_Contact_List__c showContactSetting = bsource__Show_Contact_List__c.getValues(InstanceName);             
+                bsource__Show_Contact_Lists__c showContactSetting = bsource__Show_Contact_Lists__c.getValues(InstanceName);             
                 if(showContactSetting!= null && showContactSetting.bsource__Show_Contact_Checkbox__c==true){
                     objectMap.put('showContactCheckbox','true');
                 }
@@ -68,7 +68,7 @@ public with sharing class NewDSRCreationFlowController {
            && Schema.sObjectType.bsource__DSR_Campaign__c.isCreateable() && Schema.sObjectType.bsource__DSR_Campaign__c.isAccessible()
            && Schema.sObjectType.bsource__Campaign_Id__c.isAccessible()
           ){
-              bsource__BriefingSourceSettingsList__c bss = bsource__BriefingSourceSettingsList__c.getValues(InstanceName);
+              bsource__BriefingSourceSettingsLists__c bss = bsource__BriefingSourceSettingsLists__c.getValues(InstanceName);
               bsource__BS_Deal_Support_Request__c dsrObject;
               List<String> campaignIdAdmin = new List<String>();
               List<bsource__DSR_Campaign__c> dsrRelationsList = new List<bsource__DSR_Campaign__c>();
@@ -105,7 +105,7 @@ public with sharing class NewDSRCreationFlowController {
     }
     public static void showToastMsg(){
         String instanceName = apexpages.currentpage().getparameters().get('InstanceName');
-        bsource__BriefingSourceSettingsList__c BriefingSourceSettingsList = bsource__BriefingSourceSettingsList__c.getValues(InstanceName); 
+        bsource__BriefingSourceSettingsLists__c BriefingSourceSettingsList = bsource__BriefingSourceSettingsLists__c.getValues(InstanceName); 
         if(BriefingSourceSettingsList== null){
         ApexPages.addmessage(new ApexPages.message(ApexPages.severity.FATAL,'The provided instance name does not exist, please check your instance name and try again. The BriefingSource instances are configured under Admin Settings.'));
         instanceNameExists = false;
