@@ -1,0 +1,74 @@
+.verticalAlign {
+    cursor: pointer;
+    padding: 0px 5px !important;
+}
+
+.slds-dropdown {
+    padding: 0px !important;
+}
+
+.recordListBox {
+    margin-top: 0px !important;
+    overflow-y: scroll;
+}
+
+.slds-listbox li {
+    padding: .45rem 0.7rem !important;
+    display: flex;
+}
+
+.inputBox input {
+    padding-left: 10px;
+}
+
+.eachItem:hover {
+    background-color: #F1F1F1;
+    cursor: pointer;
+}
+
+
+/* For Scrolling */
+
+::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+}
+
+::-webkit-scrollbar-track {
+    display: none !important;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.4);
+}
+
+
+/* CSS added for Delete button */
+
+.lgc-bg {
+    background-color: rgb(242, 242, 242);
+}
+
+
+/* @Deb delete css */
+
+.delete_button {
+    justify-content: space-between;
+    align-items: end;
+    display: flex;
+    /* flex-direction: column; */
+    color: #fff;
+    text-align: center;
+    margin-top: -32px;
+    padding-left: 297px;
+}
+
+@media(max-width:540px) {
+    .delete_button {
+        margin-top: 7px;
+        padding-left: 0px;
+        margin-left: auto;
+        width: max-content;
+    }
+}

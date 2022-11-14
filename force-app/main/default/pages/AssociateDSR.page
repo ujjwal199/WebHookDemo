@@ -1,0 +1,16 @@
+<apex:page showHeader="false" controller="AssociateDSRCtrl">
+
+ <apex:form id="frm">
+     <p>
+        <!--<apex:outputField value='{!objDSROpportunity.Opportunity__c}' />-->
+     </p>    
+     
+     <apex:inputField value="{!objDSROpportunity.Deal_Support_Request__c}" required="true" />
+     
+     <apex:commandButton action="{!saveAssociateDSR}" value="Save" rerender="frm"/>
+ 
+     <apex:pageMessages />
+     
+ </apex:form>
+
+</apex:page>

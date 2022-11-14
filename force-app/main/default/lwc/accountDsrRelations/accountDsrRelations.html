@@ -1,0 +1,35 @@
+<template>
+    <div class="c-container">
+        <lightning-card>
+            <h3 slot="title">
+               Select Accounts
+            </h3>
+            <p class="slds-p-horizontal_small">
+                <c-lookup-search-component
+                    object-api-name= "Account"
+                    field-api-names="Id,Name"
+                    filter-field-api-name="Name"
+                    icon-name="standard:account"
+                    onretrieve={selectItemEventHandler}
+                    onremove={deleteItemEventHandler}
+                    recordname={recordname}
+                    recid={recid} initiatedfrom={initiatedfrom}>
+                </c-lookup-search-component>
+            </p><br><br>
+            <!-- <template if:true={isItemExists}>                
+                <h3 class="slds-p-horizontal_small">
+                    {selectedItemsToDisplay}
+                </h3>                    
+               
+            </template> -->
+</lightning-card>
+</div>
+</template>
+
+<!--<template>
+    <div class="slds-card">
+        <c-lookup-search-component field-label="Select Account Record" child-object-api-name='Opportunity'
+            target-field-api-name='AccountId' required onvalueselected={handleValueSelcted}></c-lookup-search-component>
+        The selected record Id is:- {selectedRecordId}
+    </div>
+</template>-->

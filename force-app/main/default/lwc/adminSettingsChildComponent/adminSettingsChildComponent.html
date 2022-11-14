@@ -1,0 +1,282 @@
+<template>
+    <template if:true={loadedCompletely}>
+        <div class="main-container">
+            <div class="section-container">
+                <b> Step 1: BriefingSource Details</b> 
+                
+            </div>
+            
+            
+            <div class="section-row firstCell">
+                <div class="headerRow">
+                    <div class="cell-first">BriefingSource InstanceName</div>
+                    <lightning-input class="briefing-source-inp cell-second validate "  data-name="Name" value={BriefingSourceSettingsInfo.Name} onchange={handleChange} type="text" required variant="label-hidden" disabled={disabledInput} message-when-value-missing="Required" ></lightning-input>
+                    
+                </div>
+                <div class="headerRow">
+                    <div class="cell-first"></div>
+                    <div class="cell-second" style="color:red;">{instanceNameErrorMsg}</div>
+                </div>
+                
+                <div class="headerRow">
+                    <div class="cell-first">BriefingSource API URL</div>
+                    <lightning-input class="briefing-source-inp cell-second validate"  data-name="bsource__API_Endpoint__c" value={BriefingSourceSettingsInfo.bsource__API_Endpoint__c}  onchange={handleChange} type="text" required variant="label-hidden" disabled={disabledInput} message-when-value-missing="Required"></lightning-input>
+                </div>
+                <div class="headerRow">
+                    <div class="cell-first">Client ID</div>
+                    <lightning-input class="briefing-source-inp cell-second validate"  data-name="bsource__Client_Id__c" value={BriefingSourceSettingsInfo.bsource__Client_Id__c}  onchange={handleChange} type="text" required variant="label-hidden" disabled={disabledInput} message-when-value-missing="Required"></lightning-input>
+                </div>
+                <div class="headerRow">
+                    <div class="cell-first">Client Secret</div>
+                    <lightning-input class="briefing-source-inp cell-second validate"  data-name="bsource__Client_Secret__c" value={BriefingSourceSettingsInfo.bsource__Client_Secret__c}  onchange={handleChange} type="text" required variant="label-hidden" disabled={disabledInput} message-when-value-missing="Required"></lightning-input>
+                </div>
+                <div class="headerRow">
+                    <div  class="cell-first">API Username</div>
+                    <lightning-input class="briefing-source-inp cell-second validate"  data-name="bsource__API_Username__c" value={BriefingSourceSettingsInfo.bsource__API_Username__c}  onchange={handleChange} type="text" required variant="label-hidden" disabled={disabledInput} message-when-value-missing="Required"></lightning-input>
+                </div>
+                <template if:true={Connected}>
+                    <div class="slds-col slds-size_2-of-2 slds-m-horizontal_large slds-p-horizontal_xx-large" style="margin-left: 7.5%;margin-right: 0px;padding-left: 61px;padding-right: 0px;font-size:11px">
+                        <b>Connected</b> &#10004;
+                    </div></apex:outputPanel>
+                </template>
+                <template if:false={Connected}>
+                    <div class="headerRow">
+                        <div  class="cell-first">API Password</div>
+                        <lightning-input class="briefing-source-inp cell-second validate"  data-name="bsource__API_Password__c" value={BriefingSourceSettingsInfo.bsource__API_Password__c}  onchange={handleChange} type="text" required variant="label-hidden" disabled={disabledInput} message-when-value-missing="Required"></lightning-input>
+                    </div>
+                </template>
+                <div class="headerRow connectBTN">
+                    <div class="cell-first"></div>
+                    <template if:true={Connected}>
+                        <lightning-button class="cell-second" variant="destructive" label="Disconnect" type="submit" title="Brand action" onclick={DisconnectedBriefingSourceHandler}></lightning-button>
+                    </template>
+                    <template if:false={Connected}>
+                        <lightning-button class="cell-second" variant="brand" label="Connect to BriefingSource" type="submit" title="Connect" onclick={SubmitDetails} data-name="ConnectToBriefingSource"></lightning-button>
+                    </template>
+                </div>
+            </div>
+            
+            <div class="section-container">
+                <b>Step 2: Grant Access</b>
+                
+            </div>
+            <div class="section-row">
+                <a href={state} class="btn slds-button slds-button_brand" style="text-decoration:none;padding-left: 1em;
+                padding-right: 1em;padding-top: 0.1em;padding-bottom: 0.1em;">
+                Grant BriefingSource Access to Salesforce
+            </a>
+        </div>
+        <div class="section-container">
+            <b>
+                Contact Selection</b>
+            </div>
+            <div class="leftAlignment">
+                <div class="headerRow">
+                    <div class="leftAlignmentlabel">Show Contact Step</div>
+                    <lightning-input class="cell-second" checked={BriefingSourceSettingsInfo.bsource__Show_Contact_Checkbox__c} type="checkbox" onchange={handleChange} value={BriefingSourceSettingsInfo.bsource__Show_Contact_Checkbox__c} data-name="bsource__Show_Contact_Checkbox__c"></lightning-input>
+                </div>
+                <lightning-button variant="brand" class="bottomBTN" label="Save" type="submit" title="Brand action" data-name="SaveContactStep" onclick={SubmitDetails}></lightning-button>
+            </div>
+            <div class="section-container">
+                <b>
+                    Default Campaign Selection</b>
+                </div>
+                <div class="leftAlignment">
+                    <div class="headerRow">
+                        <!-- New code added for Campaign Check -->
+                        <div class="leftAlignmentlabel">Show Campaign Step</div>
+                        <lightning-input class="cell-second" checked={BriefingSourceSettingsInfo.bsource__Show_Campaign_Checkbox__c} type="checkbox" onchange={handleChange} value={BriefingSourceSettingsInfo.bsource__Show_Campaign_Checkbox__c} data-name="bsource__Show_Campaign_Checkbox__c"></lightning-input>
+                    </div>
+                    <div class="headerRow">
+                        <div class="leftAlignmentlabel">Campaign ID</div>
+                        <lightning-input class="cell-second" type="text" onchange={handleChange} data-name="bsource__Campaign_Id__c" variant="label-hidden" value={BriefingSourceSettingsInfo.bsource__Campaign_Id__c}></lightning-input>
+                    </div>
+                    <lightning-button variant="brand" class="bottomBTN" label="Save" type="submit" title="Brand action" data-name="CampaignId" onclick={SubmitDetails}></lightning-button>
+                </div>
+                
+                <!-- @Deb -->
+                <!-- New code for Help Desk Starts here -->
+                <div class="section-container" if:true={Connected}>
+                    <b>
+                        Step 3: Help Desk</b>
+                    </div>
+                    <div class="section-row" if:true={Connected}>
+                        
+                        <lightning-button class="helpbutton save-btn" variant="brand" label="Help Desk" title="Open popup" onclick={showModalBox}></lightning-button>
+                    </div>
+                    
+                    <div class="section-container" if:true={Connected}>
+                        <b>
+                            Step 4: Update Field Mapping</b>
+                        </div>
+                        <div class="section-row updatefieldmapping" if:true={Connected} style=" display: flex;">
+                                <lightning-button variant="brand" label="Save" type="submit" title="Brand action" onclick={SaveMapping} class="save-btn"></lightning-button>
+                                <lightning-button class="Delete_all" variant="brand" label="Clear Mapping" type="submit" title="Brand action" onclick={clearMappingHandler}></lightning-button>
+                            <div if:true={restoreobjectvalue}>
+                                <lightning-button class="restoreprevmap" variant="brand" label="Restored Previous Mapping " type="submit" title="Brand action" onclick={restoreDefaults}></lightning-button>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    
+                    <!-- New code for modal start here -->
+                    <template if:true={isShowModal}>
+                        <div class="slds-modal slds-fade-in-open slds-backdrop">
+                            <div class="slds-modal__container">
+                                <!---HEADER Section-->
+                                <header class="slds-modal__header">
+                                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hideModalBox}>
+                                        <lightning-icon icon-name="utility:close"
+                                        alternative-text="close"
+                                        variant="inverse"
+                                        size="small" ></lightning-icon>
+                                        <span class="slds-assistive-text">Close</span>
+                                    </button>
+                                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">
+                                        <svg width="16" height="16" fill="currentColor" class="bi bi-question-diamond-fill" viewBox="0 0 16 16">
+                                            <path d="M9.05.435c-.58-.58-1.52-.58-2.1 0L.436 6.95c-.58.58-.58 1.519 0 2.098l6.516 6.516c.58.58 1.519.58 2.098 0l6.516-6.516c.58-.58.58-1.519 0-2.098L9.05.435zM5.495 6.033a.237.237 0 0 1-.24-.247C5.35 4.091 6.737 3.5 8.005 3.5c1.396 0 2.672.73 2.672 2.24 0 1.08-.635 1.594-1.244 2.057-.737.559-1.01.768-1.01 1.486v.105a.25.25 0 0 1-.25.25h-.81a.25.25 0 0 1-.25-.246l-.004-.217c-.038-.927.495-1.498 1.168-1.987.59-.444.965-.736.965-1.371 0-.825-.628-1.168-1.314-1.168-.803 0-1.253.478-1.342 1.134-.018.137-.128.25-.266.25h-.825zm2.325 6.443c-.584 0-1.009-.394-1.009-.927 0-.552.425-.94 1.01-.94.609 0 1.028.388 1.028.94 0 .533-.42.927-1.029.927z"></path>
+                                        </svg>&nbsp; Help Desk Support
+                                    </h2>
+                                </header>
+                                <!---Body Section-->
+                                <div class="slds-modal__content slds-p-around_medium">
+                                    <div class="slds-m-around--xx-large container-fluid" style="margin-top: 10px;">
+                                        <!-- <lightning-card class="slds-page-header__title slds-page-header card_header" title="Support" variant="narrow" icon-name="standard:opportunity">
+                                        </lightning-card> -->
+                                        <div class="card_header">
+                                            <!-- <svg width="16" height="16" fill="currentColor" class="bi bi-question-diamond-fill" viewBox="0 0 16 16">
+                                                <path d="M9.05.435c-.58-.58-1.52-.58-2.1 0L.436 6.95c-.58.58-.58 1.519 0 2.098l6.516 6.516c.58.58 1.519.58 2.098 0l6.516-6.516c.58-.58.58-1.519 0-2.098L9.05.435zM5.495 6.033a.237.237 0 0 1-.24-.247C5.35 4.091 6.737 3.5 8.005 3.5c1.396 0 2.672.73 2.672 2.24 0 1.08-.635 1.594-1.244 2.057-.737.559-1.01.768-1.01 1.486v.105a.25.25 0 0 1-.25.25h-.81a.25.25 0 0 1-.25-.246l-.004-.217c-.038-.927.495-1.498 1.168-1.987.59-.444.965-.736.965-1.371 0-.825-.628-1.168-1.314-1.168-.803 0-1.253.478-1.342 1.134-.018.137-.128.25-.266.25h-.825zm2.325 6.443c-.584 0-1.009-.394-1.009-.927 0-.552.425-.94 1.01-.94.609 0 1.028.388 1.028.94 0 .533-.42.927-1.029.927z"></path>
+                                            </svg>&nbsp; Support -->
+                                            The text specified here will show up on the relevant steps of the Deal Support Request form
+                                        </div>
+                                        
+                                        <br>
+                                        <lightning-record-edit-form>
+                                            <lightning-messages>
+                                            </lightning-messages>
+                                            <br>
+                                            <!-- First row -->
+                                            <div class="slds-grid slds-gutters slds-form-element__row">
+                                                <div class="slds-col slds-size_3-of-12" >
+                                                    <label class="font16">Account Help Text</label>
+                                                </div>
+                                                <div class="slds-col">
+                                                    <lightning-input-rich-text class="inp_class" type="text" label-visible  name="AccountHelpText" value={AccountHelpText}  onchange={handleFieldChange}>
+                                                    </lightning-input-rich-text>
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <!-- Second row -->
+                                            <div class="slds-grid slds-gutters slds-form-element__row">
+                                                <div class="slds-col slds-size_3-of-12">
+                                                    <label class="font16">Contact Help Text</label>
+                                                </div>
+                                                <div class="slds-col">
+                                                    <lightning-input-rich-text class="inp_class" type="text" label-visible  name="ContactHelpText" value={ContactHelpText}  onchange={handleFieldChange}>
+                                                    </lightning-input-rich-text>
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <!-- Third row -->
+                                            <div class="slds-grid slds-gutters slds-form-element__row">
+                                                <div class="slds-col slds-size_3-of-12">
+                                                    <label class="font16">Campaign Help Text</label>
+                                                </div>
+                                                <div class="slds-col">
+                                                    <lightning-input-rich-text class="inp_class" type="text" label-visible  name="CampaignHelpText" value={CampaignHelpText} onchange={handleFieldChange}>
+                                                    </lightning-input-rich-text>
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <!-- Fourth row -->
+                                            <div class="slds-grid slds-gutters slds-form-element__row"> 
+                                                <div class="slds-col slds-size_3-of-12">
+                                                    <label class="font16">Opportunity Help Text</label>
+                                                </div>
+                                                <div class="slds-col">
+                                                    <lightning-input-rich-text class="inp_class" type="text" label-visible  name="OpportunityHelpText"  value={OpportunityHelpText} onchange={handleFieldChange}>
+                                                    </lightning-input-rich-text>
+                                                </div>
+                                            </div>
+                                            
+                                            <br>
+                                            
+                                            <div style="text-align: right;">
+                                                <!-- <lightning-button class="slds-m-top_small" variant="brand" label="Create" onclick={Finalsave}>
+                                                </lightning-button> -->
+                                            </div>
+                                        </lightning-record-edit-form>
+                                    </div>
+                                </div>
+                                <!--Footer Section-->
+                                <footer class="slds-modal__footer">
+                                    <button class="slds-button slds-button_neutral" onclick={hideModalBox}>Cancel</button>
+                                    &nbsp;
+                                    <button class="slds-button slds-button_brand" onclick={Finalsave}>Submit</button>
+                                </footer>
+                            </div>
+                        </div>
+                    </template>
+                    <!-- New code for modal end here-->
+                    <!-- New code for Help Desk Ends here -->
+                    
+                    <div class="list" if:true={Connected}>
+                        <div>
+                            <div class="headerRow">
+                                <div class="cell-first-child">
+                                    <div><b>BriefingSource Field</b></div>
+                                </div>
+                                <div class="cell-second-child">
+                                    <div><b>Salesforce Field</b></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="slds-m-around_large fieldsLoadingLoader" if:true={getIsLoaded}>
+                                <div class="fieldsLoaderP">
+                                    <div style="font-size:12px;font-weight:bold;background-color:#E8E8E8;padding:8px 15px 0px;text-align:center;">Loading Fields.......</div>
+                                    <div style="font-size:12px;font-weight:bold;background-color:#E8E8E8;padding:8px 15px 0px;text-align:center;">Please Wait....</div>
+                                </div>
+                                <div class="slds-is-relative">
+                                    <lightning-spinner alternative-text="Loading..." variant="brand">
+                                    </lightning-spinner>
+                                </div>
+                            </div>
+                            
+                            
+                            
+                            <template for:each={mappingsMap} for:item="map" for:index="index">
+                                <div class="dataRow" key={map} data-parent-index={index}>
+                                    <!-- <c-field-mapping-cmp fields-label={map.fieldLabel} fields-data={map} onfieldvalues={handelFieldChange} instance-name={_instancename} ></c-field-mapping-cmp> -->
+                                    <template if:true={map} >
+                                        <div >
+                                            <div style="font-size:12px;font-weight:bold;background-color:#E8E8E8;padding:8px 15px 0px;">{map.fieldLabel}</div>
+                                            <div style="font-size:12px;font-weight:bold;background-color:#E8E8E8;padding:8px 15px 0px;"></div>
+                                        </div>
+                                        <template for:each={map.records} for:item="fieldsData" for:index="index">
+                                            <div class="inputBox-container" key={fieldsData}>
+                                                <div class="dataCell cell-first">
+                                                    <div>{fieldsData.field.label}</div>
+                                                    <div class="data-type-style">{fieldsData.field.dataType}</div>
+                                                </div>
+                                                
+                                                <div class="dataCell cell-second">
+                                                    <lightning-input type="hidden" value={fieldsData.opportunityFieldName} name="inputFieldText" variant="label-hidden"></lightning-input>
+                                                    <c-searchable-select  options={availableFieldsForPassingInPickList} instance-name={_instancename} selectedfield={fieldsData.opportunityFieldName} onselect={handlePicklistChange} field-api-name={fieldsData.field.name} label={fieldsData.field.label} label-name={fieldsData.field.name}>
+                                                    </c-searchable-select>
+                                                </div>
+                                            </div>
+                                        </template>
+                                    </template>
+                                </div>
+                            </template>
+                            
+                        </div>
+                    </div>
+                    <c-lwc-custom-toast message={message} variant={variant} auto-close="true"></c-lwc-custom-toast>
+                    
+                </template>
+                <template if:false={loadedCompletely}>
+                    <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+                </template>
+            </template>

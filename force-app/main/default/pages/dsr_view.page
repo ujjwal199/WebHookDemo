@@ -1,0 +1,15 @@
+<apex:page standardController="BS_Deal_Support_Request__c" action="{!IF(BS_Deal_Support_Request__c.Opportunity__c == null, URLFOR($Page.AccountDSR, null, ['accountId'=BS_Deal_Support_Request__c.Account__c, 'dsrId'=BS_Deal_Support_Request__c.Id,'instanceName'=BS_Deal_Support_Request__c.bsource__BriefingSource_InstanceName__c]), URLFOR($Page.OpportunityDSR, null, ['opptyId'=BS_Deal_Support_Request__c.Opportunity__c, 'dsrId'=BS_Deal_Support_Request__c.Id,'instanceName'=BS_Deal_Support_Request__c.bsource__BriefingSource_InstanceName__c]))}" lightningStyleSheets="true">
+    <html>
+        <head>
+            <apex:slds />
+        </head>
+        <apex:pageMessages />
+        <!-- Make VisualForce compiler happy. -->
+        <apex:outputPanel style="display: none;">
+            {!BS_Deal_Support_Request__c.Account__c}
+            {!BS_Deal_Support_Request__c.Opportunity__c}
+            {!BS_Deal_Support_Request__c.Id}
+            {!BS_Deal_Support_Request__c.BriefingSource_InstanceName__c}
+        </apex:outputPanel>
+    </html>
+</apex:page>

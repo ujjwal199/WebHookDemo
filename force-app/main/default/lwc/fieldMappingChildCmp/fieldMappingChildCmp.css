@@ -1,0 +1,19 @@
+.tab{
+    background-color: red;
+}
+.inputBox-container{
+    display: flex;
+    width: 100%;
+    background: white;
+    border-bottom: 1px solid #e5e5e5;
+    padding: 10px;
+}
+
+
+.cell-first{
+    width: 49%;
+}
+.cell-second{
+    width: 49%;
+    max-width: 300px;
+}

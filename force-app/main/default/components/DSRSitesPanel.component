@@ -1,0 +1,8 @@
+<apex:component >
+  <h1>Sites</h1>
+  
+  Briefing Name:
+  <input type="text" />
+  <br/>
+  List of all briefing center sites
+</apex:component>

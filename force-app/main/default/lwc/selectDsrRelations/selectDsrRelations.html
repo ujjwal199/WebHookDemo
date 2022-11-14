@@ -1,0 +1,165 @@
+<template>
+    <div class="full_mobile-width">
+        
+        <div class="slds-theme_default" onclick={handleDivClick} data-close=true style="width: 100%;">
+            <div class="slds-p-around_medium">
+                
+                <template if:true={isAccountFlow}>
+                    <div class="outer-progress">
+                        <div class="slds-readonly-path inner-progress">
+                            <template if:true={togglerFix}>
+                                <lightning-progress-indicator type="path" current-step={selectedStep}>
+                                    <lightning-progress-step label="Select Accounts"  onstepfocus={selAccount} value="selAccount" class="step selAccount">
+                                    </lightning-progress-step>
+                                    <lightning-progress-step label="Select Opportunities"  onstepfocus={selOppty} value="selOppty" class="step selOppty">
+                                    </lightning-progress-step>
+                                    <template if:true={isShowContactTrue}>
+                                        <lightning-progress-step label="Select Contacts"  onstepfocus={selContact} value="selContact" class="step selContact">
+                                        </lightning-progress-step>
+                                    </template>
+                                    <template if:true={isCampaignAdmin}>
+                                        <lightning-progress-step label="Select Campaigns"  onstepfocus={selCampaign} value="selCampaign" class="step selCampaign">
+                                        </lightning-progress-step>
+                                    </template>
+                                </lightning-progress-indicator>
+                            </template>
+                            <template if:false={togglerFix}>
+                                <lightning-progress-indicator type="path" current-step={selectedStep}>
+                                    <lightning-progress-step label="Select Accounts"  onstepfocus={selAccount} value="selAccount" class="step selAccount">
+                                    </lightning-progress-step>
+                                    <lightning-progress-step label="Select Opportunities"  onstepfocus={selOppty} value="selOppty" class="step selOppty">
+                                    </lightning-progress-step>
+                                    <template if:true={isShowContactTrue}>
+                                        <lightning-progress-step label="Select Contacts"  onstepfocus={selContact} value="selContact" class="step selContact">
+                                        </lightning-progress-step>
+                                    </template>
+                                    <template if:true={isCampaignAdmin}>
+                                        <lightning-progress-step label="Select Campaigns"  onstepfocus={selCampaign} value="selCampaign" class="step selCampaign">
+                                        </lightning-progress-step>
+                                    </template>
+                                </lightning-progress-indicator>
+                            </template>
+                        </div>
+                    </div>
+                    
+                    <div class="slds-m-vertical_medium">
+                        <div data-id="accountBlock">
+                            <!-- @Deb -->
+                            <!-- code for Account Div -->
+                            <div if:true={accountdetails} class="helpdesk">
+                                <lightning-formatted-rich-text type="text" disabled value={accountht}></lightning-formatted-rich-text>
+                            </div>
+                            <c-account-dsr-relations initiatedfrom={objectname} dsrid={dsrid} ongetaccounts={getAccountList} onremoveaccount={handleAccountUnselect} recordname={recordname} recid={recid}></c-account-dsr-relations>
+                        </div>
+                        <div data-id="opptyBlock" class="slds-hide">
+                            <div if:true={opportunitydetails} class="helpdesk">
+                                <!-- <label><b>Help desk Opportunity details</b></label> -->
+                                <lightning-formatted-rich-text type="text" disabled value={opportunityht}></lightning-formatted-rich-text>
+                            </div>
+                            <c-opportunity-dsr-relations initiatedfrom={objectname} accountslist={listAccountId} dsrid={dsrid} ongetoppty={getOpptyList} recid={recid}></c-opportunity-dsr-relations>
+                        </div>
+                        <div data-id="contactBlock" class="slds-hide">
+                            <div if:true={contactdetails} class="helpdesk">
+                                <lightning-formatted-rich-text type="text" disabled value={contactht}></lightning-formatted-rich-text>
+                            </div>
+                            <c-contact-dsr-relations initiatedfrom={objectname} accountslist={listAccountId} ocrlist={listOpptyId} dsrid={dsrid} ongetcontact={getContactList} recid={recid}></c-contact-dsr-relations>
+                        </div>
+                        <template if:true={isCampaignAdmin}>
+                            <div data-id="campaignBlock" class="slds-hide">
+                                <div if:true={campaigndetails} class="helpdesk">
+                                    <lightning-formatted-rich-text type="text" disabled value={campaignht}></lightning-formatted-rich-text>
+                                </div>
+                                <c-campaign-dsr-relations dsrid={dsrid} ongetcampaign={getCampaignList}></c-campaign-dsr-relations>
+                            </div>
+                        </template>
+                    </div>
+                    
+                    <div class="slds-m-vertical_medium">
+                        <template if:true={hideBack}>
+                            <lightning-button label="Back" class="slds-m-left_x-small" onclick={handlePrev}></lightning-button>
+                        </template>
+                        <template if:false={isSelectStepCampaign}>
+                            <lightning-button variant="brand" class="slds-m-left_x-small" label="Save and Next" onclick={handleSaveNext}></lightning-button>
+                        </template>
+                        <template if:true={isSelectStepCampaign}>
+                            <lightning-button variant="brand" class="slds-m-left_x-small savenextbutton" label="Save and Next" onclick={handleFinish}></lightning-button>
+                        </template>
+                    </div>
+                </template>
+                
+                <template if:true={isOpptyFlow}>
+                    <div class="outer-progress">
+                        <div class="slds-readonly-path inner-progress">
+                            <template if:true={togglerFixForOpp}>
+                                <lightning-progress-indicator type="path" current-step={selectedStepOppty}>
+                                    <lightning-progress-step label="Select Opportunities" onstepfocus={selOppty} value="selOppty" class="step selOppty">
+                                    </lightning-progress-step>
+                                    <template if:true={isShowContactTrue}>
+                                        <lightning-progress-step label="Select Contacts" onstepfocus={selContact} value="selContact" class="step selContact">
+                                        </lightning-progress-step>
+                                    </template>
+                                    <template if:true={isCampaignAdmin}>
+                                        <lightning-progress-step label="Select Campaigns" onstepfocus={selCampaign} value="selCampaign" class="step selCampaign">
+                                        </lightning-progress-step>
+                                    </template>
+                                </lightning-progress-indicator>
+                            </template>
+                            <template if:false={togglerFixForOpp}>
+                                <lightning-progress-indicator type="path" current-step={selectedStepOppty}>
+                                    <lightning-progress-step label="Select Opportunities" onstepfocus={selOppty} value="selOppty" class="step selOppty">
+                                    </lightning-progress-step>
+                                    <template if:true={isShowContactTrue}>
+                                        <lightning-progress-step label="Select Contacts" onstepfocus={selContact} value="selContact" class="step selContact">
+                                        </lightning-progress-step>
+                                    </template>
+                                    <template if:true={isCampaignAdmin}>
+                                        <lightning-progress-step label="Select Campaigns" onstepfocus={selCampaign} value="selCampaign" class="step selCampaign">
+                                        </lightning-progress-step>
+                                    </template>
+                                </lightning-progress-indicator>
+                            </template>
+                        </div>
+                    </div>
+                    
+                    <div class="slds-m-vertical_medium">
+                        <div data-id="opptyBlock">
+                            <div if:true={opportunitydetails} class="helpdesk">
+                                <!-- <label><b>Help desk Opportunity details</b></label> -->
+                                <lightning-formatted-rich-text type="text" disabled value={opportunityht}></lightning-formatted-rich-text>
+                            </div>
+                            <c-opportunity-dsr-relations initiatedfrom={objectname} dsrid={dsrid} ongetoppty={getOpptyList} recordname={recordname} recid={recid}></c-opportunity-dsr-relations>
+                        </div>
+                        <div data-id="contactBlock" class="slds-hide">
+                            <div if:true={contactdetails} class="helpdesk">
+                                <lightning-formatted-rich-text type="text" disabled value={contactht}></lightning-formatted-rich-text>
+                            </div>
+                            <c-contact-dsr-relations initiatedfrom={objectname} ocrlist={listOpptyId} dsrid={dsrid} ongetcontact={getContactList} recid={recid}></c-contact-dsr-relations>
+                        </div>
+                        <template if:true={isCampaignAdmin}>
+                            <div data-id="campaignBlock" class="slds-hide">
+                                <div if:true={campaigndetails} class="helpdesk">
+                                    <lightning-formatted-rich-text type="text" disabled value={campaignht}></lightning-formatted-rich-text>
+                                </div>
+                                <c-campaign-dsr-relations dsrid={dsrid} ongetcampaign={getCampaignList}></c-campaign-dsr-relations>
+                            </div>
+                        </template>
+                    </div>
+                    
+                    <div class="slds-m-vertical_medium">
+                        <template if:true={hideBack}>
+                            <lightning-button label="Back" class="slds-m-left_x-small" onclick={handlePrev}></lightning-button>
+                        </template>
+                        <template if:false={isSelectStepCampaign}>
+                            <lightning-button variant="brand" class="slds-m-left_x-small" label="Save and Next" onclick={handleSaveNext}></lightning-button>
+                        </template>
+                        <template if:true={isSelectStepCampaign}>
+                            <lightning-button variant="brand" class="slds-m-left_x-small savenextbutton" label="Save and Next" onclick={handleFinish}></lightning-button>
+                        </template>
+                    </div>
+                </template>
+                
+            </div>
+        </div>
+        
+    </div>
+</template>

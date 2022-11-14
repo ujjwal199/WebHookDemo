@@ -1,0 +1,129 @@
+@media screen and (max-width: 500px) {
+    .inputbox-width {
+        width: 100%!important;
+    }
+    .pills-container-custom {
+        width: 100%!important;
+        height: 33px;
+        margin-top: 2px;
+        font-size: 16px;
+    }
+}
+
+
+/* @deb */
+
+
+/* css for setting title for list view */
+
+
+/* .slds-card__header-title.listtitle {
+    margin-left: -15px !important;
+} */
+
+.slds-card__header-title.listtitle[bsource-lookupSearchComponent_lookupSearchComponent] {
+    /* margin-left: -15px !important; */
+    position: fixed;
+}
+
+.pills-container-custom {
+    margin-top: 10px;
+    position: fixed;
+    /* margin-bottom: 20px; */
+}
+
+.slds-pill {
+    /* position: fixed !important; */
+    position: relative !important;
+}
+
+.slds-popover_full-width {
+    width: 100%;
+    /* margin-top: -16px; */
+}
+.height-lookup{
+    margin-top: -16px;
+}
+
+/* Extra code for height and width of Dropdown list */
+
+.slds-popover_full-width[bsource-lookupSearchComponent_lookupSearchComponent] {
+    /* width: 718px !important; */
+    /* margin-top: -16px; */
+    /* height: 700px !important; */
+    z-index: 1;
+    /* height: 476px !important; */
+}
+
+.slds-input-has-icon {
+    position: relative;
+    margin-top: 24px;
+}
+
+.slds-card__header-title.listtitle[bsource-lookupSearchComponent_lookupSearchComponent][bsource-lookupSearchComponent_lookupSearchComponent] {
+    /* margin-left: -15px !important; */
+    position: absolute;
+}
+
+.pills-container-custom[bsource-lookupSearchComponent_lookupSearchComponent] {
+    /* margin-top: 20px; */
+    position: relative !important;
+}
+
+.slds-card__header-title.listtitle[bsource-lookupSearchComponent_lookupSearchComponent][bsource-lookupSearchComponent_lookupSearchComponent][bsource-lookupSearchComponent_lookupSearchComponent] {
+    /* margin-left: -13px !important; */
+    margin-left: -11px !important;
+}
+
+.slds-popover__body {
+    position: absolute;
+    background: #fff;
+    width: 100%;
+    box-shadow: 0 3px 4px -3px;
+    border-radius: 4px;
+}
+
+lightning-card.norecordfound {
+    padding: 10px !important;
+    display: block;
+}
+
+.norecordfound[bsource-lookupSearchComponent_lookupSearchComponent][bsource-lookupSearchComponent_lookupSearchComponent] {
+    display: initial;
+}
+
+
+/* Css for SELECTED section gap 14/7/2022 */
+
+.slds-card__header-title.listtitle[bsource-lookupSearchComponent_lookupSearchComponent][bsource-lookupSearchComponent_lookupSearchComponent][bsource-lookupSearchComponent_lookupSearchComponent][bsource-lookupSearchComponent_lookupSearchComponent] {
+    margin-top: 26px;
+}
+
+.pills-container-custom[bsource-lookupSearchComponent_lookupSearchComponent] {
+    /* margin-top: 20px; */
+    /* prev. below margin-top is working  */
+    /* margin-top: 30px; */
+    /* margin-top: -10px !important; */
+    display: inline-block !important;
+}
+
+.slds-form-element__control.slds-input-has-icon.slds-input-has-icon_left-right {
+    padding-left: 10px;
+    padding-top: 10px;
+}
+
+.slds-input-has-icon[bsource-lookupSearchComponent_lookupSearchComponent] {
+    position: relative;
+    margin-top: 35px;
+    margin-left: -10px;
+}
+
+.defaultaccount {
+    font-weight: bold;
+    font-size: 1rem;
+    line-height: 1.25;
+    margin-top: 2%;
+    /* font-size: var(--slds-c-card-heading-font-size var(--sds-c-card-heading-font-size var(--lwc-varFontSize5, 1rem)));
+    font-weight: var(--slds-c-card-heading-font-weight var(--sds-c-card-heading-font-weight var(--lwc-cardFontWeight, 700)));
+    line-height: var(--lwc-lineHeightHeading, 1.25);  */
+}

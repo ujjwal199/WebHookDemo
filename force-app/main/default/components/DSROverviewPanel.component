@@ -1,0 +1,4 @@
+<apex:component >
+  <h1>Overview Panel</h1>
+  Hidden by default. Only displayed when updating a DSR.
+</apex:component>

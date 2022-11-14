@@ -1,0 +1,11 @@
+<template>
+    <div class="inputBox-container">
+    <div class="dataCell cell-first">{fieldsData.field.label}</div>
+            
+        <div class="dataCell cell-second">
+            <lightning-input type="hidden" value={fieldsData.opportunityFieldName} name="inputFieldText" variant="label-hidden"></lightning-input>
+			<c-searchable-select options={availableFields} selectedfield={fieldsData.opportunityFieldName} onselect={handleChange} field-api-name={fieldsData.field.name}>
+			</c-searchable-select>
+        </div>
+    </div>
+</template>

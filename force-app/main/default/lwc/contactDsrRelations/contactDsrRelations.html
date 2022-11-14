@@ -1,0 +1,27 @@
+<template>
+    <div class="c-container">
+        <lightning-card>
+            <h3 slot="title">
+                Select Contacts
+            </h3>
+            <p class="slds-p-horizontal_small">
+                <c-lookup-search-component
+                    object-api-name= "Contact"
+                    field-api-names="Id,Name"
+                    filter-field-api-name="Name"
+                    icon-name="standard:contact"
+                    onretrieve={selectItemEventHandler} 
+                    onremove={deleteItemEventHandler}
+                    accountslist={accountslist}
+                    ocrlist={ocrlist} recid={recid} initiatedfrom={initiatedfrom}>
+                </c-lookup-search-component>
+            </p><br><br>
+            <!--<template if:true={isItemExists}>                
+                <h3 class="slds-p-horizontal_small">
+                    {selectedItemsToDisplay}
+                </h3>                    
+               
+            </template>            -->
+        </lightning-card> 
+    </div>
+</template>

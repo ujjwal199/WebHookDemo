@@ -1,0 +1,4 @@
+<apex:component >
+  <h1>Topics</h1>
+  Available topics for a selected site.
+</apex:component>

@@ -1,0 +1,4 @@
+<apex:component >
+  <h1>Additional Fields</h1>
+  Additional intake form fields.
+</apex:component>

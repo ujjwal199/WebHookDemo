@@ -1,0 +1,25 @@
+<apex:page controller="NewDSRCreationFlowController" sidebar="true" showHeader="true">
+    <apex:pageMessages id="showmsg"></apex:pageMessages>
+    <apex:outputPanel rendered="{!instanceNameExists}">
+    <apex:includeLightning />
+    
+    <div id="lightning" />
+    </apex:outputPanel>
+    <script>
+    $Lightning.use("bsource:briefingSourceApplication", function() {
+        $Lightning.createComponent("bsource:NewDSRCreationFlow", { 
+            recordId : '{!$CurrentPage.parameters.id}',
+            vfPage   : true,
+            instanceName : '{!JSENCODE($CurrentPage.parameters.InstanceName)}'
+        }, 
+                                   "lightning",
+                                   function(cmp) {
+                                       console.log("button was created");
+                                       // do some stuff
+                                   }
+                                  );
+    });
+    
+    </script>
+    
+</apex:page>

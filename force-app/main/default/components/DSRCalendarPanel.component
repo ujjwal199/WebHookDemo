@@ -1,0 +1,4 @@
+<apex:component >
+  <h1>Calendar</h1>
+  Calendar of available briefing center dates.
+</apex:component>

@@ -1,0 +1,223 @@
+.main-container {
+    background: #fff;
+    padding: 0;
+}
+
+.section-container {
+    align-items: center;
+    border: 1px solid transparent;
+    padding: 0 0.5rem;
+    width: 100%;
+    overflow: hidden;
+    font-size: 1rem;
+    line-height: 1.875rem;
+    background-color: rgb(243, 243, 243);
+    display: flex;
+}
+
+.section-row {
+    padding: 1%;
+}
+
+.briefing-source-inp {
+    width: 390px;
+}
+
+.cell-first {
+    width: 10%;
+    max-width: 300px;
+    text-align: right;
+    font-weight: bold;
+    padding-right: 16px;
+}
+
+.connectBTN {
+    margin: 10px 0px;
+}
+
+.cell-second {
+    width: 49%;
+    max-width: 300px;
+}
+
+.headerRow {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: flex-start;
+    margin: 10px 0px;
+}
+
+.leftAlignment {
+    padding-left: 1%;
+    margin-bottom: 10px;
+}
+
+.bottomBTN {
+    columns: red;
+}
+
+.leftAlignmentlabel {
+    padding-right: 15px;
+}
+
+.save-btn {
+    margin-right: 1%;
+}
+
+.cell-first-child {
+    width: 49%;
+    margin-left: 1%;
+}
+
+.cell-second-child {
+    width: 49%;
+    max-width: 300px;
+}
+
+@media screen and (max-width: 1200px) {
+    .cell-first {
+        width: 45%;
+    }
+}
+
+
+/* New extra css for Briefing Instances step : 4 Update Field Mapping 12_07_2022 */
+
+@media(max-width: 540px) {
+    .section-row[bsource-adminSettingsChildComponent_adminSettingsChildComponent][bsource-adminSettingsChildComponent_adminSettingsChildComponent][bsource-adminSettingsChildComponent_adminSettingsChildComponent] {
+        display: grid !important;
+        margin: 5px;
+    }
+    /* .section-row[bsource-adminSettingsChildComponent_adminSettingsChildComponent][bsource-adminSettingsChildComponent_adminSettingsChildComponent] {
+        display: grid;
+
+    } */
+    /* .save-btn[bsource-adminSettingsChildComponent_adminSettingsChildComponent][bsource-adminSettingsChildComponent_adminSettingsChildComponent] {
+        margin: 2px;
+    } */
+    .save-btn[bsource-adminSettingsChildComponent_adminSettingsChildComponent][bsource-adminSettingsChildComponent_adminSettingsChildComponent][bsource-adminSettingsChildComponent_adminSettingsChildComponent] {
+        margin-bottom: 1px;
+        margin-left: -5px;
+    }
+    /* .save-btn[bsource-adminSettingsChildComponent_adminSettingsChildComponent][bsource-adminSettingsChildComponent_adminSettingsChildComponent][bsource-adminSettingsChildComponent_adminSettingsChildComponent] {
+        margin: -5px;
+    } */
+    /* lightning-button.restoreprevmap {
+        padding: 2px;
+    } */
+    lightning-button.Delete_all[bsource-adminSettingsChildComponent_adminSettingsChildComponent][bsource-adminSettingsChildComponent_adminSettingsChildComponent][bsource-adminSettingsChildComponent_adminSettingsChildComponent] {
+        padding: 2px !important;
+        margin-left: -7px;
+        margin-bottom: 1px;
+    }
+    /* lightning-button.Delete_all[bsource-adminSettingsChildComponent_adminSettingsChildComponent][bsource-adminSettingsChildComponent_adminSettingsChildComponent] {
+        padding: 2px;
+    } */
+    lightning-button.restoreprevmap[bsource-adminSettingsChildComponent_adminSettingsChildComponent] {
+        margin-left: -5px !important;
+    }
+}
+
+
+/* css for maintain gapping between save and clearmapping button  18/07/2022 */
+
+.save-btn[bsource-adminSettingsChildComponent_adminSettingsChildComponent] {
+    margin-right: 15px;
+}
+
+
+/*re construction */
+
+.inputBox-container {
+    display: flex;
+    width: 100%;
+    background: white;
+    border-bottom: 1px solid #e5e5e5;
+    padding: 5px;
+    padding-left: 15px;
+}
+
+.firstCell .cell-first {
+    max-width: 200px;
+    text-align: right;
+}
+
+.cell-first {
+    width: 49%;
+    max-width: initial;
+    text-align: left;
+    font-weight: 500;
+}
+
+.cell-second {
+    width: 49%;
+    max-width: 300px;
+    padding-top: 4px;
+}
+
+.fieldsLoadingLoader {
+    padding: 10px 0px 80px;
+    background: #e8e8e8;
+}
+
+.fieldsLoadingLoader .fieldsLoaderP {
+    padding: 100px 0px;
+}
+
+
+/* @Deb */
+
+
+/* New css code for modal and font size 27_06_2022 */
+
+.slds-modal__container {
+    margin: 0 auto;
+    width: 100%;
+    max-width: 62rem !important;
+    min-width: 20rem;
+}
+
+.font16 {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+
+/* New css for delete all button */
+
+lightning-button.Delete_all {
+    /* padding: 15px; */
+    padding: 0px !important;
+    /* extra code for set gapping */
+    margin-left: -5px;
+}
+
+
+/* restore fields mapping button gapping 15_7_2022 */
+
+lightning-button.restoreprevmap {
+    margin: 10px;
+}
+
+.data-type-style {
+    color: #999!important;
+    font-weight: normal;
+}
+
+.data-type-style:hover {
+    color: #083163!important;
+    font-weight: normal;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+
+/* Css for helpdesk stop overlapping in mobile view for Campaign and Opportunity label 22_07_2022 */
+
+@media(max-width:540px) {
+    .font16[bsource-adminSettingsChildComponent_adminSettingsChildComponent] {
+        margin-left: -32px;
+        display: -webkit-inline-box;
+    }
+}

@@ -1,0 +1,4 @@
+<apex:component >
+  <h1>Review</h1>
+  Final review of deal support request fields.
+</apex:component>

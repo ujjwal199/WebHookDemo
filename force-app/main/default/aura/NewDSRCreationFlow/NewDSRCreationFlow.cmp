@@ -1,0 +1,25 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction,lightning:isUrlAddressable,lightning:hasPageReference" access="global" controller="NewDSRCreationFlowController">
+    
+    <aura:handler name="change" value="{!v.pageReference}" action="{!c.onPageReferenceChanged}" />
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}" access="global" />
+    
+    <aura:attribute name="objectName" type="String" access="global"/>
+    <aura:attribute name="objectValues" type="String" access="global"/>
+    <aura:attribute name="opptyAccId" type="String" access="global"/>
+    <aura:attribute name="recId" type="String" />
+    <aura:attribute name="recordName" type="String" access="global"/>
+    <aura:attribute name="dsrid" type="String" access="global"/>
+    <aura:attribute name="campaignadmin" type="String" access="global"/>
+    <aura:attribute name="showContactCheck" type="Boolean" access="global"/>
+    <aura:attribute name="dsrCheck" type="Boolean" access="global" />
+    <!-- Variable use for classic flow-->
+    <aura:attribute name="recordId" type="Id" access="global"/>
+    <aura:attribute name="vfPage" type="Boolean" access="global"/>
+    <aura:attribute name="instanceName" type="String" access="global"/>
+    <lightning:navigation aura:id="navService"/>
+	<lightning:card>
+        <c:selectDsrRelations campaignadmin="{!v.campaignadmin}" dsrid="{!v.dsrid}" objectname="{!v.objectName}" 
+                              opptyaccount="{!v.opptyAccId}" recordname="{!v.recordName}" recid="{!v.recId}" 
+                              showcontact="{!v.showContactCheck}" vfpageflow ="{!v.vfPage}" instancename="{!v.instanceName}"/>
+    </lightning:card>
+</aura:component>

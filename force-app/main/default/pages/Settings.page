@@ -1,0 +1,20 @@
+<apex:page id="thePage" lightningStyleSheets="true" title="BriefingSource Admin Settings" sidebar="true" showHeader="true">
+    <apex:slds />
+    <apex:includeLightning />    
+    <div id="LightningComponentid" />   
+    <!-- the Id of div tag which will be used to render your LWC component  -->
+    <script>
+    
+    $Lightning.use("bsource:AdminSettingsApp", function() {
+        $Lightning.createComponent("bsource:adminSettingsParentComponent",
+                                   { 
+                                     sessionId : '{!JSENCODE($Api.Session_ID)}'
+                                   },
+                                   "LightningComponentid", // the Id of div tag where your component will be rendered
+                                   function(cmp) {
+                                       console.log('Calling the LWC Component');
+                                   });
+    });
+    </script>
+    
+</apex:page>

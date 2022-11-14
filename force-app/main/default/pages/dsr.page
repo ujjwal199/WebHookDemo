@@ -1,0 +1,747 @@
+<apex:page standardController="Opportunity" extensions="DSRCtrl,DSRRemote" sidebar="false" doctype="html-5.0"> 
+    
+    <apex:includeScript value="{!URLFOR($Resource.libs_vf_dsr, '/multidatespicker/js/jquery-2.1.1.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.libs_vf_dsr, '/multidatespicker/js/jquery-ui-1.11.1.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.libs_vf_dsr, '/multidatespicker/jquery-ui.multidatespicker.cs-mod.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.libs_vf_dsr, 'kendo.custom.min.js')}"/> 
+    <!-- TODO, need to move timepicker js static resource-->
+    <!-- <script src="//kendo.cdn.telerik.com/2015.2.805/js/kendo.all.min.js"></script>-->
+
+<apex:includeScript value="{!URLFOR($Resource.vf_dsr_assets, 'app.js')}"/>
+    
+    <apex:stylesheet value="{!URLFOR($Resource.vf_dsr_assets, 'app.css')}"/>
+        <apex:stylesheet value="{!URLFOR($Resource.lib_kendo_styles , 'kendo.common.min.css')}"/>
+            <apex:stylesheet value="{!URLFOR($Resource.lib_kendo_styles , 'kendo.bootstrap.min.css')}"/>  
+                <apex:stylesheet value="{!URLFOR($Resource.libs_vf_dsr , '/multidatespicker/css/mdp.css')}"/>    
+                    
+                    <!-- custom ux -->
+                        <style>
+                        .ux .well {
+                            padding: 10px;
+                            background-color: #fff;
+                            border: 1px solid #eee;
+                            border-radius: 5px;
+                            font-size: 12px;
+                            margin:10px 0px!important;
+                            
+                        }
+
+.ux .float--left {
+    float: left;
+    width:90%;
+}
+.ux .float--right {
+    float: right;
+}
+.ux .float--clear {
+    clear: both;
+}
+.ux .btn {
+    padding: 5px 10px;
+    background-color: #D8E8F5!important;
+    background: #D8E8F5!important;
+    border: 1px solid #BAD7EC!important;
+    text-decoration: none;
+}
+.ux .btn:hover {
+    padding: 5px 10px;
+    background-color: #E8F0F7!important;
+    background: #E8F0F7!important;
+    border: 1px solid #BAD7EC!important;
+    text-decoration: none;
+}
+.ux h2 {
+    display: block;
+    margin: 10px 0;
+}
+.ux h3 {
+    display: block;
+    margin: 10px 0;
+}
+.ux input {
+    border-radius: 3px;
+    border: 1px solid #ccc;
+    margin: 10px 0;
+    padding: 5px;
+}
+.ux select {
+    background-color: white;
+    width: 100%;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+    padding: 5px;
+}
+.ux .ui-datepicker {
+    padding:0!important;
+}
+.calNTopics {
+    padding: 0!important;
+}
+body .bPageBlock .helpIcon, body .tagDropDown .tagHelp .helpIcon {
+    background: transparent url(/img/alohaSkin/help_orange.png) no-repeat;
+}
+</style>
+
+<apex:form id="aform"> 
+    <!-- Render this for Classic UI only -->
+        <apex:outputPanel id="noncanvasUI1" rendered="{!IsClassicWizard}">
+        <table width="100%" border="0" style="padding: 20px 0px 20px 0px;">
+        <tr>
+        <td width="25%" style="text-align: left;">
+        <img src="/s.gif" class="opp-icon"/>
+        <h1 class="opp-label">
+    {!Opportunity.Name} 
+        </h1>
+        </td>
+        <td width="75%" style="text-align: center;">
+        <div class="breadcrumb flat">
+        
+        <a href="#" 
+        class="{!IF(state.isStageAttendees, 'active', '')} {!IF(OR(state.canChangeDSRName, state.canChangeAttendees), '', 'uneditable')}">Attendees</a>
+        <a href="#" class="{!IF(state.isStageSite, 'active', '')} {!IF(state.canChangeSites, '', 'uneditable')}">Sites</a>
+        <a href="#" class="{!IF(state.isStageTopics, 'active', '')} {!IF(state.canChangeTopics, '', 'uneditable')}">Topics</a>
+        <a href="#" class="{!IF(state.isStageAddInfo, 'active', '')} {!IF(state.canChangeAddInfo, '', 'uneditable')}">Additional Info</a>
+        <a href="#" class="{!IF(state.isStageReview, 'active', '')}">Review</a>                        
+        </div>
+        
+        </td>
+        </tr>
+        </table>
+        
+        
+        <apex:pageMessages />
+        <apex:actionStatus id="actionStatus" onstart="disableOnClick()"
+        onstop="enableOnClick()" />
+        <apex:actionStatus id="disableOnlyActionStatus" onstart="disableOnClick()"/>        
+        <!-- action functions -->                
+        <apex:actionFunction name="afOnSaveAttendees" action="{!onSaveAttendees}" 
+        rerender="aform" status="disableOnlyActionStatus"  oncomplete="afGotoAttendeesNext();"/>        
+        <apex:actionFunction name="afGotoAttendeesNext" action="{!gotoAttendeesNext}" 
+        rerender="aform" status="actionStatus"/>
+        <apex:actionFunction name="afToStepSites" action="{!toStepSites}" 
+        rerender="aform" status="actionStatus"/>
+        <apex:actionFunction name="afGototSitesNext" action="{!gotoSitesNext}" 
+        rerender="aform" status="actionStatus"/>
+        <apex:actionFunction name="afNextFromTopics" action="{!gotoTopicsNext}" 
+        rerender="aform" status="actionStatus"/>
+        
+        <!-- Hidden State --> 
+        <span style="display:none;" id="dsrIdHolder">{!state.dsrId}</span>
+        <apex:inputHidden value="{!state.selectedSite}" id="selectedSite"/>
+        <apex:inputHidden value="{!state.selectedSiteName}" id="selectedSiteName"/>        
+        <apex:inputHidden value="{!state.selectedPrimaryDate}" id="selectedPrimaryDate"/>        
+        <apex:inputHidden value="{!state.selectedAlternateDate}" id="selectedAlternateDate"/>  
+        <apex:inputHidden value="{!state.selectedMeetingDurationType}" id="selectedMeetingDuration"/> 
+        <apex:inputHidden value="{!state.selectedStartTime}" id="selectedStartTime"/> 
+        <apex:inputHidden value="{!state.selectedEndTime}" id="selectedEndTime"/> 
+        
+        <div id="errorsPanel">
+        
+        </div>
+        <!-- Sites section -->
+        <apex:pageBlock rendered="{!state.isStageSite}">
+        <apex:pageBlockButtons >
+        <apex:commandButton value="Cancel" action="{!cancel}" immediate="true" status="actionStatus"/>                  
+        <apex:commandButton action="{!movePreviousInWizard}" value="< Previous" immediate="true" rerender="aform" status="actionStatus"></apex:commandButton>
+        <input type="button" class="btn" onclick="_DSRApp.sites.toNextSection()" value="Save & Next >"/>
+        </apex:pageBlockButtons>
+        <!-- custom ux -->
+        <div class="ux">
+        <div class="well">
+        <div class="float--left">
+        <h2>Instructions</h2>
+        <p class="instruction">
+    {!$Label.locationanddatestimesforyourevent}
+        </p>
+        </div>
+        <div class="float--right">
+        
+        <div class="links"> 
+        <a href="{!URLFOR($Resource.dsrhelp, '/dsrhelp/dsrhelp.html')}#eventloc" target='_blank' title="Help for this Page (New Window)">
+        <span class="helpLink">Help for this Page</span>
+        <img src="/s.gif" alt="" class="helpIcon" title=""/>
+        </a>
+        </div>
+        </div>
+        <div class="float--clear"></div>
+        </div>
+        </div>
+        <table width="100%">
+        <tr>
+        <td width="50%" style="vertical-align: top;">
+        <div class="pbSubheader pbSectionTitle">
+        
+        <h3>Select a Site</h3>
+        </div>
+        <apex:pageBlockTable value="{!state.sitesResponse.sites}" var="site" title="Select Sites">
+        <apex:column headerValue="Select" width="100">
+        <input type="radio" name="siteSelection" data-sitename="{!site.name}" value="{!site.id}" onclick="return _DSRApp.sites.select('{!site.id}', true);"/>
+        
+        </apex:column>
+        <apex:column value="{!site.Name}" headerValue="Site Name"/>
+        <apex:column value="{!site.timezone}" headerValue="Timezone"/>
+        <apex:column value="{!site.hoursOfOperation}" headerValue="Hours of Operation" styleclass="hrsopperation"/>
+        </apex:pageBlockTable>
+        
+        
+        </td>
+        <td width="5%">&nbsp;
+        <div id="sampleDiv">
+        
+        </div>
+        </td>
+        <td id="rightPanel">                        
+        
+        </td>
+        </tr>
+        
+        </table>
+        <script>
+        _DSRApp.sites.init();
+                           </script>
+</apex:pageBlock>
+
+<!-- Topics section --> 
+    <apex:pageBlock title="Select Topics" rendered="{!state.isStageTopics}">
+        <apex:pageMessage id="topicInfoMsg" severity="info" strength="2" summary="Any changes made to topics here, will be saved immediately."></apex:pageMessage>
+        <apex:pageBlockButtons >
+            <apex:commandButton value="Cancel" action="{!cancel}" immediate="true" status="actionStatus"/>              
+            <apex:commandButton action="{!movePreviousInWizard}" value="< Previous"   rerender="aform" status="actionStatus"></apex:commandButton>
+            <input type="button" class="btn" onclick="_DSRApp.topics.toNextSection()" value="Next >"/>              
+        </apex:pageBlockButtons>
+        
+        <!-- custom ux -->
+        <div class="ux">
+            <div class="well">
+                <div class="float--left">
+                    <h2>Instructions</h2>
+                    <p class="instruction">
+                        {!$Label.Topics_Instruction}
+                    </p>
+                </div>
+                <div class="float--right">
+                    <div class="links">
+                        <a href="{!URLFOR($Resource.dsrhelp, '/dsrhelp/dsrhelp.html')}#selectTopics" target='_blank' title="Help for this Page (New Window)">
+                            <span class="helpLink">Help for this Page</span>
+                            <img src="/s.gif" alt="" class="helpIcon" title=""/>
+                        </a>
+                    </div>
+                </div>
+                <div class="float--clear"></div>
+            </div>
+        </div>
+        
+        <div id="topicsGrid"/>
+        
+        <script>
+        _DSRApp.topics.init();
+        </script>
+        
+    </apex:pageBlock>
+    
+    <!-- Attendees section --> 
+    <apex:pageBlock title="Select Attendees" rendered="{!state.isStageAttendees}">
+        <apex:pageMessage title="{!$ObjectType.BS_Deal_Support_Request__c.fields.Admin_Comments__c.Label}" 
+                          summary="{!state.dsr.Admin_Comments__c}" severity="info" strength="3" 
+                          rendered="{!AND(state.dsr.Status__c == 'Updates Required', NOT(ISBLANK(state.dsr.Admin_Comments__c)))}"></apex:pageMessage>
+        <apex:pageBlockButtons location="bottom">  
+            <apex:commandButton value="Cancel" action="{!cancel}" immediate="true" status="actionStatus" html-formnovalidate="formnovalidate"/>
+            <input type="button" onclick="_DSRApp.attendees.toNextSection()" value="Save & Next >" 
+                   class="btn {!IF(state.canChangeAttendees, '', 'display-none')}"/>     
+        </apex:pageBlockButtons>
+        
+        <!-- custom ux -->
+        <div class="ux">
+            <div class="well">
+                <div class="float--left">
+                    <h2>Instructions</h2>
+                    <p class="instruction">
+                        {!$Label.Select_Select_Attendees_Instruction}
+                    </p>
+                </div>
+                <div class="float--right">
+                    <div class="links">
+                        <a href="{!URLFOR($Resource.dsrhelp, '/dsrhelp/dsrhelp.html')}#selectAttendees" target='_blank' title="Help for this Page (New Window)">
+                            <span class="helpLink">Help for this Page</span>
+                            <img src="/s.gif" alt="" class="helpIcon" title=""/>
+                        </a>
+                    </div>
+                </div>
+                <div class="float--clear"></div>
+            </div>
+        </div>
+        
+        <apex:pageBlockSection title="{!$ObjectType.BS_Deal_Support_Request__c.fields.Name.Label}" columns="1">
+            <apex:inputField value="{!state.dsr.name}" required="true" label="Event/Briefing Name" rendered="{!state.canChangeDSRName}" style="width: 400px;"/>
+            <apex:outputField value="{!state.dsr.name}" label="Event/Briefing Name" rendered="{!NOT(state.canChangeDSRName)}"/>  
+            
+            <apex:inputField value="{!state.dsr.Briefing_Objective__c}"  required="true" label="Briefing Objective" rendered="{!state.canChangeDSRName}"  style="width: 400px;height:70px;" />
+            <apex:outputField value="{!state.dsr.Briefing_Objective__c}" label="Briefing Objective" rendered="{!NOT(state.canChangeDSRName)}"/> 
+            
+        </apex:pageBlockSection>
+        <apex:pageBlockSection title="Attendees">
+            
+            <apex:pageBlockTable value="{!state.probableAttendees}" var="attendee">
+                <apex:column headerValue="Select" width="100">
+                    <apex:inputCheckbox value="{!attendee.selected}" rendered="{!state.canChangeAttendees}" id="attendee"/>
+                    <apex:inputHidden value="{!attendee.selected}" rendered="{!NOT(state.canChangeAttendees)}"/>
+                    <apex:image URL="{!if(attendee.selected,'/img/checkbox_checked.gif','/img/checkbox_unchecked.gif')}" rendered="{!NOT(state.canChangeAttendees)}"/>
+                </apex:column>
+                <apex:column value="{!attendee.contact.name}"/>
+                <apex:column value="{!attendee.contact.title}"/>
+                <apex:column value="{!attendee.role}" headerValue="Role"/>
+            </apex:pageBlockTable>
+            
+            <!-- custom ux -->
+            <apex:outputPanel id="AdditionalAtt">
+                <h3>Additional Attendees</h3>
+                <apex:variable value="{!0}" var="index"/>
+                <table border="0" cellpadding="0" cellspacing="0" class="list ux">
+                    <colgroup span="4"></colgroup>
+                    
+                    <thead class="">
+                        <tr class="headerRow">
+                            <apex:repeat value="{!$ObjectType.Briefing_Attendee__c.fieldsets.ShowAdHocAttendeeDetail}" var="fsm">
+                                <th class="headerRow">{!fsm.label}</th>
+                            </apex:repeat>
+                            <td></td>
+                        </tr>
+                    </thead>
+                    
+                    <tbody id="">
+                        <tr>
+                            <td colspan="3">
+                                <span class="btn" onclick="showDialog('addAdHocAddendee','Additional Attendees');">Add Attendee</span>
+                                <!-- <apex:commandButton action="{!addNewRowAdHocAttendee}" value="Add Attendee" reRender="AdditionalAtt" />-->
+                            </td>
+                        </tr>
+                        <apex:repeat value="{!state.adHocAttendees}" var="attendee" >
+                            <tr>
+                                <apex:repeat value="{!$ObjectType.Briefing_Attendee__c.fieldsets.ShowAdHocAttendeeDetail}" var="fsm">
+                                    <td>
+                                        <apex:outputField value="{!attendee[fsm]}" /> 
+                                    </td>
+                                </apex:repeat>
+                                <td>
+                                    <apex:commandLink action="{!removeAdHocAttendee}" reRender="addNew,AdditionalAtt">[x]
+                                        <apex:param name="index" assignTo="{!index}" value="{!index}"/>
+                                    </apex:commandLink>
+                                </td>    
+                            </tr>
+                        </apex:repeat>       
+                    </tbody>
+                </table>
+            </apex:outputPanel>
+            <!-- END custom ux -->
+            
+        </apex:pageBlockSection>            
+        
+        <script>
+        _DSRApp.init();
+        </script>
+    </apex:pageBlock>
+    
+    
+    <!-- Add Info section -->  
+    <apex:pageBlock title="Additional Info" rendered="{!state.isStageAddInfo}">
+        <apex:pageBlockButtons >
+            <apex:commandButton value="Cancel" action="{!cancel}" immediate="true" status="actionStatus"/>                  
+            <apex:commandLink value="< Previous" action="{!movePreviousInWizard}" immediate="true" styleClass="btn cmd-link-btn"
+                              rerender="aform" status="actionStatus" html-formnovalidate="formnovalidate" />
+            <apex:commandButton value="Save & Next >" action="{!gotoAddInfoNext}" 
+                                rerender="aform" status="actionStatus"/>
+        </apex:pageBlockButtons> 
+        
+        <!-- custom ux -->
+        <div class="ux">
+            <div class="well">
+                <div class="float--left">
+                    <h2>Instructions</h2>
+                    <p class="instruction">
+                        {!$Label.Additional_Info_Instruction}
+                    </p>
+                </div>
+                <div class="float--right">
+                    <div class="links">
+                        <a href="{!URLFOR($Resource.dsrhelp, '/dsrhelp/dsrhelp.html')}#additionalInfo" target='_blank' title="Help for this Page (New Window)">
+                            <span class="helpLink">Help for this Page</span>
+                            <img src="/s.gif" alt="" class="helpIcon" title=""/>
+                        </a>
+                    </div>
+                </div>
+                <div class="float--clear"></div>
+            </div>
+        </div>
+        
+        
+        <apex:pageBlockSection columns="2">
+            
+            <apex:repeat value="{!$ObjectType.BS_Deal_Support_Request__c.fieldsets.DSR_Fields}" var="fsm"> 
+                <apex:inputField value="{!state.dsr[fsm]}" required="{!fsm.required}" rendered="{!state.canChangeAddInfo}"/>
+                <apex:outputField value="{!state.dsr[fsm]}" rendered="{!NOT(state.canChangeAddInfo)}"/>
+            </apex:repeat>
+        </apex:pageBlockSection>
+        
+    </apex:pageBlock>
+    
+    <!-- Review section --> 
+    <apex:pageBlock title="Review" rendered="{!state.isStageReview}">
+        <apex:pageBlockButtons >
+            <apex:commandButton value="Cancel" action="{!cancel}" immediate="true" status="actionStatus"/>                  
+            <apex:commandButton value="< Previous" action="{!movePreviousInWizard}" immediate="true"
+                                rerender="aform" status="actionStatus" rendered="{!state.canChangeDSR}"/>
+            <input type="button" class='btn' id="btnPrint" value="Print" onclick='window.print();' />                            
+            <apex:commandButton value="Submit Request" action="{!createDSR}"  rendered="{!AND(state.dsr.Status__c != 'Submitted', state.canChangeDSR)}"                                         
+                                rerender="aform" status="actionStatus"/>
+        </apex:pageBlockButtons> 
+        
+        <!-- custom ux -->
+        <!-- <div class="ux">
+<div class="well">
+<div class="float--left">
+<h2>Instructions</h2>
+<p class="instruction">
+{!$Label.Review_Instruction}
+</p>
+</div>
+<div class="float--right">
+<div class="links">
+<a href="{!URLFOR($Resource.dsrhelp, '/dsrhelp/dsrhelp.html')}#review" target='_blank' title="Help for this Page (New Window)">
+<span class="helpLink">Help for this Page</span>
+<img src="/s.gif" alt="" class="helpIcon" title=""/>
+</a>
+</div>
+</div>
+<div class="float--clear"></div>
+</div>
+</div>-->
+        
+        <!--<apex:pageBlockSection title="{!$ObjectType.BS_Deal_Support_Request__c.fields.Name.Label}" columns="1">-->
+        <apex:pageBlockSection title="Deal Support Information" columns="1">
+            <apex:outputField value="{!state.dsr.name}" />
+            <apex:outputField value="{!state.dsr.Briefing_Objective__c}" />
+        </apex:pageBlockSection>
+        
+        <apex:pageBlockSection columns="2" title="Site Information">
+            <apex:outputText value="{!state.dsr.Site_Name__c}"></apex:outputText>
+            <apex:outputField value="{!state.dsr.Primary_Date__c}" /> 
+            <apex:outputField value="{!state.dsr.Meeting_Duration__c}" /> 
+            <apex:outputField value="{!state.dsr.Alternative_Date__c}" /> 
+            <apex:outputField value="{!state.dsr.MeetingHours__c}" /> 
+        </apex:pageBlockSection>
+        <apex:pageBlockSection columns="1" title="Topics">
+            <apex:pageBlockTable value="{!state.dsr.Briefing_Topics__r}" var="topic">
+                <apex:column value="{!topic.Category_Name__c}"/>
+                <apex:column value="{!topic.name}"/>       
+                <apex:column value="{!topic.Notes__c}"/>                           
+            </apex:pageBlockTable>
+        </apex:pageBlockSection>
+        <!-- <apex:pageBlockSection columns="2" title="Dates">
+<apex:outputField value="{!state.dsr.Primary_Date__c}" /> 
+<apex:outputPanel></apex:outputPanel>
+</apex:pageBlockSection>-->
+        
+        <apex:pageBlockSection columns="1" title="Attendees">
+            <apex:pageBlockTable value="{!state.dsr.Briefing_Attendees__r}" var="att">
+                <apex:column headervalue="{!$ObjectType.Briefing_Attendee__c.fields.Contact__c.label}" >
+                    <a href="/{!att.Contact__c}" target="_blank">{!att.Contact__r.Name}</a> 
+                </apex:column>
+                <apex:column value="{!att.Contact__r.Title}" />
+            </apex:pageBlockTable>
+        </apex:pageBlockSection>
+        
+        <apex:pageBlockSection columns="1" title="Additional Attendees" rendered="{!state.adHocAttendees!=null && state.adHocAttendees.size>0}">
+            <apex:pageBlockTable value="{!state.adHocAttendees}" var="att">
+                <apex:repeat value="{!$ObjectType.Briefing_Attendee__c.fieldsets.ShowAdHocAttendeeDetail}" var="fsm" >
+                    <apex:column headervalue="{!fsm.label}">
+                        <apex:outputField value="{!att[fsm]}"/>
+                    </apex:column>
+                </apex:repeat>
+            </apex:pageBlockTable>
+        </apex:pageBlockSection>
+        
+        
+        <apex:pageBlockSection columns="1" title="Additional Info">
+            <apex:repeat value="{!$ObjectType.BS_Deal_Support_Request__c.fieldsets.DSR_Fields}" var="fsm"> 
+                <apex:outputField value="{!state.dsr[fsm]}"/>
+            </apex:repeat>
+        </apex:pageBlockSection> 
+        
+        <apex:pageBlockSection columns="1" title="Account Information">
+            <apex:repeat value="{!$ObjectType.Opportunity.fieldsets.Account_Information}" var="oppf"> 
+                <apex:outputField value="{!state.relatedOpportunity[oppf]}" />
+            </apex:repeat>
+            
+        </apex:pageBlockSection>
+        
+        <apex:pageBlockSection columns="1" title="Opportunity Information">
+            <apex:repeat value="{!$ObjectType.Opportunity.fieldsets.Opportunity_Information}" var="oppf"> 
+                <apex:outputField value="{!state.relatedOpportunity[oppf]}"/>
+            </apex:repeat>
+        </apex:pageBlockSection>
+        
+    </apex:pageBlock>
+</apex:outputPanel>
+
+<!-- Canvas App Section for version 2 of the Application-->
+
+<apex:outputPanel id="canvasUI" rendered="{!NOT(IsClassicWizard)}">
+    <!--First Section On Intital load -->
+    <apex:pageBlock title="{!$Label.bsource__CanvasUIPageBlockTitle}" rendered="{!NOT(canvasLocked)}">
+        <!-- custom ux -->
+        <apex:outputPanel rendered="{!AND(NOT(renderCanvas),NOT(canvasLocked))}">
+            <div class="ux">
+                <div class="well">
+                    <div class="float--left">
+                        <h2>Instructions</h2>
+                        <p class="instruction">
+                            {!$Label.Topics_Instruction}
+                        </p>
+                    </div>
+                    <div class="float--right">
+                        <div class="links">
+                            <a href="{!URLFOR($Resource.dsrhelp, '/dsrhelp/dsrhelp.html')}#selectTopics" target='_blank' title="Help for this Page (New Window)">
+                                <span class="helpLink">Help for this Page</span>
+                                <img src="/s.gif" alt="" class="helpIcon" title=""/>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="float--clear">
+                    </div>
+                </div>
+            </div>
+        </apex:outputPanel>
+        <!-- Start of PageBlock Section for Canvas Application -->
+        <apex:pageBlockSection title="{!$ObjectType.BS_Deal_Support_Request__c.fields.Name.Label}" columns="1" rendered="{!AND(NOT(renderCanvas),NOT(canvasLocked))}">
+            <apex:inputField value="{!state.dsr.name}" required="true" label="Event/Briefing Name" rendered="{!state.canChangeDSRName}" style="width: 400px;"/>
+            <apex:outputField value="{!state.dsr.name}" label="Event/Briefing Name" rendered="{!NOT(state.canChangeDSRName)}"/>  
+            
+            <apex:inputField value="{!state.dsr.Briefing_Objective__c}"  required="true" label="Briefing Objective" rendered="{!state.canChangeDSRName}"  style="width: 400px;height:70px;" />
+            <apex:outputField value="{!state.dsr.Briefing_Objective__c}" label="Briefing Objective" rendered="{!NOT(state.canChangeDSRName)}"/> 
+        </apex:pageBlockSection>
+        <apex:pageBlockButtons location="bottom" rendered="{!AND(NOT(renderCanvas),NOT(canvasLocked))}">
+            <apex:commandButton value="Save" action="{!startCanvasFlow}"/>
+            <apex:commandButton value="Cancel" action="{!cancel}" immediate="true" status="actionStatus" html-formnovalidate="formnovalidate"/>
+        </apex:pageBlockButtons>
+        <!-- Canvas UI From Briefing Source-->
+        <apex:canvasApp developerName="BriefingSourceCanvasApp"
+                        height="8000px" width="2500px" rendered="{!(renderCanvas)}" parameters="{'oppId':'{!JSENCODE(Opportunity.Id)}',
+                                                                                                'domain':'{!JSENCODE(CanvasAppDomain)}',
+                                                                                                'dsrId':'{!JSENCODE(state.dsrId)}',
+                                                                                                'centerId':'{!state.dsr.Center__c}',
+                                                                                                'briefingTypeId':'{!state.dsr.Briefing_Type__c}',
+                                                                                                'accountName' : '{!JSENCODE(Opportunity.Account.Name)}',
+                                                                                                'briefingName' : '{!JSENCODE(state.dsr.Name)}',
+                                                                                                'briefingObjective' : '{!JSENCODE(state.dsr.Briefing_Objective__c)}',
+                                                                                                'opportunityName' :'{!JSENCODE(Opportunity.Name)}'}" scrolling="auto" />
+        <script type="text/javascript" src="/canvas/sdk/js/36.0/controller.js"></script>
+        <script type="text/javascript">  
+            Sfdc.canvas.controller.subscribe({name : 'bsource.backToSalesforce', onData : function (e) {
+                window.top.location.href = '/'+e.opportunityId;
+            }});
+        Sfdc.canvas.controller.subscribe({name : 'bsource.scrollToTop', onData : function (e) {
+            console.log('scrolling..');
+            window.scrollTo(0, 0);
+        }});
+        </script>   
+    </apex:pageBlock>
+    
+    <!--Start of edit Section when the DSR record in SFDC is in Locked State -->
+    
+    <apex:pageBlock title="Review" rendered="{!canvasLocked}">
+        <apex:pageBlockButtons >
+            <apex:commandButton value="Cancel" action="{!cancel}" immediate="true" status="actionStatus"/>                  
+            <input type="button" class='btn' id="btnPrint" value="Print" onclick='window.print();' />                            
+        </apex:pageBlockButtons> 
+        
+        <apex:pageBlockSection title="Deal Support Information" columns="1">
+            <apex:outputField value="{!state.dsr.name}" />
+            <apex:outputField value="{!state.dsr.Briefing_Objective__c}" />
+        </apex:pageBlockSection>
+        
+        <apex:pageBlockSection columns="2" title="Site Information">
+            <apex:outputText value="{!state.dsr.Site_Name__c}"></apex:outputText>
+            <apex:outputField value="{!state.dsr.Primary_Date__c}" /> 
+            <apex:outputField value="{!state.dsr.Meeting_Duration__c}" /> 
+            <apex:outputField value="{!state.dsr.Alternative_Date__c}" /> 
+            <apex:outputField value="{!state.dsr.MeetingHours__c}" /> 
+        </apex:pageBlockSection>
+        
+        
+        <apex:pageBlockSection columns="1" title="Additional Info">
+            <apex:repeat value="{!$ObjectType.BS_Deal_Support_Request__c.fieldsets.DSR_Fields}" var="fsm"> 
+                <apex:outputField value="{!state.dsr[fsm]}"/>
+            </apex:repeat>
+        </apex:pageBlockSection> 
+        
+        <apex:pageBlockSection columns="1" title="Account Information">
+            <apex:repeat value="{!$ObjectType.Opportunity.fieldsets.Account_Information}" var="oppf"> 
+                <apex:outputField value="{!state.relatedOpportunity[oppf]}" />
+            </apex:repeat>
+            
+        </apex:pageBlockSection>
+        
+        <apex:pageBlockSection columns="1" title="Opportunity Information">
+            <apex:repeat value="{!$ObjectType.Opportunity.fieldsets.Opportunity_Information}" var="oppf"> 
+                <apex:outputField value="{!state.relatedOpportunity[oppf]}"/>
+            </apex:repeat>
+        </apex:pageBlockSection>
+        
+    </apex:pageBlock>
+    
+</apex:outputPanel>
+<div style='display:none' id='addAdHocAddendee'>
+    <apex:pageBlock >
+        <apex:outputPanel id="addNew">
+            <table border="0" cellpadding="0" width='100%' cellspacing="0" class="list ux1">
+                <colgroup span="4"></colgroup>
+                <thead class="">
+                    <tr class="headerRow">
+                        <apex:repeat value="{!$ObjectType.Briefing_Attendee__c.fieldsets.Create_New_Ad_Hoc_Attendee}" var="fsm">
+                            <th class="headerRow">{!fsm.label}</th>
+                        </apex:repeat>
+                    </tr>
+                </thead>
+                <tbody id="">
+                    <apex:repeat value="{!state.adHocAttendees}" var="attendee">
+                        <tr>
+                            <apex:repeat value="{!$ObjectType.Briefing_Attendee__c.fieldsets.Create_New_Ad_Hoc_Attendee}" var="fsm">
+                                <td>
+                                    <apex:inputField value="{!attendee[fsm]}" required="{!fsm.required}" /> </td>
+                            </apex:repeat>
+                        </tr>
+                    </apex:repeat>
+                    <tr>
+                        <td colspan="3">
+                            <apex:commandButton action="{!addNewRowAdHocAttendee}" value="Add Row" reRender="addNew" />
+                        </td>
+                        <td>
+                            <apex:commandButton rendered="{!state.adHocAttendees!=null && state.adHocAttendees.size>0}" action="{!AddToAttendeeList}" value='Add To Attendee List' 
+                                                reRender="addNew,AdditionalAtt" oncomplete="if({!(isCompleted)}){hidePopup('addAdHocAddendee');}" />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </apex:outputPanel>
+        <apex:actionFunction name="closeWindow" immediate="true" action="{!verifyAdohAttendeeList}" reRender="addNew,AdditionalAtt" oncomplete="hidePopup('addAdHocAddendee');" />
+    </apex:pageBlock>
+</div>
+</apex:form>    
+
+
+
+
+<script>
+// A global JS variable which could be declared only on VF
+var _sfdcPageData = {
+    remoteActions : {
+        fetchCalendarDates :     '{!$RemoteAction.DSRRemote.jsrFetchCalendarDates}',
+        fetchAPITopics :        '{!$RemoteAction.DSRRemote.jsrFetchAPITopics}',
+        fetchDSRTopics :        '{!$RemoteAction.DSRRemote.jsrFetchDSRTopics}',
+        upsertTopic :           '{!$RemoteAction.DSRRemote.jsrUpsertTopic}',
+        deleteTopic :           '{!$RemoteAction.DSRRemote.jsrDeleteTopic}' 
+    },
+    labels : {
+        msg_dsr_no_contact : '{!$Label.msg_dsr_no_contact}'
+    }
+};
+
+</script>
+
+<script id="cal-topics-template" type="text/x-kendo-template">
+<div class="calNTopics">
+    <div class="pbSubheader pbSectionTitle">
+        <h3>Site Details</h3>
+        </div>
+        <table width="100%" class="ux" style="display: #:processing?'none' : 'table' #; padding: 10px;">
+            <tr>
+            <td colspan="2">
+                <div class="well">
+                    <h2><em> #: siteName # </em></h2>
+                <div class="float--left" style="width: 40%;">
+                    <h3>Meeting Duration</h3>
+                    <div id="secondaryMeetingDuration">
+                        <select class='meetingId' style="background-color: white; width: 90%; height: 26px;" onchange="return _DSRApp.sites.selectedMeetingDurationType(this.value);">
+                            <option>Full Day</option>
+                            <option>1/2 Day</option>
+                            <option>1 1/2 Days</option>
+                            <option>2 Days</option>
+                            <option>Other</option>
+                            </select>
+                            </div>
+                            </div>
+                            <div class="float--left" style="width: 55%;">
+                                <h3>Start and End Times</h3>
+                                <div id="secondaryTime">
+                                    <input style="width:40%;" type="text" value="8:00 AM" placeholder="Start Time" id='start' class='start'> 
+                                        <input style="width:40%;" type="text" placeholder="End Time" id='end' class='end'>
+                                            </div>
+                                        </div>
+                                        <div class="float--clear"></div>
+                                        </div>
+                                        </td>
+                                        </tr>
+                                        
+                                        <tr>
+                                            <td width="50%" valign="top" style="padding: 0 10px;">
+                                                <div id="primaryCalendar" />
+                                                    </td>
+                                                <td width="50%" valign="top" style="padding: 0 10px;">
+                                                    <div id="secondaryCalendar" />
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td valign="top" style="padding: 0 10px;">
+                                                            <div class="well">
+                                                                <h3>Primary Date</h3>
+                                                                <div id="primaryCalendarAlt" class="selected-date" />
+                                                                    </div>
+                                                                </td>
+                                                                <td valign="top" style="padding: 0 10px;">
+                                                                    <div class="well">
+                                                                        <h3>Alternate Date</h3>
+                                                                        <div id="secondaryCalendarAlt" class="selected-date" />
+                                                                            </div>
+                                                                        </td>
+                                                                        </tr>
+                                                                        </table>
+                                                                        </div>
+                                                                        
+                                                                        
+                                                                        </script>
+
+<script id="error-msg-template" type="text/x-kendo-template">    
+
+<div class="message errorM3" role="alert">
+    <table border="0" cellpadding="0" cellspacing="0" class="messageTable" style="padding:0px;margin:0px;">
+        <tbody>
+        <tr valign="top">
+            <td>
+            <img alt="ERROR" class="msgIcon" src="/s.gif" title="ERROR">
+                </td>
+            <td class="messageCell">
+                <div class="messageText"><span style="color:\\#cc0000">
+                    <h4>Errors</h4></span>
+                        <br/>
+                        </div>
+                    </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                    <td>
+                        <span>
+                        <ul style="padding-left:10px;padding-top:0px;margin:0px">
+                            # for (var i = 0; i < errors.length; i++) { #
+                        <li style="padding-top:5px">#= errors[i] #</li>
+                        # } #                        
+                        </ul>
+                        </span>
+                        </td>
+                        </tr>
+                        </tbody>
+                        </table>
+                        </div>
+                        
+                        </script>    
+
+</apex:page>

@@ -1,0 +1,14 @@
+<template>
+    <div >
+        <div style="font-size:12px;font-weight:bold;background-color:#E8E8E8;padding:8px 15px 0px;">{fieldsLabel}</div>
+        <div style="font-size:12px;font-weight:bold;background-color:#E8E8E8;padding:8px 15px 0px;"></div>
+    </div>
+    <template for:each={fieldsDataForChild} for:item="map" for:index="index">
+        <div class="dataRow" key={map}>
+            <template if:true={map}>
+                <c-field-mapping-child-cmp  fields-data={map} fields-label={fieldsLabelForChild} instance-name={instanceName}></c-field-mapping-child-cmp>
+            </template>
+        </div>
+    </template>
+
+</template>

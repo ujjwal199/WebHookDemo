@@ -1,0 +1,93 @@
+<template>
+    <div class="slds-page-header">
+        <div class="slds-page-header__row">
+            <div class="slds-page-header__col-title">
+                <div class="slds-media">
+                    <div class="slds-media__figure">
+                        <span class="slds-icon_container slds-icon-custom-custom19">
+                            <lightning-icon icon-name="standard:custom" alternative-text="Custom" title="Custom">
+                                
+                            </lightning-icon>
+                        </span>
+                    </div>
+                    <div class="slds-media__body">
+                        <div class="slds-page-header__name">
+                            <div class="slds-page-header__name-title">
+                                <h1>
+                                    <span>Settings</span>
+                                    <span class="slds-page-header__title slds-truncate" title="Admin Settings">Admin Settings</span>
+                                </h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="main-container">
+        <div class="section-container">
+            <b>New BriefingSource Instance</b> 
+            
+        </div>
+        <div class="section-row">
+			<lightning-button variant="brand" label="Add BriefingSource Instance" type="submit" title="Brand action" data-name="SaveContactStep" onclick={addBriefingSource}></lightning-button>
+        </div>
+        <div class="slds-tabs_default">
+             <ul class="slds-tabs_default__nav" role="tablist">
+                <template for:each={lstTabs} for:item="tab" for:index="index">
+
+                    <template if:true={tab.bottomLine}>
+                        <li class="slds-tabs_default__item slds-is-active closeIconListItem" title="Item Two" role="presentation" key={tab.Name} data-name={tab.Name} data-id={tab.Id} onclick={handleChangeActive}>
+                            <a class="slds-tabs_default__link" href="#" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-default-2" id={tab.Name}>{tab.Name}
+                              <span class="slds-tabs__right-icon">
+                                <span class="slds-icon_container slds-icon-utility-error" title="This item has an error">
+                                  <lightning-button-icon class="close-btn slds-m-left_xx-small closeIcons" size="x-small" icon-name="utility:close" alternative-text="Remove" title="Remove" onclick={handleClose} data-id={tab.Id} data-name={tab.Name}>
+                                  </lightning-button-icon>
+                                  <span class="slds-assistive-text">{tab.Name}</span>
+                                </span>
+                              </span>
+                            </a>
+                          </li>
+                    </template>
+                    <template if:false={tab.bottomLine}>
+                        <li class="slds-tabs_default__item closeIconListItem" title="Item Two" role="presentation" key={tab.Name}  data-name={tab.Name} data-id={tab.Id} onclick={handleChangeActive}>
+                            <a class="slds-tabs_default__link" href="#" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-default-2" id={tab.Name}>{tab.Name}
+                              <span class="slds-tabs__right-icon">
+                                <span class="slds-icon_container slds-icon-utility-error" title="This item has an error">
+                                  <lightning-button-icon class="close-btn slds-m-left_xx-small closeIcons" size="x-small" icon-name="utility:close" alternative-text="Remove" title="Remove" onclick={handleClose} data-id={tab.Id} data-name={tab.Name}>
+                                  </lightning-button-icon>
+                                  <span class="slds-assistive-text">{tab.Name}</span>
+                                </span>
+                              </span>
+                            </a>
+                          </li>
+                    </template>
+                </template>
+            </ul>
+            <div id="tab-default-1" class="slds-tabs_default__content slds-show" role="tabpanel" aria-labelledby="tab-default-1__item">
+                <template for:each={lstTabs} for:item="tab" for:index="index">     
+                    <template if:true={tab.isActive}>
+                        <div key={tab.Name} data-name={tab.Name}>
+                            <c-admin-settings-child-component instancename={tab.Name} data-id={tab.Id} index={index} onloading={showLoader} ondisconnect={handleDisconnectCallBack}></c-admin-settings-child-component> 
+                        </div>
+                    </template>     
+                </template>
+            </div>
+        </div>
+
+
+        <!-- <lightning-tabset style="position: relative;" >   
+            <div class="checkWidth">
+                <template for:each={lstTabs} for:item="tab" for:index="index">     
+                    <lightning-tab key={tab.Name} label={tab.Name} value={tab.Name} onactive={handleActive} >
+                        <c-admin-settings-child-component instancename={tab.Name} index={index} onloading={showLoader}></c-admin-settings-child-component>
+                    </lightning-tab>                
+                </template>
+            </div>
+        </lightning-tabset> -->
+    </div>
+    <template if:true={processing}>
+        <lightning-spinner alternative-text="Loading" size="large" class="loader-container"></lightning-spinner>
+    </template>
+    <c-lwc-custom-toast message={message} variant={variant} auto-close="true"></c-lwc-custom-toast>
+</template>

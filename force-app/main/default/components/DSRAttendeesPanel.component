@@ -1,0 +1,4 @@
+<apex:component >
+  <h1>Attendees Panel</h1>
+  List of contacts associated with an Opportunity and Account.
+</apex:component>

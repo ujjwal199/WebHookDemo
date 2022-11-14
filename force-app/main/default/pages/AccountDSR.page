@@ -1,0 +1,216 @@
+<apex:page sidebar="false" doctype="html-5.0" standardController="Account" extensions="AccountDSRController" action="{!initPage}" lightningStylesheets="true"> 
+
+    <style>
+        .ux .well {
+        padding: 10px;
+        background-color: #fff;
+        border: 1px solid #eee;
+        border-radius: 5px;
+        font-size: 12px;
+        margin:10px 0px!important;
+        }
+       
+        .ux .float--left {
+        float: left;
+        width:90%;
+        }
+        .ux .float--right {
+        float: right;
+        }
+        .ux .float--clear {
+        clear: both;
+        }
+        .ux .btn {
+        padding: 5px 10px;
+        background-color: #D8E8F5!important;
+        background: #D8E8F5!important;
+        border: 1px solid #BAD7EC!important;
+        text-decoration: none;
+        }
+        .ux .btn:hover {
+        padding: 5px 10px;
+        background-color: #E8F0F7!important;
+        background: #E8F0F7!important;
+        border: 1px solid #BAD7EC!important;
+        text-decoration: none;
+        }
+        .ux h2 {
+            display: block;
+            margin: 10px 0;
+        }
+        .ux h3 {
+            display: block;
+            margin: 10px 0;
+        }
+        .ux input {
+            border-radius: 3px;
+            border: 1px solid #ccc;
+            margin: 10px 0;
+            padding: 5px;
+        }
+        .ux select {
+            background-color: white;
+            width: 100%;
+            border-radius: 3px;
+            border: 1px solid #ccc;
+            padding: 5px;
+        }
+        .ux .ui-datepicker {
+            padding:0!important;
+        }
+        .calNTopics {
+            padding: 0!important;
+        }
+        body .bPageBlock .helpIcon, body .tagDropDown .tagHelp .helpIcon {
+            background: transparent url(/img/alohaSkin/help_orange.png) no-repeat;
+        }
+        tbody th{font-weight:bold!important}
+	</style>
+
+	<apex:pageMessages />
+
+	<apex:form >
+		<!--<apex:pageBlock title="{!$Label.bsource__canvasuipageblocktitle}" rendered="{!NOT(canvasLocked) && NOT(renderCanvas)}">
+			<div class="ux">
+				<div class="well">
+					<div class="float--left">
+						<h2>Instructions</h2>
+						<p class="instruction">{!$Label.Topics_Instruction}</p>
+					</div>
+					<div class="float--right">
+						<div class="links">
+							<a href="{!URLFOR($Resource.dsrhelp, '/dsrhelp/dsrhelp.html')}#selectTopics" target='_blank' title="Help for this Page (New Window)">
+								<span class="helpLink">Help for this Page</span>
+								<img src="/s.gif" alt="" class="helpIcon" title=""/>
+							</a>
+						</div>
+					</div>
+					<div class="float--clear">
+					</div>
+				</div>
+			</div>
+
+            <apex:pageBlockSection id="editFields" title="{!$ObjectType.BS_Deal_Support_Request__c.fields.Name.Label}" columns="1">
+				<apex:pageBlockSectionItem rendered="{!canChangeDsr}">
+					<apex:outputLabel value="{!$ObjectType.BS_Deal_Support_Request__c.fields.Center__c.Label}"/>
+					<apex:outputPanel >
+						<apex:selectList value="{!dsr.Center__c}" size="1">
+							<apex:selectOption itemValue="" itemLabel="--Select Center--"/>
+							<apex:selectOptions value="{!centerOptions}"/>
+							<apex:actionSupport event="onchange" action="{!changeCenter}" status="actionStatus" rerender="editFields"/>
+						</apex:selectList>
+					</apex:outputPanel>
+				</apex:pageBlockSectionItem>
+				<apex:outputField value="{!dsr.Center__c}" rendered="{!NOT(canChangeDsr)}"/>
+				
+				<apex:pageBlockSectionItem rendered="{!canChangeDsr}">
+					<apex:outputLabel value="{!$ObjectType.BS_Deal_Support_Request__c.fields.Briefing_Type__c.Label}"/>
+					<apex:outputPanel >
+						<apex:selectList value="{!dsr.Briefing_Type__c}" size="1">
+							<apex:selectOption itemValue="" itemLabel="--Select Briefing Type--"/>
+							<apex:selectOptions value="{!briefingTypeOptions}"/>
+						</apex:selectList>
+					</apex:outputPanel>
+				</apex:pageBlockSectionItem>
+				<apex:outputField value="{!dsr.Briefing_Type__c}" rendered="{!NOT(canChangeDsr)}"/>
+
+                <apex:inputField value="{!dsr.Name}" label="Event/Briefing Name" rendered="{!canChangeDsr}" style="width: 400px;"/>
+                <apex:outputField value="{!dsr.Name}" label="Event/Briefing Name" rendered="{!NOT(canChangeDsr)}"/>  
+
+                <apex:inputField value="{!dsr.Briefing_Objective__c}" label="Briefing Objective" rendered="{!canChangeDsr}" style="width: 400px;height:70px;" />
+                <apex:outputField value="{!dsr.Briefing_Objective__c}" label="Briefing Objective" rendered="{!NOT(canChangeDsr)}"/> 
+            </apex:pageBlockSection>
+            <apex:pageBlockButtons location="bottom">
+                <apex:commandButton value="Save" action="{!save}"/>
+                <apex:commandButton value="Cancel" action="{!cancel}" immediate="true" status="actionStatus" html-formnovalidate="formnovalidate"/>
+            </apex:pageBlockButtons>
+		</apex:pageBlock>-->
+
+		<apex:pageBlock title="{!$Label.bsource__canvasuipageblocktitle}" rendered="{!NOT(canvasLocked) && renderCanvas}" >
+			<!--<apex:canvasApp developerName="BriefingSourceCanvasApp"
+	                        height="8000px"
+	                        width="2500px"
+	                        scrolling="auto"
+	                        parameters="{
+								'dsrId': '{!JSENCODE(dsr.Id)}',
+								'accountId': '{!JSENCODE(Account.Id)}',
+								'accountName': '{!JSENCODE(Account.Name)}',
+								'domain': '{!JSENCODE(canvasAppDomain)}',
+								'briefingName': '{!JSENCODE(dsr.Name)}',
+								'briefingObjective': '{!JSENCODE(dsr.Briefing_Objective__c)}',
+								'centerId': '{!dsr.Center__c}',
+	            				'briefingTypeId': '{!dsr.Briefing_Type__c}'
+							}"
+			/>--> 
+            <apex:canvasApp developerName="BriefingSourceCanvasApp"
+	                        height="8000px"
+                            maxHeight="infinite"
+	                        width="2500px"
+	                        scrolling="auto"
+	                        parameters="{
+								'dsrId': '{!JSENCODE(dsr.Id)}',
+								'accountId': '{!JSENCODE(accObj.Id)}',
+								'accountName': '{!JSENCODE(accObj.Name)}',
+								'domain': '{!JSENCODE(canvasAppDomain)}',
+								'briefingName': '{!JSENCODE(dsr.Name)}',
+								'briefingObjective': '{!JSENCODE(dsr.Briefing_Objective__c)}',
+								'centerId': '{!dsr.Center__c}',
+	            				'briefingTypeId': '{!dsr.Briefing_Type__c}',
+                                'instanceName' : '{!JSENCODE(canvasInstanceName)}'
+							}"
+			/>
+			<script type="text/javascript" src="/canvas/sdk/js/37.0/controller.js"></script>
+			<script type="text/javascript">  
+				Sfdc.canvas.controller.subscribe({
+					name: 'bsource.backToSalesforce',
+					onData: function(e) {
+						window.top.location.href = '/' + e.accountId;
+					}
+				});
+
+				Sfdc.canvas.controller.subscribe({
+					name: 'bsource.scrollToTop',
+					onData: function(e) {
+						window.scrollTo(0, 0);
+					}
+				});
+			</script>
+		</apex:pageBlock>
+
+		<apex:outputPanel rendered="{!canvasLocked}">
+			<apex:sectionHeader title="{!$ObjectType.BS_Deal_Support_Request__c.label}" subtitle="{!dsr.Name}"/>
+			
+			<apex:pageBlock title="{!$ObjectType.BS_Deal_Support_Request__c.label} Detail">
+				<apex:pageBlockButtons >
+					<apex:commandButton value="Cancel" action="{!cancelDSR}" immediate="true"/>
+					<input type="button" class="btn" value="Print" onclick="window.print();"/>
+				</apex:pageBlockButtons>
+	
+	            <apex:pageBlockSection title="Deal Support Overview" columns="2">
+	                <apex:outputField value="{!dsr.Name}" style="font-weight:bold"/>
+	                <apex:outputField value="{!dsr.Status__c}" />
+	
+	                <apex:outputField value="{!dsr.Briefing_Objective__c}" />
+	                <apex:outputField value="{!dsr.Requestor__c}" />
+	                
+	                <apex:outputField value="{!dsr.Account__c}" />
+	                <apex:pageBlockSectionItem />
+	            </apex:pageBlockSection>
+	
+				<apex:pageBlockSection title="Briefing Center Scheduling Information" columns="2">
+					<apex:outputField value="{!dsr.BriefingID__c}"/>
+					<apex:outputField value="{!dsr.Site_Name__c}"/>
+					<apex:outputField value="{!dsr.Confirmed_Date__c}"/>
+					<apex:outputField value="{!dsr.ConfirmedTime__c}"/>
+					<apex:outputField value="{!dsr.RoomLocation__c}"/>
+					<apex:outputField value="{!dsr.ContactName__c}"/>
+					<apex:outputField value="{!dsr.Briefing_Doc_Link__c}"/>
+					<apex:outputField value="{!dsr.Admin_Comments__c}"/>
+                    <apex:outputField value="{!dsr.BriefingSource_InstanceName__c}"/>
+					<apex:outputField value="{!dsr.BriefingSource_API_URL__c}"/>
+				</apex:pageBlockSection>
+			</apex:pageBlock>
+		</apex:outputPanel>
+    </apex:form>    
+    
+</apex:page>

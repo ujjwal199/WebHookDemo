@@ -1,0 +1,43 @@
+.main-container {
+	background: #fff;
+    padding: 0;
+}
+.section-container{
+    align-items: center;
+    border: 1px solid transparent;
+    padding: 0 0.5rem;
+    width: 100%;
+    overflow: hidden;
+    font-size: 1rem;
+    line-height: 1.875rem;
+    background-color: rgb(243, 243, 243);
+    display: flex;
+}
+.section-row{
+    padding: 1%;
+}
+.briefing-source-inp{
+    width: 390px;
+}
+.BTNnn{
+    position: absolute;
+    width: 170px;
+    left: 100%;
+    top: 0;
+    right: 0px;
+    transform: translate(85%, 15%);
+}
+.loader-container{
+    position: fixed;
+    overflow: hidden;
+}
+
+.closeIcons{
+    opacity: 0;
+}
+.closeIconListItem:hover .closeIcons{
+opacity: 1;
+} 
+.closeIconListItem{
+    padding: 0px 0px 0px 25px;
+}

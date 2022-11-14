@@ -1,0 +1,117 @@
+/**
+* @description AccountDSRController
+*/
+public with sharing class NewDSRCreationFlowController {
+    /**
+* @description AccountDSRController
+@param recId
+@return Map
+*/
+    public static Boolean  instanceNameExists{get;set;}
+    Public NewDSRCreationFlowController(){
+        NewDSRCreationFlowController.showToastMsg();
+    }
+    @AuraEnabled
+    public static Map<String,String> getObjectName(Id recId,String InstanceName){
+        Map<String,String> objectMap = new Map<String,String>();
+        List<String> campaignIdAdmin = new List<String>();
+        if(recId != null){
+            bsource__BriefingSourceSettingsList__c BriefingSourceSettingsList = bsource__BriefingSourceSettingsList__c.getValues(InstanceName); 
+            if(BriefingSourceSettingsList!= null && BriefingSourceSettingsList.Name != null){
+                objectMap.put('instanceName','true');
+                
+                String sObjName = recId.getSObjectType().getDescribe().getName();
+                objectMap.put('objectName',sObjName);
+                if(sObjName == 'Opportunity' && Schema.sObjectType.Opportunity.isAccessible()){
+                    Opportunity oppty = [SELECT AccountId,Name from Opportunity where Id = :recId LIMIT 1];
+                    objectMap.put('accountId',oppty.AccountId);
+                    objectMap.put('recordName',oppty.Name);
+                }
+                if(sObjName == 'Account' && Schema.sObjectType.Account.isAccessible()){
+                    String accName = [SELECT Name from Account where Id = :recId].Name;
+                    objectMap.put('recordName',accName);
+                }
+                
+                bsource__Campaign_Ids_List__c customSettings = bsource__Campaign_Ids_List__c.getValues(InstanceName); 
+                if(customSettings!= null && customSettings.bsource__Show_Campaign_Checkbox__c == true){
+                    objectMap.put('campaignIdAdmin','true');
+                }
+                else{
+                    objectMap.put('campaignIdAdmin','false');
+                }
+                bsource__Show_Contact_List__c showContactSetting = bsource__Show_Contact_List__c.getValues(InstanceName);             
+                if(showContactSetting!= null && showContactSetting.bsource__Show_Contact_Checkbox__c==true){
+                    objectMap.put('showContactCheckbox','true');
+                }
+                else{
+                    objectMap.put('showContactCheckbox','false'); 
+                }            
+            }
+            else{
+                objectMap.put('instanceName','false'); 
+            }
+            return objectMap;
+            
+            
+        }else{
+            return null;
+        }
+        
+    }
+    /**
+* @description saveDSRObject
+@param nameDSR @param objectName @param recId
+*/
+    @AuraEnabled
+    public static Id saveDSRObject(String nameDSR, String objectName, Id recId,String InstanceName){
+        if(Schema.sObjectType.bsource__BS_Deal_Support_Request__c.isCreateable() && Schema.sObjectType.bsource__BS_Deal_Support_Request__c.isAccessible()
+           && Schema.sObjectType.bsource__DSR_Campaign__c.isCreateable() && Schema.sObjectType.bsource__DSR_Campaign__c.isAccessible()
+           && Schema.sObjectType.bsource__Campaign_Id__c.isAccessible()
+          ){
+              bsource__BriefingSourceSettingsList__c bss = bsource__BriefingSourceSettingsList__c.getValues(InstanceName);
+              bsource__BS_Deal_Support_Request__c dsrObject;
+              List<String> campaignIdAdmin = new List<String>();
+              List<bsource__DSR_Campaign__c> dsrRelationsList = new List<bsource__DSR_Campaign__c>();
+              if(objectName == 'Account' ){
+                  dsrObject = new bsource__BS_Deal_Support_Request__c(Name=nameDSR, Status__c='Draft',bsource__Account__c=recId,
+                                                                      bsource__BriefingSource_InstanceName__c=InstanceName,bsource__BriefingSource_API_URL__c=bss.bsource__API_Endpoint__c);
+              }
+              if(objectName == 'Opportunity'){
+                  dsrObject = new bsource__BS_Deal_Support_Request__c(Name=nameDSR, Status__c='Draft',bsource__Opportunity__c=recId,
+                                                                      bsource__BriefingSource_InstanceName__c=InstanceName,bsource__BriefingSource_API_URL__c=bss.bsource__API_Endpoint__c );
+              }
+              database.insert(dsrObject);
+             /* bsource__Campaign_Ids_List__c customSettings = bsource__Campaign_Ids_List__c.getValues(InstanceName); 
+              // bsource__Campaign_Id__c customSettings = bsource__Campaign_Id__c.getOrgDefaults();
+              if(customSettings!= null && customSettings.bsource__Campaign_Id__c != null && customSettings.bsource__Campaign_Id__c != ''){
+                  campaignIdAdmin = customSettings.bsource__Campaign_Id__c.split(',');
+                  System.debug('campaignIdAdmin :: ' +campaignIdAdmin);
+                  for(Id campaignId: campaignIdAdmin){
+                      bsource__DSR_Campaign__c dsrRelations= new bsource__DSR_Campaign__c();
+                      dsrRelations.bsource__Deal_Support_Request__c = dsrObject.Id;
+                      dsrRelations.bsource__Campaign__c = campaignId;
+                      dsrRelationsList.add(dsrRelations);
+                  }
+                  if(dsrRelationsList!=null && !dsrRelationsList.isEmpty() && Schema.sObjectType.bsource__DSR_Campaign__c.isCreateable()){
+                      Database.insert(dsrRelationsList);
+                  }
+              }*/
+              return dsrObject.Id;
+          }else{
+              return null;
+          }
+        
+        
+    }
+    public static void showToastMsg(){
+        String instanceName = apexpages.currentpage().getparameters().get('InstanceName');
+        bsource__BriefingSourceSettingsList__c BriefingSourceSettingsList = bsource__BriefingSourceSettingsList__c.getValues(InstanceName); 
+        if(BriefingSourceSettingsList== null){
+        ApexPages.addmessage(new ApexPages.message(ApexPages.severity.FATAL,'The provided instance name does not exist, please check your instance name and try again. The BriefingSource instances are configured under Admin Settings.'));
+        instanceNameExists = false;
+        }
+        else{
+          instanceNameExists = true;  
+        }
+    }
+}

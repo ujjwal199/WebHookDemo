@@ -1,0 +1,61 @@
+.slds-readonly-path {
+    pointer-events: none;
+}
+
+@media screen and (max-width: 500px) {
+    .outer-progress {
+        overflow: auto;
+    }
+    .inner-progress {
+        width: 500px;
+    }
+    .outer-progress::-webkit-scrollbar {
+        display: none;
+    }
+    .inputbox-width {
+        width: 100%;
+    }
+    .full_mobile-width {
+        height: 100vh;
+    }
+}
+
+
+/* New Css for helpdesk */
+
+.helpdesk {
+    background-color: #dbe9fc !important;
+}
+
+.helpdesk[bsource-selectDsrRelations_selectDsrRelations] {
+    padding: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+
+/* Save and Next button css */
+
+.slds-m-vertical_medium .slds-m-left_x-small {
+    padding: 10px;
+}
+
+
+/* New code for back and Save & Next button space 14_07_2022 */
+
+
+/* more gap between back and savenext button */
+
+
+/* .slds-m-vertical_medium[bsource-selectDsrRelations_selectDsrRelations] .slds-m-left_x-small[bsource-selectDsrRelations_selectDsrRelations] {
+    padding: 0px;
+    margin-left: 15px;
+} */
+
+
+/* Less gap between back and savenext button */
+
+.slds-m-vertical_medium[bsource-selectDsrRelations_selectDsrRelations][bsource-selectDsrRelations_selectDsrRelations] .slds-m-left_x-small[bsource-selectDsrRelations_selectDsrRelations][bsource-selectDsrRelations_selectDsrRelations]:nth-child(2) {
+    padding: 0px;
+    margin-left: 0px;
+}
