@@ -1,6 +1,6 @@
 @isTest
 private class AccountDSRControllerTest {
- 
+
 	static testmethod void testCreate1() {
 		Account account = new Account();
 		account.Name = 'Test';
@@ -40,7 +40,7 @@ private class AccountDSRControllerTest {
 		ApexPages.currentPage().getParameters().put('accountId', account.Id);
 
 		AccountDSRController controller = new AccountDSRController(new ApexPages.standardController(account));
-		
+		  controller.cancelDSR();
 		System.assertEquals('Draft', controller.dsr.Status__c,'Draft Should be return');
 		Test.startTest();
 		Test.setMock(HttpCalloutMock.class, new GenericCalloutMock(httpResponse,true));
@@ -154,9 +154,25 @@ private class AccountDSRControllerTest {
         DSRobj.Name='DSRName';
         DSRobj.Center__c =2;
         insert DSRobj;
-		DSRController objDSRController= new DSRController();
+     	DSRController objDSRController= new DSRController();
         objDSRController.initPage();
         objDSRController.changeCenter();
 		system.assert(DSRobj!=null, 'Inserted');
 	}
+    static testmethod void testCreate6() {
+          string instanceName= ApexPages.currentPage().getParameters().get('instanceName').escapeHtml4();
+          Id dsrId = ApexPages.currentPage().getParameters().get('dsrId');
+            Id accountId = ApexPages.currentPage().getParameters().get('accountId');
+            Id opptyId = '0061P00000WwFMWQA3';
+        bsource__BriefingSourceSettingsLists__c objSettings = bsource__BriefingSourceSettingsLists__c.getValues(instanceName);
+           objSettings.bsource__API_Endpoint__c='';
+                objSettings.bsource__API_Username__c='';
+           objSettings.bsource__API_Password__c='';
+           objSettings.bsource__Client_Id__c='';
+        objSettings.bsource__Client_Secret__c='';
+        DSRController objDSRController= new DSRController();
+        objDSRController.initPage();
+        objDSRController.changeCenter();
+    }
+    
 }

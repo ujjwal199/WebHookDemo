@@ -6,12 +6,9 @@ public with sharing class AccountDSRController extends DSRController {
             super();
         }catch(Exception e){system.debug('exception occured>>'+e.getStackTraceString());
         }
-		
 		//dsr.Account__c = standardController.getId();
-	}
-    
-    public PageReference cancelDSR(){
-        //Id dsrId=apexpages.currentpage().getparameters().get('dsrId');
+		}
+    public PageReference cancelDSR(){//Id dsrId=apexpages.currentpage().getparameters().get('dsrId');
         PageReference orderPage = new PageReference('/' + dsr.id);
         return orderPage;
     }

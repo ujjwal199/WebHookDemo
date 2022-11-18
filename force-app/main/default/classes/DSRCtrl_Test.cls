@@ -230,8 +230,29 @@ Attempt to test as many methods as possible with minimal dependency on mock data
     }
     /**
 *
+
 @description TestExternalAttendee
 */
+    
+    public static testmethod void constructorcallElse() {
+          MockFactory mockData = new MockFactory();
+        Opportunity opp = mockData.Opp;
+        List < Contact > contacts = mockData.con;
+        
+        ApexPages.CurrentPage().getparameters().put('id', opp.id);
+        
+         ApexPages.StandardController sc = new ApexPages.standardController(opp);
+        DSRCtrl controller = new DSRCtrl(sc);
+        controller.state.dsr.bsource__Status__c='Submitted';
+    }
+    
+    public static testmethod void testchangeCenter(){
+                DSRCtrl controller = new DSRCtrl();
+     
+        controller.changeCenter();
+
+}
+
     public static testmethod void TestExternalAttendee() {
         MockFactory mockData = new MockFactory();
         Opportunity opp = mockData.Opp;
@@ -241,6 +262,7 @@ Attempt to test as many methods as possible with minimal dependency on mock data
         
         ApexPages.StandardController sc = new ApexPages.standardController(opp);
         DSRCtrl controller = new DSRCtrl(sc);
+        controller.state.dsr.bsource__Status__c='Submitted';
         controller.state.dsr.Name = 'testDSR';
         controller.state.probableAttendees[0].Selected = true;
         
@@ -322,6 +344,21 @@ Attempt to test as many methods as possible with minimal dependency on mock data
 *
 @description TeststartCanvasFlow2
 */
+    
+    public static testmethod void testmoveInWizard(){
+        
+        DSRCtrl dsr=new DSRCtrl();
+         dsr.movePreviousInWizard();
+    }
+      public static testmethod void testmoveInWizard2(){
+        DSRCtrl dsr=new DSRCtrl();
+        dsr.moveNextInWizard();
+      
+    }
+    Private static  testmethod void testfetchcurrentDSR(){
+          DSRCtrl dsr=new DSRCtrl();
+            
+    }
     public static testmethod void TeststartCanvasFlow2(){
         //Create the sample Custom Setting Data
         bsource__BriefingSourceSettings__c bsource = new bsource__BriefingSourceSettings__c();

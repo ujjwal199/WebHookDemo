@@ -18,11 +18,8 @@ public with sharing virtual class DSRController {
         get {
             string instanceName = ApexPages.currentPage().getParameters().get('instanceName').escapeHtml4();
             bsource__BriefingSourceSettingsLists__c briefingSourceSettings = bsource__BriefingSourceSettingsLists__c.getAll().get(instanceName);
-
-
             System.debug('briefingSourceSettings777'+briefingSourceSettings);
             System.debug('briefingSourceSettings'+briefingSourceSettings.API_Endpoint__c);
-
             //bsource__BriefingSourceSettingsLists__c briefingSourceSettings = bsource__BriefingSourceSettingsLists__c.getValues('Tushar7');
             //BriefingSourceSettings__c briefingSourceSettings = BriefingSourceSettings__c.getOrgDefaults();
              if (briefingSourceSettings.API_Endpoint__c != null) {

@@ -169,6 +169,8 @@ public with sharing class EVApi {
         Decimal minutes = getRefreshedTime(briefingSourceSettings);
         system.debug('briefingSourceSettings>>'+briefingSourceSettings);
         String InstanceName = briefingSourceSettings.Name;
+                system.debug('nAME briefingSourceSettings >>'+briefingSourceSettings.Name);
+
         Briefing_Source_Settings__mdt objMetadata = getCustomMetadata(InstanceName);
         bsource__BriefingSourceSettingsLists__c bss = bsource__BriefingSourceSettingsLists__c.getValues(InstanceName); 
         if(!Test.isRunningTest()){

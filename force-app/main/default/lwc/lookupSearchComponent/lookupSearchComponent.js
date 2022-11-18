@@ -82,8 +82,8 @@ export default class LookupSearchComponent extends LightningElement {
     // Code ends here for selected labels Name
 
     renderedCallback() {
-        console.log('Inside renderedCallback in Lookup Search Component ', this.items.length);
-        if (this.items.length == 0) {
+        console.log('Inside renderedCallback in Lookup Search Component ', this.items);
+        if (this.items && this.items.length == 0) {
             console.log('No items!!');
             this.isDialogDisplay = false;
         }
@@ -100,6 +100,8 @@ export default class LookupSearchComponent extends LightningElement {
         console.log('Obj>>' + this.objectApiName);
         console.log('recid>>' + this.recid);
         this.searchInput = event.target.value;
+        console.log('this.searchInput.trim()>>>'+this.searchInput.trim());
+        console.log('this.searchInput.trim().length>>>'+this.searchInput.trim().length);
         if (this.searchInput.trim().length > 2) {
             retrieveRecords({
                     objectName: this.objectApiName,
@@ -112,7 +114,7 @@ export default class LookupSearchComponent extends LightningElement {
                     initiatedfrom: this.initiatedfrom
                 })
                 .then(result => {
-
+                   console.log('result>>>',result);
                     this.items = [];
                     this.value = [];
                     this.previousSelectedItems = [];

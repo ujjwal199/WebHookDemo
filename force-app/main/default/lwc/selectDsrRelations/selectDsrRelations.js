@@ -430,7 +430,7 @@ export default class SelectDsrRelations extends NavigationMixin(LightningElement
 
     getAccountList(event) {
         console.log('Inside getAccountList on selectDsrRelations');
-        this.listAccountId = JSON.parse(JSON.stringify(event.detail.listAccountIds));
+        this.listAccountId = event.detail && event.detail.listAccountIds ? JSON.parse(JSON.stringify(event.detail.listAccountIds)) : [];
     }
 
     handleAccountUnselect() {

@@ -1,7 +1,14 @@
 public with sharing class MultiSelectLookupController {
     @AuraEnabled (cacheable=true)
     public static List<SObjectQueryResult> retrieveRecords(String objectName, String fieldAPINames, String filterFieldAPIName, String strInput, String accountslist , String ocrlist, String recid, String initiatedfrom){
-        
+         System.debug('objectName>>'+objectName);
+         System.debug('fieldAPINames>>'+fieldAPINames);
+         System.debug('filterFieldAPIName>>'+filterFieldAPIName);
+         System.debug('strInput>>'+strInput);
+         System.debug('initiatedfrom>>'+initiatedfrom);
+         System.debug('accountslist>>'+accountslist);
+
+         
         List<SObjectQueryResult> lstReturnResult = new List<SObjectQueryResult>();
         List<SObjectQueryResult> lstReturnResultContact = new List<SObjectQueryResult>();
         Boolean mainAccountSelected = false;
@@ -28,6 +35,7 @@ public with sharing class MultiSelectLookupController {
                     listOpportunityIds.add(recid);
                 }
             }
+            System.debug('opptyPreselection>>'+opptyPreselection);
             
             if(listOpportunityIds != null && !listOpportunityIds.isEmpty() && Opportunity.SObjectType.getDescribe().isAccessible()){
                  system.debug('listOpportunityIds'+listOpportunityIds);
@@ -41,6 +49,7 @@ public with sharing class MultiSelectLookupController {
             
         }
         
+        system.debug('listopptyaccountId '+listopptyaccountId);
         String str = strInput + '%';
         String strQueryField = '';
         List<String> fieldList = fieldAPINames.split(','); 
@@ -79,7 +88,7 @@ public with sharing class MultiSelectLookupController {
         }
         
         if (objectName == 'Opportunity' && Opportunity.SObjectType.getDescribe().isAccessible()){
-            
+            System.debug('mainAccountSelected>>'+mainAccountSelected);
             if(accountslist != null && accountslist!='' && !mainAccountSelected){
                 system.debug('accountslist>>'+accountslist);
                 system.debug('listaccountId>>'+listaccountId);
@@ -87,9 +96,10 @@ public with sharing class MultiSelectLookupController {
                     + ' FROM ' 
                     + String.escapeSingleQuotes(objectName) 
                     + ' WHERE ' + String.escapeSingleQuotes(filterFieldAPIName) + '  LIKE \'%' + String.escapeSingleQuotes(str) + '%\''
-                    + ' AND ' + 'AccountId IN (' + listaccountId + ')' + String.escapeSingleQuotes(opptyPreselection)
+                    + ' AND ' + 'AccountId IN (' + listaccountId + ')' + String.escapeSingleQuotes(opptyPreselection).replace('\\\'','\'')
                     + ' ORDER BY LastModifiedDate DESC'
                     + ' LIMIT 50';// 50000
+                system.debug('opptyPreselection '+opptyPreselection);
             }
             
             else if(mainAccountSelected && Schema.getGlobalDescribe().get(objectName).getDescribe().isAccessible()){
@@ -100,14 +110,18 @@ public with sharing class MultiSelectLookupController {
                     + ' AND ' + 'AccountId IN (' + listaccountId + ')'
                     + ' ORDER BY LastModifiedDate DESC'
                     + ' LIMIT 50'; // 50000
+                system.debug('opptyPreselection '+opptyPreselection);
             }else{
                 strQuery = 'SELECT ' + String.escapeSingleQuotes(strQueryField) 
                     + ' FROM ' 
                     + String.escapeSingleQuotes(objectName) 
-                    + ' WHERE ' + String.escapeSingleQuotes(filterFieldAPIName) + '  LIKE \'%' + String.escapeSingleQuotes(str) + '%\'' + String.escapeSingleQuotes(opptyPreselection)
+                    + ' WHERE ' + String.escapeSingleQuotes(filterFieldAPIName) + '  LIKE \'%' + String.escapeSingleQuotes(str) + '%\' ' + String.escapeSingleQuotes(opptyPreselection).replace('\\\'','\'')
                     + ' ORDER BY LastModifiedDate DESC'
                     + ' LIMIT 50'; // 50000
+                system.debug('opptyPreselection '+opptyPreselection);
+                system.debug('String.escapeSingleQuotes(opptyPreselection)>>>'+String.escapeSingleQuotes(opptyPreselection).replace('\\\'','\''));
             }
+            system.debug('strQuery '+strQuery);
             for(SObject sobj:database.query(strQuery)){
                 listocrId+= '\''+(String) sobj.get('Id') +'\',';
             }
