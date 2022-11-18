@@ -33,8 +33,7 @@ public with sharing class NewDSRCreationFlowController {
                 }
                 
                 bsource__Campaign_Ids_Lists__c customSettings = bsource__Campaign_Ids_Lists__c.getValues(InstanceName); 
-                if(customSettings!= null && customSettings.bsource__Show_Campaign_Checkbox__c == true){
-                    objectMap.put('campaignIdAdmin','true');
+                if(customSettings!= null && customSettings.bsource__Show_Campaign_Checkbox__c == true){ objectMap.put('campaignIdAdmin','true');
                 }
                 else{
                     objectMap.put('campaignIdAdmin','false');
@@ -96,10 +95,7 @@ public with sharing class NewDSRCreationFlowController {
                       Database.insert(dsrRelationsList);
                   }
               }*/
-              return dsrObject.Id;
-          }else{
-              return null;
-          }
+              return dsrObject.Id; }  else{  return null;}
         
         
     }

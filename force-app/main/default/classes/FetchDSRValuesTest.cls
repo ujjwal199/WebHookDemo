@@ -22,6 +22,7 @@ public class FetchDSRValuesTest {
         acc.Description = 'testdescription';
         acc.Rating = 'good';
         acc.Site = 'www.test.com';
+        
         insert acc;   
        
       
@@ -29,11 +30,33 @@ public class FetchDSRValuesTest {
         c.AccountId = acc.Id;
         c.LastName='LName';
         c.Email='email@gmail.com';
+        c.firstName='test';
+      //   c.job_title='test';
+         c.phone='test';
+       // c.comments='test';
+         c.Salutation='test';
+        c.HomePhone='test';
+         c.Department='test';
+        
+        c.MailingStreet='test';
+         c.MailingCity='test';
+        c.MailingState='test';
+         c.MailingPostalCode='test';
+        c.MailingCountry='test';
+         c.Fax='test';
+        c.AssistantName='test';
+         c.LeadSource='test';
+
         insert c; 
         
         Campaign camp=new Campaign();
         camp.Name='test';
         camp.Status='Receive';
+        camp.ExpectedRevenue=2313131.2;
+        camp.BudgetedCost=2313131.2;
+        camp.ActualCost=2313131.2;
+        camp.Description='2313131';
+
         insert camp;
         
         Opportunity oppty=new Opportunity();
@@ -43,7 +66,13 @@ public class FetchDSRValuesTest {
         oppty.name = acc.Name;
         oppty.amount = 1.0;
         oppty.Description = 'test';
-        //oppty.ExpectedRevenue = '';
+        oppty.TotalOpportunityQuantity = 21311.7;
+        
+        oppty.Type = 'test';
+        oppty.NextStep = 'test';
+        oppty.LeadSource = 'test';
+
+        
         
         oppty.CloseDate=system.today();
         Insert oppty; 

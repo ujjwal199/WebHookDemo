@@ -204,4 +204,14 @@ public class NewDSRCreationFlowControllerTest {
        
     }
     
+    @isTest
+    public static void NewDSRCreationFlowController(){
+        String instanceName = apexpages.currentpage().getparameters().get('InstanceName');
+        //bsource__BriefingSourceSettingsLists__c BriefingSourceSettingsList = [Select id, bsource__API_Username__c, bsource__API_Password__c, bsource__Client_Id__c from bsource__BriefingSourceSettingsLists__c order by createddate desc limit 1 ]; 
+         // Perform test below
+        NewDSRCreationFlowController newdsr= new NewDSRCreationFlowController();
+        system.assert(instanceName !='', 'Record found');
+       
+    }
+    
 }

@@ -16,7 +16,7 @@ public with sharing virtual class DSRController {
     public String canvasInstanceName {get; set;}
     public String canvasAppDomain {
         get {
-            string instanceName = ApexPages.currentPage().getParameters().get('instanceName').escapeHtml4();
+            string instanceName = ApexPages.currentPage().getParameters().get('instanceName').escapeHtml4();   
             bsource__BriefingSourceSettingsLists__c briefingSourceSettings = bsource__BriefingSourceSettingsLists__c.getAll().get(instanceName);
             System.debug('briefingSourceSettings777'+briefingSourceSettings);
             System.debug('briefingSourceSettings'+briefingSourceSettings.API_Endpoint__c);

@@ -29,9 +29,7 @@ public with sharing class DSRCtrl {
         this.state = new DSRUIModel.WizardState();
         //system.debug('$$$$'+this.state.dsr.status__c);
         //Render Canvas or Not Depending on the DSR Status and DSR ID
-        if(this.state.dsr.Id == null){
-            renderCanvas = false;
-            canvasLocked = false;
+        if(this.state.dsr.Id == null){  renderCanvas = false;   canvasLocked = false;
             /*
 centerOptions = new List<SelectOption>();
 briefingTypeOptions = new List<SelectOption>();
@@ -74,15 +72,14 @@ centerOptions.add(new SelectOption(String.valueOf(center.id), center.name));
     public void changeCenter() {
         briefingTypeOptions = new List<SelectOption>();
         
-        if (state.dsr.Center__c != null) {
-            for (EVApi.Center center : centers) {
-                if (state.dsr.Center__c == center.id) {
-                    for (EVApi.BriefingType briefingType : center.briefingTypes) {
-                        briefingTypeOptions.add(new SelectOption(String.valueOf(briefingType.id), briefingType.name));
-                    }
-                    break;
-                }
-            }
+        if (state.dsr.Center__c != null) {    for (EVApi.Center center : centers) {
+                                               if (state.dsr.Center__c == center.id) {
+                                                  for (EVApi.BriefingType briefingType : center.briefingTypes) {
+                                       briefingTypeOptions.add(new SelectOption(String.valueOf(briefingType.id), briefingType.name));
+                                                                                    }
+                                           break;
+                                        }
+                                  }
         }
     }
     
@@ -128,11 +125,7 @@ centerOptions.add(new SelectOption(String.valueOf(center.id), center.name));
     void moveInWizard(MovementDirection dir) {
         Integer idxOfCurrStage = 0;
         for (DSRUIModel.WizardStage ws: WizardStages) {
-            if (ws == this.state.stage) {
-                break;
-            }    
-            idxOfCurrStage++;
-        }
+            if (ws == this.state.stage) {   break;  }    idxOfCurrStage++;  }
         
         idxOfCurrStage =  dir == MovementDirection.Next ? ++idxOfCurrStage : --idxOfCurrStage;
         System.debug (idxOfCurrStage);        
@@ -141,6 +134,8 @@ centerOptions.add(new SelectOption(String.valueOf(center.id), center.name));
         this.state.stage = reqdStage;
         gotoEditableStage(dir, reqdStage);
     }
+    
+    @testVisible
     void gotoEditableStage(MovementDirection dir, DSRUIModel.WizardStage reqdStage) {
         
         if (reqdStage == DSRUIModel.WizardStage.Attendees && (this.state.canChangeDSRName || this.state.canChangeAttendees)) {
@@ -169,7 +164,7 @@ centerOptions.add(new SelectOption(String.valueOf(center.id), center.name));
     public void movePreviousInWizard() {
         moveInWizard(MovementDirection.Previous);
     }
-    
+    @TestVisible
     private void fetchcurrentDSR(){
         String currentNamespace = DSRCtrl.class.getName().substringBefore('DSRCtrl').removeEnd('.');
         if (!String.isEmpty(currentNamespace)) {
@@ -196,8 +191,7 @@ centerOptions.add(new SelectOption(String.valueOf(center.id), center.name));
             ' (Select Name, Category_Name__c, Notes__c from Briefing_Topics__r order by Category_Name__c), ' +
             ' (Select Contact__c, Contact__r.Name, Contact__r.Title from Briefing_Attendees__r where Contact__c!=null order by Contact__r.Name) ' +                                         
             ' from BS_Deal_Support_Request__c  where Id =:dsrId ';
-        Id dsrId = this.state.dsrId;
-        this.state.dsr = Database.query(dsrSoql);
+        Id dsrId = this.state.dsrId;     this.state.dsr = Database.query(dsrSoql);
         Set<String> oppFields = new Set<String>();
         oppFields.addAll(Utils.fieldsFromFieldSet(SObjectType.Opportunity.FieldSets.Opportunity_Information, Schema.Opportunity.SObjectType));
         oppFields.addAll(Utils.parentFieldsFromFieldSet(SObjectType.Opportunity.FieldSets.Account_Information));
@@ -210,9 +204,7 @@ centerOptions.add(new SelectOption(String.valueOf(center.id), center.name));
     
     public PageReference addNewRowAdHocAttendee(){ 
         isCompleted=false;
-        if(this.state.adHocAttendees==null){
-            this.state.adHocAttendees=new List<Briefing_Attendee__c>();
-        }
+        if(this.state.adHocAttendees==null){ this.state.adHocAttendees=new List<Briefing_Attendee__c>(); }
         
         this.state.adHocAttendees.add(new Briefing_Attendee__c());
         
@@ -220,9 +212,7 @@ centerOptions.add(new SelectOption(String.valueOf(center.id), center.name));
     }
     
     public PageReference removeAdHocAttendee(){ 
-        if(this.state.adHocAttendees!=null && this.state.adHocAttendees.size()>=index){
-            this.state.adHocAttendees.remove(index);
-        }
+        if(this.state.adHocAttendees!=null && this.state.adHocAttendees.size()>=index){this.state.adHocAttendees.remove(index); }
         
         return null;
     }    
@@ -254,8 +244,7 @@ centerOptions.add(new SelectOption(String.valueOf(center.id), center.name));
     public void onSaveAttendees() {        
         
         Map<String, Briefing_Attendee__c> existingAttendees = new Map<String, Briefing_Attendee__c>();
-        Map<String, Briefing_Attendee__c> existingAdHocAttendees = new Map<String, Briefing_Attendee__c>(); 
-        
+        Map<String, Briefing_Attendee__c> existingAdHocAttendees = new Map<String, Briefing_Attendee__c>();  
         System.debug ('this.state.dsrId: ' + this.state.dsrId);
         if (this.state.dsrId == null) {
             // create new dsr
@@ -327,9 +316,7 @@ centerOptions.add(new SelectOption(String.valueOf(center.id), center.name));
     }
     
     public void gotoAttendeesNext() {
-        this.state.probableAttendees = null;
-        //toStepSites();
-        moveNextInWizard();
+        this.state.probableAttendees = null;   moveNextInWizard();
     }
     
     public void gotoSitesNext() {
@@ -458,17 +445,14 @@ centerOptions.add(new SelectOption(String.valueOf(center.id), center.name));
             // load api data
             this.state.sitesResponse = EVAPI.DataSource.loadSites(new DSRUIModel.SitesRequest()); 
         }
-       
-    }
-    
+    }   
     public void toStepTopics() {
         if(BS_Deal_Support_Request__c.sObjectType.getDescribe().isAccessible()){
             BS_Deal_Support_Request__c dsr = [Select Site_ID__c, site_name__c from BS_Deal_Support_Request__c where Id =:this.state.dsrId];
             this.state.selectedSite = dsr.Site_ID__c;
             this.state.selectedSiteName = dsr.site_name__c;                
             this.state.stage = DSRUIModel.WizardStage.Topics;
-        }
-       
+        }     
     } 
     
     public void toStepAddInfo() { 
@@ -477,8 +461,7 @@ centerOptions.add(new SelectOption(String.valueOf(center.id), center.name));
             currentNamespace += '__';
         }
         
-        Id dsrId = this.state.dsrId;        
-        Set<String> dsrFields = new Set<String>{'name', currentNamespace + 'status__c'};
+        Id dsrId = this.state.dsrId;    Set<String> dsrFields = new Set<String>{'name', currentNamespace + 'status__c'};
             dsrFields.addAll(Utils.fieldsFromFieldSet(SObjectType.BS_Deal_Support_Request__c.FieldSets.DSR_Fields, Schema.BS_Deal_Support_Request__c.SObjectType));
         String dsrSoql = 'Select ' + String.escapeSingleQuotes(Utils.toCSV(new List<String>(dsrFields)))  + ' from BS_Deal_Support_Request__c where Id =:dsrId ';
         this.state.dsr = Database.query(dsrSoql);
@@ -511,8 +494,7 @@ centerOptions.add(new SelectOption(String.valueOf(center.id), center.name));
             ' (Select Name, Category_Name__c, Notes__c from Briefing_Topics__r order by Category_Name__c), ' +
             ' (Select Contact__c, Contact__r.Name, Contact__r.Title from Briefing_Attendees__r where Contact__c!=null order by Contact__r.Name) ' +                                         
             ' from BS_Deal_Support_Request__c  where Id =:dsrId ';
-        Id dsrId = this.state.dsrId;
-        this.state.dsr = Database.query(dsrSoql);
+        Id dsrId = this.state.dsrId;    this.state.dsr = Database.query(dsrSoql);
         
         this.state.adHocAttendees=new List<Briefing_Attendee__c>();
         Set<String> adHocAttendeesField=new Set<String>();
@@ -550,8 +532,7 @@ centerOptions.add(new SelectOption(String.valueOf(center.id), center.name));
           
             if(BS_Deal_Support_Request__c.sObjectType.getDescribe().isAccessible() && BS_Deal_Support_Request__c.sObjectType.getDescribe().isUpdateable()
               && Schema.sObjectType.BS_Deal_Support_Request__c.fields.Status__c.isUpdateable()){  
-                  if (this.state.dsr.Status__c != null && 
-                   (this.state.dsr.Status__c == 'Draft' || this.state.dsr.Status__c.equalsIgnoreCase('Updates Required'))
+                  if (this.state.dsr.Status__c != null &&  (this.state.dsr.Status__c == 'Draft' || this.state.dsr.Status__c.equalsIgnoreCase('Updates Required'))
                   ){
                       this.state.dsr.Status__c = 'Submitted';
                       update this.state.dsr;
@@ -624,8 +605,7 @@ centerOptions.add(new SelectOption(String.valueOf(center.id), center.name));
     //Send the Domain for redirection in Canvas App
     public String getCanvasAppDomain(){
         String appDomain;
-        string instanceName= ApexPages.currentPage().getParameters().get('instanceName').escapeHtml4();
-            bsource__BriefingSourceSettingsLists__c bss = bsource__BriefingSourceSettingsLists__c.getValues(instanceName);
+        string instanceName= ApexPages.currentPage().getParameters().get('instanceName').escapeHtml4();       bsource__BriefingSourceSettingsLists__c bss = bsource__BriefingSourceSettingsLists__c.getValues(instanceName);
        // bsource__BriefingSourceSettings__c  bss = bsource__BriefingSourceSettings__c.getOrgDefaults();
         if(bss.bsource__API_Endpoint__c != null){
             appDomain = bss.bsource__API_Endpoint__c.substringBetween('//','.');

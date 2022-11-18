@@ -21,7 +21,7 @@ public with sharing class MultiSelectLookupController {
         String opptyPreselection ='';
         Set<String> listOpportunityIds = new Set<String>();
         if(initiatedfrom == 'Opportunity'){
-            opptyPreselection =  'AND Id NOT IN (\''+ recid + '\')';
+            opptyPreselection =  'AND Id NOT IN (\''+ String.escapeSingleQuotes(recid) + '\')';
             if(ocrlist != null && ocrlist!=''){
                 List<String> lstocrIds = ocrlist.split(',');
                 for(String strValue : lstocrIds){
@@ -96,7 +96,7 @@ public with sharing class MultiSelectLookupController {
                     + ' FROM ' 
                     + String.escapeSingleQuotes(objectName) 
                     + ' WHERE ' + String.escapeSingleQuotes(filterFieldAPIName) + '  LIKE \'%' + String.escapeSingleQuotes(str) + '%\''
-                    + ' AND ' + 'AccountId IN (' + listaccountId + ')' + String.escapeSingleQuotes(opptyPreselection).replace('\\\'','\'')
+                    + ' AND ' + 'AccountId IN (' + listaccountId + ')' + opptyPreselection
                     + ' ORDER BY LastModifiedDate DESC'
                     + ' LIMIT 50';// 50000
                 system.debug('opptyPreselection '+opptyPreselection);
@@ -115,15 +115,15 @@ public with sharing class MultiSelectLookupController {
                 strQuery = 'SELECT ' + String.escapeSingleQuotes(strQueryField) 
                     + ' FROM ' 
                     + String.escapeSingleQuotes(objectName) 
-                    + ' WHERE ' + String.escapeSingleQuotes(filterFieldAPIName) + '  LIKE \'%' + String.escapeSingleQuotes(str) + '%\' ' + String.escapeSingleQuotes(opptyPreselection).replace('\\\'','\'')
+                    + ' WHERE ' + String.escapeSingleQuotes(filterFieldAPIName) + '  LIKE \'%' + String.escapeSingleQuotes(str) + '%\' ' + opptyPreselection
                     + ' ORDER BY LastModifiedDate DESC'
                     + ' LIMIT 50'; // 50000
                 system.debug('opptyPreselection '+opptyPreselection);
-                system.debug('String.escapeSingleQuotes(opptyPreselection)>>>'+String.escapeSingleQuotes(opptyPreselection).replace('\\\'','\''));
+                system.debug('String.escapeSingleQuotes(opptyPreselection)>>>'+String.escapeSingleQuotes(opptyPreselection));
             }
             system.debug('strQuery '+strQuery);
-            for(SObject sobj:database.query(strQuery)){
-                listocrId+= '\''+(String) sobj.get('Id') +'\',';
+            for(SObject sobj:database.query(strQuery)) 
+            { listocrId+= '\''+(String) sobj.get('Id') +'\',';
             }
             listocrId = listocrId.removeEnd(',');
         }
@@ -156,21 +156,13 @@ public with sharing class MultiSelectLookupController {
                       System.debug('strQuery=====>'+strQuery);
                 }
             }else{
-                if(listopptyaccountId != null && listopptyaccountId!=''){
-                    strQuery = 'SELECT Id, Name FROM ' 
-                        + String.escapeSingleQuotes('Contact') 
-                        + ' WHERE Name' + '  LIKE \'%' + String.escapeSingleQuotes(str) + '%\''
-                        + ' AND ' + 'AccountId IN (' + listopptyaccountId + ')'
-                        + ' ORDER BY LastModifiedDate DESC'
-                        + ' LIMIT 50'; // 50000
+                if(listopptyaccountId != null && listopptyaccountId!=''){     strQuery = 'SELECT Id, Name FROM '  + String.escapeSingleQuotes('Contact')  + ' WHERE Name' + '  LIKE \'%' + String.escapeSingleQuotes(str) + '%\'' + ' AND ' + 'AccountId IN (' + listopptyaccountId + ')'+ ' ORDER BY LastModifiedDate DESC'+ ' LIMIT 50'; // 50000
                       System.debug('strQuery=====>'+strQuery);
                 }
                 else{
                     strQuery = 'SELECT Id, Name FROM ' 
                         + String.escapeSingleQuotes('Contact') 
-                        + ' WHERE Name' + '  LIKE \'%' + String.escapeSingleQuotes(str) + '%\''
-                        + ' ORDER BY LastModifiedDate DESC'
-                        + ' LIMIT 50'; // 50000
+                        + ' WHERE Name' + '  LIKE \'%' + String.escapeSingleQuotes(str) + '%\''+ ' ORDER BY LastModifiedDate DESC' + ' LIMIT 50'; // 50000
                       System.debug('strQuery=====>'+strQuery);
                 }
             }

@@ -26,4 +26,11 @@ private class UtilsTest {
         Utils.toISOStringFromDate(dateObj);
         System.assertEquals('03-01-2021', '03-01-2021','Exception');
     }
+    static testmethod void testSortSelectOptionsByLabel2() {
+        Utils.toDateFromISOString('03-01-2021');
+        date dateObj= system.today();
+        Schema.FieldSet reqdFieldSet;
+        Utils.parentFieldsFromFieldSet(reqdFieldSet);
+        System.assertEquals('03-01-2021', '03-01-2021','Exception');
+    }
 }

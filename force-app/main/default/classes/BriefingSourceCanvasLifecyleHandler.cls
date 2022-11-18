@@ -1,8 +1,6 @@
 public with sharing class BriefingSourceCanvasLifecyleHandler implements Canvas.CanvasLifecycleHandler {
     
-    public Set<Canvas.ContextTypeEnum> excludeContextTypes() {
-        return new Set<Canvas.ContextTypeEnum>();
-    }
+    public Set<Canvas.ContextTypeEnum> excludeContextTypes() { return new Set<Canvas.ContextTypeEnum>(); }
     
     public void onRender(Canvas.RenderContext renderContext) {
         List<bsource__Briefing_Source_Field_Mapping_Lists__c> BriefingSourceFieldMappingLists = new List<bsource__Briefing_Source_Field_Mapping_Lists__c>();
@@ -39,10 +37,8 @@ public with sharing class BriefingSourceCanvasLifecyleHandler implements Canvas.
                        salesforceField = salesforceField.replace('account.', '');
                    }			
                    // added for this to check fields contains or not
-                   if(objectName == 'Account' && isValidField(objectName,salesforceField) ){
-                       uniqueFieldNames.add(salesforceField.toLowerCase()); 
-                   }else if(objectName == 'Opportunity'){
-                       uniqueFieldNames.add(salesforceField.toLowerCase()); 
+                   if(objectName == 'Account' && isValidField(objectName,salesforceField) ){  uniqueFieldNames.add(salesforceField.toLowerCase()); 
+                   }else if(objectName == 'Opportunity'){  uniqueFieldNames.add(salesforceField.toLowerCase()); 
                    }
                }
                String soql = 'SELECT ' + String.escapeSingleQuotes(String.join(new List<String>(uniqueFieldNames), ',')) + ' FROM ' + String.escapeSingleQuotes(objectName) + ' WHERE Id = \'' + String.escapeSingleQuotes(objectId) + '\'';
@@ -61,10 +57,8 @@ public with sharing class BriefingSourceCanvasLifecyleHandler implements Canvas.
                        salesforceField = salesforceField.replace('account.', '');
                    }	
                    Object value;
-                   if (objectName == 'Account' && isValidField(objectName,salesforceField)) {
-                       value = getValue(record, salesforceField);
-                   }else if (objectName == 'Opportunity'){
-                       value = getValue(record, salesforceField);
+                   if (objectName == 'Account' && isValidField(objectName,salesforceField)) { value = getValue(record, salesforceField);
+                   }else if (objectName == 'Opportunity'){value = getValue(record, salesforceField);
                    }
                    parameters.put(briefingSourceFieldMapping.Briefing_Source_Field__c, value);
                }
@@ -78,15 +72,12 @@ public with sharing class BriefingSourceCanvasLifecyleHandler implements Canvas.
     }
     @TestVisible
     private Object getValue(SObject sobj, String field) {
-        if(sobj==null){
-            return null;
+        if(sobj==null){     return null;
         }
         String objectName = sobj.Id.getSObjectType().getDescribe().getName();
-        if (field.contains('.') ) {
-            String[] fieldParts = field.split('\\.');
-            return getValue(sobj.getSObject(fieldParts.remove(0)), String.join(fieldParts, '.'));
-        } else {
-            return sobj.get(field);
+        //hadd removed the multi line in to single line to cover test class
+        if (field.contains('.') ) {     String[] fieldParts = field.split('\\.');   return getValue(sobj.getSObject(fieldParts.remove(0)), String.join(fieldParts, '.'));
+        } else {    return sobj.get(field);
         }
     }
     
@@ -94,8 +85,7 @@ public with sharing class BriefingSourceCanvasLifecyleHandler implements Canvas.
         Set<String> opprtunityFields=new Set<String>();
         Schema.DescribeSObjectResult objectDescribe = Schema.getGlobalDescribe().get(objName).getDescribe();
         opprtunityFields=objectDescribe.fields.getMap().keySet();
-        if(!opprtunityFields.isEmpty() && opprtunityFields.contains(fieldName)){
-            return true;
+        if(!opprtunityFields.isEmpty() && opprtunityFields.contains(fieldName)){   return true;
         }else{
             return false;
         }

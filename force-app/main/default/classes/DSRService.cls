@@ -44,7 +44,6 @@ global with sharing class DSRService {
                 fields.add(parentRefPrfx + '.' + fieldPath);
             }
         }
-        
         return fields;
     }
 }

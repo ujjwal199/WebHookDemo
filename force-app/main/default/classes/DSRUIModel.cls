@@ -173,9 +173,20 @@ public with sharing class DSRUIModel {
     
     public with sharing class WizardState {
         public WizardStage stage {get;set;}
-        
+          public Id oppId {
+            get {
+                return ApexPages.currentPage().getParameters().get('Id').escapeHtml4();
+            }
+        }
         public Opportunity relatedOpportunity {get;set;}
-       
+        public Id dsrId {
+            get {
+                if (dsrId == null) {
+                    dsrId = ApexPages.currentPage().getParameters().get('dsrId').escapeHtml4();    
+                }
+                return dsrId;
+            } set;
+        }
         public BS_Deal_Support_Request__c dsr {
             get {
                 if (dsr == null) {
@@ -205,20 +216,9 @@ public with sharing class DSRUIModel {
         
         public Briefing_Attendee__c[] adHocAttendees {get;set;}
         
-        public Id dsrId {
-            get {
-                if (dsrId == null) {
-                    dsrId = ApexPages.currentPage().getParameters().get('dsrId').escapeHtml4();    
-                }
-                return dsrId;
-            } set;
-        }
         
-        public Id oppId {
-            get {
-                return ApexPages.currentPage().getParameters().get('Id').escapeHtml4();
-            }
-        }
+        
+      
         
         public Boolean isStageTopics {
             get {return stage == WizardStage.Topics;}

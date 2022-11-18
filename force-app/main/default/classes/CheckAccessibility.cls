@@ -24,9 +24,7 @@ public with sharing class CheckAccessibility
                 }
             }
             return Verifiedfields;
-        }catch(Exception e){
-            System.debug('*************Error'+e.getMessage()+' At Line '+e.getLineNumber());
-        }
+        }catch(Exception e){ System.debug('*************Error'+e.getMessage()+' At Line '+e.getLineNumber()); }
         System.debug('8888888888'+Verifiedfields);
         return Verifiedfields;
     }

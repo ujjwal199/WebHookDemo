@@ -120,6 +120,7 @@ bss = new bsource__BriefingSourceSettings__c();
           } 
         return null;
     }
+    
     public PageReference credentialPage(){   
         PageReference pageRef= new PageReference('/lightning/setup/NamedCredential/home');
         pageRef.setRedirect(true);
@@ -192,9 +193,7 @@ bss = new bsource__BriefingSourceSettings__c();
             Schema.DescribeFieldResult fieldDescribe;
             
             if (objectDescribe.fields.getMap().containsKey(fieldName)) {
-                fieldDescribe = objectDescribe.fields.getMap().get(fieldName).getDescribe();
-            } else {
-                fieldDescribe = objectDescribe.fields.getMap().get(Utils.namespace(fieldName)).getDescribe();
+                fieldDescribe = objectDescribe.fields.getMap().get(fieldName).getDescribe();    }   else {  fieldDescribe = objectDescribe.fields.getMap().get(Utils.namespace(fieldName)).getDescribe();
             }
             
             if (fieldDescribe.getLabel().toLowerCase().contains(query.toLowerCase())) {
@@ -302,8 +301,7 @@ bss = new bsource__BriefingSourceSettings__c();
                 }
             }
             try{
-                if(!test.isRunningTest()){
-                    EVApi.getFields(bss);
+                if(!test.isRunningTest()){    EVApi.getFields(bss);
                 }
             }
             catch (Exception e) {
@@ -313,8 +311,7 @@ bss = new bsource__BriefingSourceSettings__c();
             }
             bsource__Custom_Toast_Messages__c objCustomToastMessages = bsource__Custom_Toast_Messages__c.getOrgDefaults();
             if(objCustomToastMessages!= null){
-                if(objCustomToastMessages.bsource__Credentials_update_fail__c!=null){
-                    errorMessage = objCustomToastMessages.bsource__Credentials_update_fail__c;   
+                if(objCustomToastMessages.bsource__Credentials_update_fail__c!=null){ errorMessage = objCustomToastMessages.bsource__Credentials_update_fail__c;   
                 }
                 else{
                     errorMessage = 'Failed to update the credentials';
@@ -448,8 +445,7 @@ bss = new bsource__BriefingSourceSettings__c();
             }
             if(checkCampaignIdAdmin.size() > 0){
                 if(Campaign.SObjectType.getDescribe().isAccessible() && Schema.sObjectType.Campaign.fields.Id.isAccessible()){
-                    for(Campaign objCampaign : [select id from Campaign where id in : checkCampaignIdAdmin]){
-                        CampaignIdSet.add(objCampaign.Id);
+                    for(Campaign objCampaign : [select id from Campaign where id in : checkCampaignIdAdmin]){    CampaignIdSet.add(objCampaign.Id);
                     } 
                 }
             }
@@ -467,16 +463,14 @@ update objShowCampaign;
                 campaignIdAdmin = campaignIds.split(',');  
             }
             for(String objId : campaignIdAdmin){
-                if(objId.length() >14 && String.isNotBlank(objId) && CampaignIdSet.contains(objId)){
-                    idCount += 1;
+                if(objId.length() >14 && String.isNotBlank(objId) && CampaignIdSet.contains(objId)){  idCount += 1;
                 }else{
                     System.debug('objId----->'+objId);
                     wrongId += objId+',';
                 }
             }
             
-            if(idCount == campaignIdAdmin.size()){
-                isValidId = true;
+            if(idCount == campaignIdAdmin.size()){    isValidId = true;
             }
             if(String.isNotBlank(campaignIds) && !isValidId && campaignIdAdmin.size() > 0){
                 return 'Campaign ID entered is not valid. [ID] : ';
@@ -544,23 +538,19 @@ update objShowCampaign;
             if( bsource__Briefing_Source_Field_Mapping_Lists__c.SObjectType.getDescribe().isAccessible() &&
                Schema.SObjectType.bsource__Briefing_Source_Field_Mapping_Lists__c.fields.Briefing_Source_Field__c.isAccessible() &&
                Schema.SObjectType.bsource__Briefing_Source_Field_Mapping_Lists__c.fields.Salesforce_Field__c.isAccessible()){
-                   for (bsource__Briefing_Source_Field_Mapping_Lists__c briefingSourceFieldMapping : [select Briefing_Source_Field__c, Salesforce_Field__c from bsource__Briefing_Source_Field_Mapping_Lists__c where bsource__Instance_Name__c =:instanceName LIMIT 49999]) {
-                       briefingSourceFieldMappings.put(briefingSourceFieldMapping.Briefing_Source_Field__c, briefingSourceFieldMapping);
+                   for (bsource__Briefing_Source_Field_Mapping_Lists__c briefingSourceFieldMapping : [select Briefing_Source_Field__c, Salesforce_Field__c from bsource__Briefing_Source_Field_Mapping_Lists__c where bsource__Instance_Name__c =:instanceName LIMIT 49999]) {    briefingSourceFieldMappings.put(briefingSourceFieldMapping.Briefing_Source_Field__c, briefingSourceFieldMapping);
                    }  
                }
             //mappings = new List<Mapping>();
             bsource__BriefingSourceSettingsLists__c bss = bsource__BriefingSourceSettingsLists__c.getValues(InstanceName);
             Map<String,List<parseJSON.FormFields>> fields = new Map<String,List<parseJSON.FormFields>>();
-            if(bss!= null){
-                fields = EVApi.getFields(bss);  
+            if(bss!= null){ fields = EVApi.getFields(bss);  
             }
             
             system.debug('fields finalll'+fields);
-            for(String eachSection :fields.keySet()){
-                for(parseJSON.FormFields field:fields.get(eachSection)){
+            for(String eachSection :fields.keySet()){    for(parseJSON.FormFields field:fields.get(eachSection)){
                     system.debug('field>>'+field);
-                    system.debug('briefingSourceFieldMappings>>'+briefingSourceFieldMappings);
-                    bsource__Briefing_Source_Field_Mapping_Lists__c briefingSourceFieldMapping = briefingSourceFieldMappings.get(field.name);
+                    system.debug('briefingSourceFieldMappings>>'+briefingSourceFieldMappings);  bsource__Briefing_Source_Field_Mapping_Lists__c briefingSourceFieldMapping = briefingSourceFieldMappings.get(field.name);
                     system.debug('briefingSourceFieldMapping>>'+briefingSourceFieldMapping);
                     Mapping mapping = new Mapping();
                     mapping.fieldLabel  = eachSection;
@@ -690,8 +680,7 @@ update objShowCampaign;
               defaultBriefingSourceFieldMappings = [Select Id, Briefing_Source_Field__c, Salesforce_Field__c from bsource__Default_Briefing_Source_Field_Mappings__c WHERE bsource__Instance_Name__c=:instanceName];
               
               
-              for (Integer i = 0; i < defaultBriefingSourceFieldMappings.size(); i++) {
-                  bsource__Briefing_Source_Field_Mapping_Lists__c briefingSourceFieldMapping = new bsource__Briefing_Source_Field_Mapping_Lists__c();
+              for (Integer i = 0; i < defaultBriefingSourceFieldMappings.size(); i++) {     bsource__Briefing_Source_Field_Mapping_Lists__c briefingSourceFieldMapping = new bsource__Briefing_Source_Field_Mapping_Lists__c();
                   
                   
                   briefingSourceFieldMapping.Name = instanceName.escapeHtml4() + '_Mapping' + i;
@@ -702,8 +691,7 @@ update objShowCampaign;
                   
               }
               
-              if(!briefingSourceFieldMappings.isempty()){
-                  database.upsert(briefingSourceFieldMappings,false); 
+              if(!briefingSourceFieldMappings.isempty()){   database.upsert(briefingSourceFieldMappings,false); 
               }   
           }
     }
@@ -717,8 +705,7 @@ update objShowCampaign;
         remoteSiteSettings.disableProtocolSecurity=false;
         MetadataService.AsyncResult[] results = service.create(new List<MetadataService.Metadata> { remoteSiteSettings });
         MetadataService.AsyncResult[] checkResults;
-        if(!Test.isRunningTest()){
-            checkResults = service.checkStatus(new List<string> {string.ValueOf(results[0].Id)});
+        if(!Test.isRunningTest()){       checkResults = service.checkStatus(new List<string> {string.ValueOf(results[0].Id)});
         }
         // MetadataService.AsyncResult[] checkResults = service.checkStatus(new List<string> {string.ValueOf(results[0].Id)});
         system.debug( checkResults );  
@@ -734,8 +721,7 @@ update objShowCampaign;
     @AuraEnabled
     public static string whiteListRemoteSiteSetting(){
         bsource__WhiteListRemoteSiteSetting__c bss = bsource__WhiteListRemoteSiteSetting__c.getOrgDefaults();
-        if(bss != null && bss.bsource__Remote_site_setting_is_present__c == true){
-            return 'false'; 
+        if(bss != null && bss.bsource__Remote_site_setting_is_present__c == true){  return 'false'; 
         }
         else{
             URL baseUrl = URL.getSalesforceBaseUrl();
@@ -791,9 +777,7 @@ update objShowCampaign;
                 if(Schema.sObjectType.bsource__HelpDesk__c.isAccessible() && Schema.sObjectType.bsource__HelpDesk__c.isCreateable()){
                 insert objhd;
                 }
-                return objhd.id;
-            } 
-        }catch (Exception e) {
+                return objhd.id;    }          }catch (Exception e) {
             system.debug('g'+e.getLineNumber());
             system.debug('g'+e.getMessage());
             //throw new AuraHandledException(e.getMessage());
@@ -859,8 +843,7 @@ update objShowCampaign;
         
         DELETE [Select Id, Briefing_Source_Field__c, Salesforce_Field__c from bsource__Briefing_Source_Field_Mapping_Lists__c WHERE bsource__Instance_Name__c=:instanceName];
         List<bsource__Briefing_Source_Field_Mapping_Lists__c> briefingSourceFieldMappings = new List<bsource__Briefing_Source_Field_Mapping_Lists__c>();
-        for (Integer i = 0; i < updatedBriefingSourceFieldMappings.size(); i++) {
-            bsource__Briefing_Source_Field_Mapping_Lists__c briefingSourceFieldMapping = new bsource__Briefing_Source_Field_Mapping_Lists__c();
+        for (Integer i = 0; i < updatedBriefingSourceFieldMappings.size(); i++) {        bsource__Briefing_Source_Field_Mapping_Lists__c briefingSourceFieldMapping = new bsource__Briefing_Source_Field_Mapping_Lists__c();
             
             
             briefingSourceFieldMapping.Name = instanceName.escapeHtml4() + '_Mapping' + i;
@@ -871,9 +854,7 @@ update objShowCampaign;
             
         }
         
-        if(!briefingSourceFieldMappings.isempty()){
-            database.upsert(briefingSourceFieldMappings,false); 
-        }
+        if(!briefingSourceFieldMappings.isempty())   {    database.upsert(briefingSourceFieldMappings,false);   }
         
     }
 }

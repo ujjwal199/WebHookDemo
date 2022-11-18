@@ -40,20 +40,25 @@ private class AccountDSRControllerTest {
 		ApexPages.currentPage().getParameters().put('accountId', account.Id);
 
 		AccountDSRController controller = new AccountDSRController(new ApexPages.standardController(account));
-		  controller.cancelDSR();
-		System.assertEquals('Draft', controller.dsr.Status__c,'Draft Should be return');
+        BS_Deal_Support_Request__c dsrs=new BS_Deal_Support_Request__c();
+        insert dsrs;
+                
 		Test.startTest();
 		Test.setMock(HttpCalloutMock.class, new GenericCalloutMock(httpResponse,true));
         Test.setMock(HttpCalloutMock.class, new GenericCalloutMock(httpResponse,'Test'));
 		//controller.changeCenter();
 		//String aString = controller.canvasAppDomain;
 		controller.initPage();
-		controller.save();
+		//controller.save();
         controller.dsr=dsr;
        
         controller.cancelDSR();
          controller.dsr.bsource__Center__c=1;
        // controller.changeCenter();
+       PageReference orderPage = new PageReference('/' +dsrs.Id );
+
+		  controller.cancelDSR();
+		System.assertEquals('Draft', controller.dsr.Status__c,'Draft Should be return');
 		Test.stopTest();
 
 		System.assertNotEquals(true, controller.canvasLocked,'canvasLocked Should be True');
@@ -82,6 +87,7 @@ private class AccountDSRControllerTest {
         Test.stopTest();
         
     }
+   
    static testmethod void testCreate4() {
 		Account account = new Account();
 		account.Name = 'Test';
@@ -173,6 +179,94 @@ private class AccountDSRControllerTest {
         DSRController objDSRController= new DSRController();
         objDSRController.initPage();
         objDSRController.changeCenter();
+        
     }
+    static testmethod void testCreate7() {
+          string instanceName= ApexPages.currentPage().getParameters().get('instanceName').escapeHtml4();
+          Id dsrId = ApexPages.currentPage().getParameters().get('dsrId');
+            Id accountId = ApexPages.currentPage().getParameters().get('accountId');
+            Id opptyId = '0061P00000WwFMWQA3';
+        bsource__BriefingSourceSettingsLists__c objSettings = bsource__BriefingSourceSettingsLists__c.getValues(instanceName);
+          
+        DSRController objDSRController= new DSRController();
+       System.debug(objDSRController.centerOptions);
+        
+    }
+      static testmethod void testCreate8() {
+          	Test.startTest();
+           DSRController objDSRController= new DSRController();
+           System.debug(objDSRController.canChangeDsr);
+                     System.debug(objDSRController.renderCanvas);
+                     System.debug(objDSRController.canvasLocked);
+            Test.stopTest();   
+    }
+    static testmethod void testCreate9() {
+          	Test.startTest();
+           DSRController objDSRController= new DSRController();
+           System.debug(objDSRController.canvasInstanceName);
+            Test.stopTest();   
+    }
+     static testmethod void testCreate10() {
+          	Test.startTest();
+            string instanceName= 'Account';
+            bsource__BriefingSourceSettingsLists__c briefingSourceSettings = bsource__BriefingSourceSettingsLists__c.getAll().get(instanceName);
+
+           DSRController objDSRController= new DSRController();
+           System.debug(objDSRController.canvasAppDomain);
+            Test.stopTest();   
+    }
+    
+    static testmethod void testCreate11() {
+          	Test.startTest();
+           DSRController objDSRController= new DSRController();
+           System.debug(objDSRController.centerOptions);
+            Test.stopTest();   
+    }
+    static testmethod void testCreate12() {
+          	Test.startTest();
+           DSRController objDSRController= new DSRController();
+           System.debug(objDSRController.accObj);
+            Test.stopTest();   
+    }
+    static testmethod void testCreate13() {
+          	Test.startTest();
+           DSRController objDSRController= new DSRController();
+           System.debug(objDSRController.oppObj);
+            Test.stopTest();   
+    }
+     static testmethod void testCreate14() {
+          	Test.startTest();
+           DSRController objDSRController= new DSRController();
+          
+           System.debug(objDSRController.canvasAppDomain);
+            Test.stopTest();   
+    }
+     static testmethod void testCreate15() {
+          	Test.startTest();
+           DSRController objDSRController= new DSRController();
+          bsource__BriefingSourceSettingsLists__c briefingSourceSettings = bsource__BriefingSourceSettingsLists__c.getOrgDefaults();
+        briefingSourceSettings.API_Endpoint__c = '';
+        briefingSourceSettings.bsource__API_Username__c='';
+        briefingSourceSettings.bsource__API_Password__c='';
+        briefingSourceSettings.bsource__Client_Id__c='';
+        briefingSourceSettings.bsource__Client_Secret__c='test';
+        briefingSourceSettings.bsource__isConnected__c=true;
+        briefingSourceSettings.Name ='test';
+        briefingSourceSettings.bsource__Is_CanvasApp__c = true;
+        //briefingSourceSettings.Center__c ='test'
+        insert briefingSourceSettings;
+       
+            Test.stopTest();   
+    }
+       static testmethod void testCreate16() {
+          	Test.startTest();
+           BS_Deal_Support_Request__c dsr=new BS_Deal_Support_Request__c();
+           dsr.bsource__Center__c=56789;
+           insert dsr;
+           DSRController objDSRController= new DSRController();
+          objDSRController.save();
+            Test.stopTest();   
+    }
+    
     
 }

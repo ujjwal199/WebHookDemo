@@ -11,9 +11,9 @@ public with sharing class BriefingAttendeeTriggerHandler {
             }
         }
         
-        for(Contact objContact : [select id,Email from Contact where Email IN: emailSet order by createddate desc]){
-            if(contactMap.containsKey(objContact.Email) && contactMap.get(objContact.Email) != null){
-                contactMap.get(objContact.Email).add(objContact);
+        for(Contact objContact : [select id,Email from Contact 
+                                  where Email IN: emailSet order by createddate desc]){
+            if(contactMap.containsKey(objContact.Email) && contactMap.get(objContact.Email) != null){  contactMap.get(objContact.Email).add(objContact);
             }else{
                 contactMap.put(objContact.Email, new List<Contact>{ objContact });
             }

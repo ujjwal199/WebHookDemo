@@ -176,21 +176,17 @@ public with sharing class FetchDSRValues {
                       if(dsrRel.bsource__Opportunity__r.ExpectedRevenue!= null){
                           objOpp.ExpectedRevenue = dsrRel.bsource__Opportunity__r.ExpectedRevenue;
                       }
-                      if(dsrRel.bsource__Opportunity__r.TotalOpportunityQuantity!= null){
-                          objOpp.TotalOpportunityQuantity = dsrRel.bsource__Opportunity__r.TotalOpportunityQuantity;
+                      if(dsrRel.bsource__Opportunity__r.TotalOpportunityQuantity!= null){objOpp.TotalOpportunityQuantity = dsrRel.bsource__Opportunity__r.TotalOpportunityQuantity;
                       }
                       if(dsrRel.bsource__Opportunity__r.CloseDate!= null){
                           objOpp.CloseDate = dsrRel.bsource__Opportunity__r.CloseDate;
                       }
                       
-                      if(dsrRel.bsource__Opportunity__r.Type!= null){
-                          objOpp.Type = dsrRel.bsource__Opportunity__r.Type;
+                      if(dsrRel.bsource__Opportunity__r.Type!= null){ objOpp.Type = dsrRel.bsource__Opportunity__r.Type;
                       }
-                      if(dsrRel.bsource__Opportunity__r.NextStep!= null){
-                          objOpp.NextStep = dsrRel.bsource__Opportunity__r.NextStep;
+                      if(dsrRel.bsource__Opportunity__r.NextStep!= null){  objOpp.NextStep = dsrRel.bsource__Opportunity__r.NextStep;
                       }
-                      if(dsrRel.bsource__Opportunity__r.LeadSource!= null){
-                          objOpp.LeadSource = dsrRel.bsource__Opportunity__r.LeadSource;
+                      if(dsrRel.bsource__Opportunity__r.LeadSource!= null){ objOpp.LeadSource = dsrRel.bsource__Opportunity__r.LeadSource;
                       }
                       
                       if(dsrRel.bsource__Opportunity__r.IsClosed!= null){
@@ -206,11 +202,9 @@ public with sharing class FetchDSRValues {
                       if(dsrRel.bsource__Opportunity__r.ForecastCategoryName!= null){
                           objOpp.ForecastCategoryName = dsrRel.bsource__Opportunity__r.ForecastCategoryName;
                       }
-                      if(dsrRel.bsource__Opportunity__r.bsource__TrackingNumber__c!= null){
-                          objOpp.TrackingNumber = dsrRel.bsource__Opportunity__r.bsource__TrackingNumber__c;
+                      if(dsrRel.bsource__Opportunity__r.bsource__TrackingNumber__c!= null){  objOpp.TrackingNumber = dsrRel.bsource__Opportunity__r.bsource__TrackingNumber__c;
                       }
-                      if(dsrRel.bsource__Opportunity__r.bsource__Previous_Amount__c!= null){
-                          objOpp.PreviousAmount = dsrRel.bsource__Opportunity__r.bsource__Previous_Amount__c;
+                      if(dsrRel.bsource__Opportunity__r.bsource__Previous_Amount__c!= null){  objOpp.PreviousAmount = dsrRel.bsource__Opportunity__r.bsource__Previous_Amount__c;
                       }
                       oppList.add(objOpp);
                   }
@@ -228,8 +222,7 @@ public with sharing class FetchDSRValues {
                       if(dsrRel.bsource__Contact__r.Name!= null){
                           objContact.Name = dsrRel.bsource__Contact__r.Name;
                       }
-                      if(dsrRel.bsource__Contact__r.FirstName!= null){
-                          objContact.firstName = dsrRel.bsource__Contact__r.FirstName;
+                      if(dsrRel.bsource__Contact__r.FirstName!= null){   objContact.firstName = dsrRel.bsource__Contact__r.FirstName;
                       }
                       if(dsrRel.bsource__Contact__r.LastName!= null){
                           objContact.lastName = dsrRel.bsource__Contact__r.LastName;
@@ -237,64 +230,48 @@ public with sharing class FetchDSRValues {
                       if(dsrRel.bsource__Contact__r.Email!= null){
                           objContact.email = dsrRel.bsource__Contact__r.Email;
                       }
-                      if(dsrRel.bsource__Contact__r.Title!= null){
-                          objContact.job_title = dsrRel.bsource__Contact__r.Title;
+                      if(dsrRel.bsource__Contact__r.Title!= null){ objContact.job_title = dsrRel.bsource__Contact__r.Title;
                       }
-                      if(dsrRel.bsource__Contact__r.Phone!= null){
-                          objContact.phone = dsrRel.bsource__Contact__r.Phone;
+                      if(dsrRel.bsource__Contact__r.Phone!= null){   objContact.phone = dsrRel.bsource__Contact__r.Phone;
                       }
-                      if(dsrRel.bsource__Contact__r.Description!= null){
-                          objContact.comments = dsrRel.bsource__Contact__r.Description;
+                      if(dsrRel.bsource__Contact__r.Description!= null){  objContact.comments = dsrRel.bsource__Contact__r.Description;
                       }
                       
                       if(dsrRel.bsource__Contact__r.AccountId!= null){
                           objContact.AccountId = dsrRel.bsource__Contact__r.AccountId;
                       }
-                      if(dsrRel.bsource__Contact__r.Salutation!= null){
-                          objContact.Salutation = dsrRel.bsource__Contact__r.Salutation;
+                      if(dsrRel.bsource__Contact__r.Salutation!= null){ objContact.Salutation = dsrRel.bsource__Contact__r.Salutation;
                       }
-                      if(dsrRel.bsource__Contact__r.MailingStreet!= null){
-                          objContact.MailingStreet = dsrRel.bsource__Contact__r.MailingStreet;
+                      if(dsrRel.bsource__Contact__r.MailingStreet!= null){ objContact.MailingStreet = dsrRel.bsource__Contact__r.MailingStreet;
                       }
                       
-                      if(dsrRel.bsource__Contact__r.MailingCity!= null){
-                          objContact.MailingCity = dsrRel.bsource__Contact__r.MailingCity;
+                      if(dsrRel.bsource__Contact__r.MailingCity!= null){  objContact.MailingCity = dsrRel.bsource__Contact__r.MailingCity;
                       }
-                      if(dsrRel.bsource__Contact__r.MailingState!= null){
-                          objContact.MailingState = dsrRel.bsource__Contact__r.MailingState;
+                      if(dsrRel.bsource__Contact__r.MailingState!= null){  objContact.MailingState = dsrRel.bsource__Contact__r.MailingState;
                       }
-                      if(dsrRel.bsource__Contact__r.MailingPostalCode!= null){
-                          objContact.MailingPostalCode = dsrRel.bsource__Contact__r.MailingPostalCode;
+                      if(dsrRel.bsource__Contact__r.MailingPostalCode!= null){   objContact.MailingPostalCode = dsrRel.bsource__Contact__r.MailingPostalCode;
                       }
                       
-                      if(dsrRel.bsource__Contact__r.MailingCountry!= null){
-                          objContact.MailingCountry = dsrRel.bsource__Contact__r.MailingCountry;
+                      if(dsrRel.bsource__Contact__r.MailingCountry!= null){ objContact.MailingCountry = dsrRel.bsource__Contact__r.MailingCountry;
                       }
                       
-                      if(dsrRel.bsource__Contact__r.Fax!= null){
-                          objContact.Fax = dsrRel.bsource__Contact__r.Fax;
+                      if(dsrRel.bsource__Contact__r.Fax!= null){  objContact.Fax = dsrRel.bsource__Contact__r.Fax;
                       }
                       
-                      if(dsrRel.bsource__Contact__r.HomePhone!= null){
-                          objContact.HomePhone = dsrRel.bsource__Contact__r.HomePhone;
+                      if(dsrRel.bsource__Contact__r.HomePhone!= null){ objContact.HomePhone = dsrRel.bsource__Contact__r.HomePhone;
                       }
                       
-                      if(dsrRel.bsource__Contact__r.Department!= null){
-                          objContact.Department = dsrRel.bsource__Contact__r.Department;
+                      if(dsrRel.bsource__Contact__r.Department!= null){  objContact.Department = dsrRel.bsource__Contact__r.Department;
                       }
                       
-                      if(dsrRel.bsource__Contact__r.AssistantName!= null){
-                          objContact.AssistantName = dsrRel.bsource__Contact__r.AssistantName;
+                      if(dsrRel.bsource__Contact__r.AssistantName!= null){      objContact.AssistantName = dsrRel.bsource__Contact__r.AssistantName;
                       }
-                      if(dsrRel.bsource__Contact__r.LeadSource!= null){
-                          objContact.LeadSource = dsrRel.bsource__Contact__r.LeadSource;
+                      if(dsrRel.bsource__Contact__r.LeadSource!= null){    objContact.LeadSource = dsrRel.bsource__Contact__r.LeadSource;
                       }
-                      if(dsrRel.bsource__Contact__r.Birthdate!= null){
-                          objContact.Birthdate = dsrRel.bsource__Contact__r.Birthdate;
+                      if(dsrRel.bsource__Contact__r.Birthdate!= null){ objContact.Birthdate = dsrRel.bsource__Contact__r.Birthdate;
                       }
                       
-                      if(dsrRel.bsource__Contact__r.PhotoUrl!= null){
-                          objContact.PhotoUrl = dsrRel.bsource__Contact__r.PhotoUrl;
+                      if(dsrRel.bsource__Contact__r.PhotoUrl!= null){ objContact.PhotoUrl = dsrRel.bsource__Contact__r.PhotoUrl;
                       }
                       contactList.add(objContact);
                   }
@@ -319,21 +296,16 @@ public with sharing class FetchDSRValues {
                       if(dsrRel.bsource__Campaign__r.Status!= null){
                           objCampaign.Status = dsrRel.bsource__Campaign__r.Status;
                       }
-                      if(dsrRel.bsource__Campaign__r.StartDate!= null){
-                          objCampaign.StartDate = dsrRel.bsource__Campaign__r.StartDate;
+                      if(dsrRel.bsource__Campaign__r.StartDate!= null){     objCampaign.StartDate = dsrRel.bsource__Campaign__r.StartDate;
                       }
-                      if(dsrRel.bsource__Campaign__r.EndDate!= null){
-                          objCampaign.EndDate = dsrRel.bsource__Campaign__r.EndDate;
+                      if(dsrRel.bsource__Campaign__r.EndDate!= null){     objCampaign.EndDate = dsrRel.bsource__Campaign__r.EndDate;
                       }
                       
-                      if(dsrRel.bsource__Campaign__r.ExpectedRevenue!= null){
-                          objCampaign.ExpectedRevenue = dsrRel.bsource__Campaign__r.ExpectedRevenue;
+                      if(dsrRel.bsource__Campaign__r.ExpectedRevenue!= null){   objCampaign.ExpectedRevenue = dsrRel.bsource__Campaign__r.ExpectedRevenue;
                       }
-                      if(dsrRel.bsource__Campaign__r.BudgetedCost!= null){
-                          objCampaign.BudgetedCost = dsrRel.bsource__Campaign__r.BudgetedCost;
+                      if(dsrRel.bsource__Campaign__r.BudgetedCost!= null){     objCampaign.BudgetedCost = dsrRel.bsource__Campaign__r.BudgetedCost;
                       }
-                      if(dsrRel.bsource__Campaign__r.ActualCost!= null){
-                          objCampaign.ActualCost = dsrRel.bsource__Campaign__r.ActualCost;
+                      if(dsrRel.bsource__Campaign__r.ActualCost!= null){   objCampaign.ActualCost = dsrRel.bsource__Campaign__r.ActualCost;
                       }
                       
                       if(dsrRel.bsource__Campaign__r.ExpectedResponse!= null){
@@ -346,8 +318,7 @@ public with sharing class FetchDSRValues {
                           objCampaign.IsActive = dsrRel.bsource__Campaign__r.IsActive;
                       }
                       
-                      if(dsrRel.bsource__Campaign__r.Description!= null){
-                          objCampaign.Description = dsrRel.bsource__Campaign__r.Description;
+                      if(dsrRel.bsource__Campaign__r.Description!= null){     objCampaign.Description = dsrRel.bsource__Campaign__r.Description;
                       }
                       if(dsrRel.bsource__Campaign__r.NumberOfLeads!= null){
                           objCampaign.NumberOfLeads = dsrRel.bsource__Campaign__r.NumberOfLeads;
@@ -411,8 +382,7 @@ public with sharing class FetchDSRValues {
         public String BillingCity{get;set;}
         public String BillingState{get;set;}
         public String BillingPostalCode{get;set;}
-        public String BillingCountry{get;set;}
-        public String BillingAddress{get;set;}
+        public String BillingCountry{get;set;} public String BillingAddress{get;set;}
         public String Phone{get;set;}
         public String Fax{get;set;}
         public String AccountNumber{get;set;}
@@ -460,10 +430,8 @@ public with sharing class FetchDSRValues {
         public String name{get;set;}
         public String firstName{get;set;}
         public String lastName{get;set;}
-        public String email{get;set;}
-        public String job_title{get;set;}
-        public String phone{get;set;}
-        public String comments{get;set;}
+        public String email{get;set;}      public String job_title{get;set;}
+        public String phone{get;set;}      public String comments{get;set;}
         
         public String AccountId{get;set;}
         public String Salutation{get;set;}
@@ -479,10 +447,7 @@ public with sharing class FetchDSRValues {
         
         public String Department{get;set;}
         public String AssistantName{get;set;}
-        public String LeadSource{get;set;}
-        
-        public Date Birthdate{get;set;}
-        public String PhotoUrl{get;set;}
+        public String LeadSource{get;set;}    public Date Birthdate{get;set;}    public String PhotoUrl{get;set;}
     }
     
     public class campaignWrapper {
@@ -490,9 +455,7 @@ public with sharing class FetchDSRValues {
         public String id{get;set;}
         public String name{get;set;}        
         public String Type{get;set;}
-        public String Status{get;set;}
-        public Date  StartDate{get;set;}
-        public Date  EndDate{get;set;}
+        public String Status{get;set;} public Date  StartDate{get;set;}   public Date  EndDate{get;set;}
         public Decimal  ExpectedRevenue{get;set;}
         public Decimal  BudgetedCost{get;set;}
         public Decimal  ActualCost{get;set;}

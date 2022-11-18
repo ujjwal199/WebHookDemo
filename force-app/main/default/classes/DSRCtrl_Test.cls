@@ -55,6 +55,7 @@ Attempt to test as many methods as possible with minimal dependency on mock data
         List < AccountContactRole > accConRoles = mockData.accConRole;
         
         ApexPages.CurrentPage().getparameters().put('id', opp.id);
+        ApexPages.CurrentPage().getparameters().put('dsrId', '');
         
         ApexPages.StandardController sc = new ApexPages.standardController(opp);
         DSRCtrl controller = new DSRCtrl(sc);
@@ -245,13 +246,64 @@ Attempt to test as many methods as possible with minimal dependency on mock data
         DSRCtrl controller = new DSRCtrl(sc);
         controller.state.dsr.bsource__Status__c='Submitted';
     }
-    
-    public static testmethod void testchangeCenter(){
+     public static testmethod void test_toStepSites(){
                 DSRCtrl controller = new DSRCtrl();
-     
-        controller.changeCenter();
-
+               controller.toStepSites();
 }
+     public static testmethod void test_gotoAddInfoNext(){
+                DSRCtrl controller = new DSRCtrl();
+          
+               controller.gotoAddInfoNext();
+         
+           controller.moveNextInWizard();
+}
+       public static testmethod void test_toStepAttendees(){
+                DSRCtrl controller = new DSRCtrl();
+           
+        // ids of contacts selected as attendees
+        Set<Id> selectedAttendees = new Set<Id>();
+        Set<Id> selectedAdHocAttendees = new Set<Id>();
+               controller.toStepAttendees();        
+}
+    
+    public static testmethod void testtoStepAddInfo(){
+                DSRCtrl controller = new DSRCtrl();
+           Set<String> dsrFields = new Set<String>{'name', 'bsource__status__c'};
+               controller.toStepAddInfo();
+}
+        public static testmethod void test_toStepTopics(){
+                DSRCtrl controller = new DSRCtrl();
+        
+               controller.toStepTopics();
+}
+      public static testmethod void testchangeCenter(){
+                DSRCtrl controller = new DSRCtrl();
+               controller.changeCenter();
+}
+     public static testmethod void test_toStepReview(){
+                DSRCtrl controller = new DSRCtrl();
+          Set<String> dsrFields = new Set<String>{
+            'name',
+                'bsource__' + 'status__c', 
+                'bsource__' + 'site_id__c', 
+                'bsource__' + 'site_name__c', 
+                'bsource__' + 'primary_date__c',
+                'bsource__' + 'meeting_duration__c',
+                'bsource__' + 'meetinghours__c',
+                'bsource__' + 'alternative_date__c',
+                'bsource__' + 'starttime__c',
+                'bsource__' + 'endtime__c',
+                'bsource__' + 'center__c',
+                'bsource__' + 'briefing_type__c'};
+                    controller.toStepReview();
+          String dsrSoql = 'Select ' +  String.escapeSingleQuotes(Utils.toCSV(new List<String>(dsrFields))) + ', ' +
+            ' (Select Name, Category_Name__c, Notes__c from Briefing_Topics__r order by Category_Name__c), ' +
+            ' (Select Contact__c, Contact__r.Name, Contact__r.Title from Briefing_Attendees__r where Contact__c!=null order by Contact__r.Name) ' +                                         
+            ' from BS_Deal_Support_Request__c  where Id =:dsrId ';
+         controller.state.dsr = Database.query(dsrSoql);
+                       
+
+     }
 
     public static testmethod void TestExternalAttendee() {
         MockFactory mockData = new MockFactory();
@@ -344,20 +396,136 @@ Attempt to test as many methods as possible with minimal dependency on mock data
 *
 @description TeststartCanvasFlow2
 */
-    
+  
+    public static testmethod void testgetCanvasAppDomain(){
+        
+        DSRCtrl dsr=new DSRCtrl();
+            bsource__BriefingSourceSettingsLists__c bss = bsource__BriefingSourceSettingsLists__c.getValues('Opportunity');
+         dsr.getCanvasAppDomain();
+    }
+     public static testmethod void teststartCanvasFlow1(){
+        
+        DSRCtrl dsr=new DSRCtrl();
+            BS_Deal_Support_Request__c bss = new BS_Deal_Support_Request__c();
+        insert bss;
+         dsr.startCanvasFlow();
+    }
     public static testmethod void testmoveInWizard(){
         
         DSRCtrl dsr=new DSRCtrl();
          dsr.movePreviousInWizard();
+        
     }
+    
       public static testmethod void testmoveInWizard2(){
         DSRCtrl dsr=new DSRCtrl();
         dsr.moveNextInWizard();
       
     }
-    Private static  testmethod void testfetchcurrentDSR(){
+    
+    Private static  testmethod void testgotoAttendeesNext(){
           DSRCtrl dsr=new DSRCtrl();
-            
+            dsr.gotoAttendeesNext();
+    }
+    public static testmethod void testonSaveAttendees3(){
+        DSRCtrl dsr=new DSRCtrl();
+                dsr.onSaveAttendees(); 
+
+        dsr.state.dsrId = null;
+    }
+    
+    public static testmethod void testverifyAdohAttendeeList(){
+        DSRCtrl dsr=new DSRCtrl();
+        dsr.verifyAdohAttendeeList(); 
+    }
+     public static testmethod void testisCompleted(){
+        DSRCtrl dsr=new DSRCtrl();
+         System.debug(dsr.isCompleted);
+        dsr.AddToAttendeeList(); 
+    }
+        public static testmethod void testAddToAttendeeList(){
+        DSRCtrl dsr=new DSRCtrl();
+        dsr.AddToAttendeeList(); 
+    }
+    
+     public static testmethod void testremoveAdHocAttendee(){
+        DSRCtrl dsr=new DSRCtrl();
+        dsr.removeAdHocAttendee(); 
+         dsr.addNewRowAdHocAttendee();
+    }
+    public static testmethod void addNewRowAdHocAttendeetest(){
+        DSRCtrl dsr=new DSRCtrl(); 
+         dsr.state.adHocAttendees=null;
+         dsr.state.adHocAttendees=new List<Briefing_Attendee__c>();
+        dsr.state.adHocAttendees.add(new Briefing_Attendee__c());
+         dsr.addNewRowAdHocAttendee();
+       
+    }
+    
+    
+
+    
+    
+    
+    
+     public static testmethod void testmoveInWizard3(){
+        DSRCtrl dsr=new DSRCtrl();
+        dsr.createDSR(); 
+    }
+    Private static  testmethod void testgotoSitesNext(){
+          DSRCtrl dsr=new DSRCtrl();
+            dsr.gotoSitesNext();
+    }
+    public static  testmethod void indextest(){
+          DSRCtrl dsr=new DSRCtrl();
+            dsr.index=123131;
+    }
+    
+     public static  testmethod void renderCanvastest(){
+          DSRCtrl dsr=new DSRCtrl();
+            dsr.renderCanvas=true;
+    }
+     public static  testmethod void canvasLockedtest(){
+          DSRCtrl dsr=new DSRCtrl();
+            dsr.canvasLocked=true;
+    }
+     public static  testmethod void  centerOptionsTest(){
+          DSRCtrl dsr=new DSRCtrl();
+        System.debug(dsr.centerOptions);
+
+    }
+     public static  testmethod void  gotoEditableStagetest(){
+          DSRCtrl dsr=new DSRCtrl();
+       //  MovementDirection dir;
+         DSRUIModel.WizardStage reqdStage;
+     // dsr.gotoEditableStage(null,null);
+
+    }
+    
+    //u nused
+     public static  testmethod void  SubmittedLStest(){
+          String stage ='asas';
+          DSRCtrl dsr=new DSRCtrl();
+                
+
+    }
+     public static  testmethod void  SubmitelseLStest(){
+          Account testAccount = new Account();
+ testAccount.Name='Test Account' ;
+ insert testAccount;
+
+ Test.StartTest(); 
+  ApexPages.StandardController sc = new ApexPages.StandardController(testAccount);
+  
+     String stage =null;
+          DSRCtrl dsr=new DSRCtrl();
+ Test.stopTest();        
+    }
+    
+    
+     Private static  testmethod void testfetchcurrentDSR(){
+          DSRCtrl dsr=new DSRCtrl();
+            dsr.fetchcurrentDSR();
     }
     public static testmethod void TeststartCanvasFlow2(){
         //Create the sample Custom Setting Data

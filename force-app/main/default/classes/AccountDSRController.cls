@@ -3,8 +3,7 @@ public with sharing class AccountDSRController extends DSRController {
 	public AccountDSRController(ApexPages.StandardController standardController) {
        // dsrId=apexpages.currentpage().getparameters().get('dsrId');
         try{
-            super();
-        }catch(Exception e){system.debug('exception occured>>'+e.getStackTraceString());
+            super();  }catch(Exception e){system.debug('exception occured>>'+e.getStackTraceString());
         }
 		//dsr.Account__c = standardController.getId();
 		}

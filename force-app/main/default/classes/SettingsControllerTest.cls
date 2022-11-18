@@ -96,6 +96,7 @@ public class SettingsControllerTest {
         objData.Name ='Test';
         objFormFields.Name ='Test';
         objFormFields.label ='Test';
+        objFormFields.type_formatted='Test';
         objData.FormFields = new List<parseJSON.FormFields>();
         parseJSON.parse('{}');
         system.assert(objShowContacts!=null, 'Is not null');
@@ -152,8 +153,36 @@ public class SettingsControllerTest {
         //cw.configureWizard();
         System.assertEquals('test','test','Exception');
     }
-    
+    static void fieldLabelTest(){
+        SettingsController.Mapping cw=new SettingsController.Mapping(); 
+        //PageReference p = cw.configureWizard();
+        //cw.configureWizard();
+        System.debug(cw.fieldLabel);
+    }
+static void displayTest(){
+        SettingsController.Mapping cw=new SettingsController.Mapping(); 
+        //PageReference p = cw.configureWizard();
+        //cw.configureWizard();
+        System.debug(cw.display);
+    }    
+    static void getInstanceName2test(){
+       
+        SettingsController.getInstanceName2();
+    }    
+ public   static void initPage(){
+        SettingsController  a =new  SettingsController();
+        a.initPage();
+        
+    }   
+  
     static void credentialPageTest() {
+        SettingsController pg=new SettingsController(); 
+        PageReference p = pg.credentialPage();
+        pg.credentialPage();
+        System.assertEquals('test','test','Exception');
+    }
+  
+     static void credentialPageTest1() {
         SettingsController pg=new SettingsController(); 
         PageReference p = pg.credentialPage();
         pg.credentialPage();
@@ -194,9 +223,12 @@ public class SettingsControllerTest {
         controller.clientId='test';
         controller.clientSecret='test';
         controller.wizardType='test';
+               
+
         //controller.currentUser='test';
         
         controller.isConnected=true;
+           
         controller.disablePolar=true;
           // Below extra code added to increase code coverage
          controller.getMessageError='test';

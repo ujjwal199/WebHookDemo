@@ -40,8 +40,7 @@ public class MetadataService {
         {
             // Workaround to platform bug (?) where the following method returns a none HTTPS URL in a Batch Apex context
             URL baseUrl = URL.getSalesforceBaseUrl();
-            if(baseUrl.getProtocol() == 'http')
-                baseUrl = new URL('https', baseUrl.getHost(), baseUrl.getPort(), baseUrl.getFile()); // Switch to https protocol
+            if(baseUrl.getProtocol() == 'http')     baseUrl = new URL('https', baseUrl.getHost(), baseUrl.getPort(), baseUrl.getFile()); // Switch to https protocol
             endpoint_x = baseUrl.toExternalForm() + '/services/Soap/m/27.0';
         }
         public Map<String,String> inputHttpHeaders_x;
@@ -87,19 +86,7 @@ public class MetadataService {
             request_x.asyncProcessId = asyncProcessId;
             Map<String, MetadataService.checkStatusResponse_element> response_map_x = new Map<String, MetadataService.checkStatusResponse_element>();
             response_map_x.put('response_x', response_x);
-            if(!Test.isRunningTest()){
-                WebServiceCallout.invoke(
-                  this,
-                  request_x,
-                  response_map_x,
-                  new String[]{endpoint_x,
-                  '',
-                  'http://soap.sforce.com/2006/04/metadata',
-                  'checkStatus',
-                  'http://soap.sforce.com/2006/04/metadata',
-                  'checkStatusResponse',
-                  'MetadataService.checkStatusResponse_element'}
-                );
+            if(!Test.isRunningTest()){ WebServiceCallout.invoke( this,request_x,response_map_x,new String[]{endpoint_x,'','http://soap.sforce.com/2006/04/metadata','checkStatus','http://soap.sforce.com/2006/04/metadata','checkStatusResponse', 'MetadataService.checkStatusResponse_element'});
             }
             else {
                 response_map_x.put('response_x', new MetadataService.checkStatusResponse_element());                

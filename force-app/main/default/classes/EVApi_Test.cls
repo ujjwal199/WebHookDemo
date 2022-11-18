@@ -46,7 +46,7 @@ public class EVApi_Test {
         return res;
         
     }
-    private static testMethod void test() {
+      private static testMethod void testfetchJSON() {
         EVApi.BSDataSource ev = new EVApi.BSDataSource();
         DSRUIModel.TopicsRequest reqForTopic= new DSRUIModel.TopicsRequest();
         reqForTopic.siteId ='1';
@@ -73,10 +73,9 @@ public class EVApi_Test {
         test.startTest();
         // call testParseDates method to test ParseDates of EVApiModel....
         EVApiModel.testParseDates();
-        // DSRUIModel.SitesResponse siteRes = ev.loadSites(new DSRUIModel.SitesRequest());
-        //  DSRUIModel.TopicsResponse topicRes = ev.loadTopics(reqForTopic);
-        //   DSRUIModel.CalendarResponse calenderRes = ev.loadCalendar(reqForCalender);
-        
+        DSRUIModel.SitesResponse siteRes = ev.loadSites(new DSRUIModel.SitesRequest());
+          DSRUIModel.TopicsResponse topicRes = ev.loadTopics(reqForTopic);
+           DSRUIModel.CalendarResponse calenderRes = ev.loadCalendar(reqForCalender);
         test.stopTest();
         
         //   System.assert(siteRes != null,'siteRes not equal to null');
@@ -84,6 +83,123 @@ public class EVApi_Test {
         //        System.assert(calenderRes != null,'calenderRes not equal to null');
         
     }
+    public static testMethod void test() {
+        EVApi.BSDataSource ev = new EVApi.BSDataSource();
+        DSRUIModel.TopicsRequest reqForTopic= new DSRUIModel.TopicsRequest();
+        reqForTopic.siteId ='1';
+        DSRUIModel.CalendarRequest reqForCalender = new DSRUIModel.CalendarRequest();
+        reqForCalender.siteId ='1';
+        DSRUIModel.CalendarTopicResult CalendarTopicResult= new DSRUIModel.CalendarTopicResult();
+        
+        
+        DSRUIModel.Site DSRUSite = new DSRUIModel.Site('1', 'Test', 'india' ,'2012,11,23,12,0,0','2012,11,23,12,0,10');
+        DSRUSite.getHoursOfOperation();
+        
+        DSRUIModel.CalendarItem CalItem = new DSRUIModel.CalendarItem('2015-07-08',True);
+        CalItem.start='2015-07-08';
+        CalItem.available=True;
+        
+        System.assertNotEquals(null,CalItem.title,'title not equal to null');
+        System.assertNotEquals(null,CalItem.backgroundColor,'backgroundColor not equal to null');
+        
+        new DSRUIModel.CalendarItem(System.now().date(),false);
+        
+        //set mock callout class
+        Test.setMock(HttpCalloutMock.class, new EVApiMockHttpResponse());
+        
+        test.startTest();
+        // call testParseDates method to test ParseDates of EVApiModel....
+        EVApiModel.testParseDates();
+        DSRUIModel.SitesResponse siteRes = ev.loadSites(new DSRUIModel.SitesRequest());
+          DSRUIModel.TopicsResponse topicRes = ev.loadTopics(reqForTopic);
+           DSRUIModel.CalendarResponse calenderRes = ev.loadCalendar(reqForCalender);
+        HttpRequest req =new HttpRequest();
+           
+           ev.fetchJSON(req);
+    test.stopTest();
+        
+        //   System.assert(siteRes != null,'siteRes not equal to null');
+        //   System.assert(topicRes != null,'topicRes not equal to null');
+        //        System.assert(calenderRes != null,'calenderRes not equal to null');
+        
+    }
+    private static testMethod void test1() {
+        EVApi.BSDataSource ev = new EVApi.BSDataSource();
+        DSRUIModel.TopicsRequest reqForTopic= new DSRUIModel.TopicsRequest();
+        reqForTopic.siteId ='1';
+        DSRUIModel.CalendarRequest reqForCalender = new DSRUIModel.CalendarRequest();
+        reqForCalender.siteId ='1';
+        DSRUIModel.CalendarTopicResult CalendarTopicResult= new DSRUIModel.CalendarTopicResult();
+        
+        
+        DSRUIModel.Site DSRUSite = new DSRUIModel.Site('1', 'Test', 'india' ,'2012,11,23,12,0,0','2012,11,23,12,0,10');
+        DSRUSite.getHoursOfOperation();
+        
+        DSRUIModel.CalendarItem CalItem = new DSRUIModel.CalendarItem('2015-07-08',True);
+        CalItem.start='2015-07-08';
+        CalItem.available=True;
+        
+        System.assertNotEquals(null,CalItem.title,'title not equal to null');
+        System.assertNotEquals(null,CalItem.backgroundColor,'backgroundColor not equal to null');
+        
+        new DSRUIModel.CalendarItem(System.now().date(),false);
+        
+        //set mock callout class
+        Test.setMock(HttpCalloutMock.class, new EVApiMockHttpResponse());
+        
+        test.startTest();
+        // call testParseDates method to test ParseDates of EVApiModel....
+        EVApiModel.testParseDates();
+       // DSRUIModel.SitesResponse siteRes = ev.loadSites(new DSRUIModel.SitesRequest());
+          DSRUIModel.TopicsResponse topicRes = ev.loadTopics(reqForTopic);
+           DSRUIModel.CalendarResponse calenderRes = ev.loadCalendar(reqForCalender);
+        test.stopTest();
+        
+        //   System.assert(siteRes != null,'siteRes not equal to null');
+        //   System.assert(topicRes != null,'topicRes not equal to null');
+        //        System.assert(calenderRes != null,'calenderRes not equal to null');
+        
+    }
+    
+    private static testMethod void test2() {
+        EVApi.BSDataSource ev = new EVApi.BSDataSource();
+        DSRUIModel.TopicsRequest reqForTopic= new DSRUIModel.TopicsRequest();
+        reqForTopic.siteId ='1';
+        DSRUIModel.CalendarRequest reqForCalender = new DSRUIModel.CalendarRequest();
+        reqForCalender.siteId ='1';
+        DSRUIModel.CalendarTopicResult CalendarTopicResult= new DSRUIModel.CalendarTopicResult();
+        
+        
+        DSRUIModel.Site DSRUSite = new DSRUIModel.Site('1', 'Test', 'india' ,'2012,11,23,12,0,0','2012,11,23,12,0,10');
+        DSRUSite.getHoursOfOperation();
+        
+        DSRUIModel.CalendarItem CalItem = new DSRUIModel.CalendarItem('2015-07-08',True);
+        CalItem.start='2015-07-08';
+        CalItem.available=True;
+        
+        System.assertNotEquals(null,CalItem.title,'title not equal to null');
+        System.assertNotEquals(null,CalItem.backgroundColor,'backgroundColor not equal to null');
+        
+        new DSRUIModel.CalendarItem(System.now().date(),false);
+        
+        //set mock callout class
+        Test.setMock(HttpCalloutMock.class, new EVApiMockHttpResponse());
+        
+        test.startTest();
+        // call testParseDates method to test ParseDates of EVApiModel....
+        EVApiModel.testParseDates();
+       // DSRUIModel.SitesResponse siteRes = ev.loadSites(new DSRUIModel.SitesRequest());
+         // DSRUIModel.TopicsResponse topicRes = ev.loadTopics(reqForTopic);
+           DSRUIModel.CalendarResponse calenderRes = ev.loadCalendar(reqForCalender);
+        test.stopTest();
+        
+        //   System.assert(siteRes != null,'siteRes not equal to null');
+        //   System.assert(topicRes != null,'topicRes not equal to null');
+        //        System.assert(calenderRes != null,'calenderRes not equal to null');
+        
+    }
+    
+    
     
     static testmethod void testGetCenters() {
         bsource__BriefingSourceSettingsLists__c briefingSourceSettings = bsource__BriefingSourceSettingsLists__c.getOrgDefaults();
@@ -187,6 +303,7 @@ public class EVApi_Test {
         Test.setMock(HttpCalloutMock.class, new GenericCalloutMock(httpResponse,'test'));
         // EVApi.getFieldsClone();
         //  EVApi.getToken(bsource);
+        
         Test.stopTest();
         
     }
@@ -269,8 +386,563 @@ public class EVApi_Test {
         WizardState.selectedStartTime ='test';
         WizardState.selectedEndTime ='test';
         WizardState.selectedMeetingDurationType ='test';
-        system.debug(WizardState.canChangeSites);
+       system.debug(WizardState.canChangeSites);
+         
+          
         WizardState.getSelectedPrimaryDateObj();
+    
+        system.assert(objBriefingTopic!=null, 'Is not null');
+        // WizardState.getSelectedAlternateDateObj();
+        //objTopic.toBriefingTopicRecord();
+    }
+    public static testmethod void testDSRUIModelClass1() {
+        Account acc = new Account();
+        acc.Name = 'test';
+        insert acc;   
+        
+        Contact c=new Contact();
+        c.AccountId = acc.Id;
+        c.LastName='LName';
+        c.Email='email@gmail.com';
+        insert c;
+        bsource__BS_Deal_Support_Request__c DSRobj=new bsource__BS_Deal_Support_Request__c();
+        DSRobj.Name='DSRName';
+        insert DSRobj;
+        DSRUIModel.Topic objTopic = new DSRUIModel.Topic('test','test');
+        objTopic.apiId ='test';
+        objTopic.categoryId='Testing';
+        objTopic.categoryName ='test';
+        objTopic.duration ='test';
+        objTopic.notes='Testing';
+        objTopic.dsrId =DSRobj.Id;
+        Briefing_Topic__c objBriefingTopic = new Briefing_Topic__c();
+        objBriefingTopic.bsource__Category_Name__c ='General';
+        objBriefingTopic.bsource__Deal_Support_Request__c =DSRobj.Id;
+        insert objBriefingTopic;
+        DSRUIModel.Topic objTopic2= new DSRUIModel.Topic(objBriefingTopic);
+        DSRUIModel.Attendee objAttendee = new DSRUIModel.Attendee(c,'test',true);
+        DSRUIModel.WizardState WizardState = new DSRUIModel.WizardState();
+        WizardState.selectedSite ='test';
+        WizardState.selectedSiteName ='test';
+        WizardState.selectedAlternateDate ='test';
+        WizardState.selectedStartTime ='test';
+        WizardState.selectedEndTime ='test';
+        WizardState.selectedMeetingDurationType ='test';
+       // system.debug(WizardState.canChangeSites);
+          system.debug(WizardState.canChangeDSRName);
+         
+          
+        WizardState.getSelectedPrimaryDateObj();
+    
+        system.assert(objBriefingTopic!=null, 'Is not null');
+        // WizardState.getSelectedAlternateDateObj();
+        //objTopic.toBriefingTopicRecord();
+    }
+    public static testmethod void testDSRUIModelClass2() {
+        Account acc = new Account();
+        acc.Name = 'test';
+        insert acc;   
+        
+        Contact c=new Contact();
+        c.AccountId = acc.Id;
+        c.LastName='LName';
+        c.Email='email@gmail.com';
+        insert c;
+        bsource__BS_Deal_Support_Request__c DSRobj=new bsource__BS_Deal_Support_Request__c();
+        DSRobj.Name='DSRName';
+        insert DSRobj;
+        DSRUIModel.Topic objTopic = new DSRUIModel.Topic('test','test');
+        objTopic.apiId ='test';
+        objTopic.categoryId='Testing';
+        objTopic.categoryName ='test';
+        objTopic.duration ='test';
+        objTopic.notes='Testing';
+        objTopic.dsrId =DSRobj.Id;
+        Briefing_Topic__c objBriefingTopic = new Briefing_Topic__c();
+        objBriefingTopic.bsource__Category_Name__c ='General';
+        objBriefingTopic.bsource__Deal_Support_Request__c =DSRobj.Id;
+        insert objBriefingTopic;
+        DSRUIModel.Topic objTopic2= new DSRUIModel.Topic(objBriefingTopic);
+        DSRUIModel.Attendee objAttendee = new DSRUIModel.Attendee(c,'test',true);
+        DSRUIModel.WizardState WizardState = new DSRUIModel.WizardState();
+        WizardState.selectedSite ='test';
+        WizardState.selectedSiteName ='test';
+        WizardState.selectedAlternateDate ='test';
+        WizardState.selectedStartTime ='test';
+        WizardState.selectedEndTime ='test';
+        WizardState.selectedMeetingDurationType ='test';
+    
+          system.debug(WizardState.isStageAttendees);  
+    
+          
+        WizardState.getSelectedPrimaryDateObj();
+    
+        system.assert(objBriefingTopic!=null, 'Is not null');
+        // WizardState.getSelectedAlternateDateObj();
+        //objTopic.toBriefingTopicRecord();
+    }
+    public static testmethod void testDSRUIModelClass3() {
+        Account acc = new Account();
+        acc.Name = 'test';
+        insert acc;   
+        
+        Contact c=new Contact();
+        c.AccountId = acc.Id;
+        c.LastName='LName';
+        c.Email='email@gmail.com';
+        insert c;
+        bsource__BS_Deal_Support_Request__c DSRobj=new bsource__BS_Deal_Support_Request__c();
+        DSRobj.Name='DSRName';
+        insert DSRobj;
+        DSRUIModel.Topic objTopic = new DSRUIModel.Topic('test','test');
+        objTopic.apiId ='test';
+        objTopic.categoryId='Testing';
+        objTopic.categoryName ='test';
+        objTopic.duration ='test';
+        objTopic.notes='Testing';
+        objTopic.dsrId =DSRobj.Id;
+        Briefing_Topic__c objBriefingTopic = new Briefing_Topic__c();
+        objBriefingTopic.bsource__Category_Name__c ='General';
+        objBriefingTopic.bsource__Deal_Support_Request__c =DSRobj.Id;
+        insert objBriefingTopic;
+        DSRUIModel.Topic objTopic2= new DSRUIModel.Topic(objBriefingTopic);
+        DSRUIModel.Attendee objAttendee = new DSRUIModel.Attendee(c,'test',true);
+        DSRUIModel.WizardState WizardState = new DSRUIModel.WizardState();
+        WizardState.selectedSite ='test';
+        WizardState.selectedSiteName ='test';
+        WizardState.selectedAlternateDate ='test';
+        WizardState.selectedStartTime ='test';
+        WizardState.selectedEndTime ='test';
+        WizardState.selectedMeetingDurationType ='test';
+   
+        system.debug(WizardState.isStageReview);
+         
+          
+        WizardState.getSelectedPrimaryDateObj();
+    
+        system.assert(objBriefingTopic!=null, 'Is not null');
+        // WizardState.getSelectedAlternateDateObj();
+        //objTopic.toBriefingTopicRecord();
+    }
+    public static testmethod void testDSRUIModelClass4() {
+        Account acc = new Account();
+        acc.Name = 'test';
+        insert acc;   
+        
+        Contact c=new Contact();
+        c.AccountId = acc.Id;
+        c.LastName='LName';
+        c.Email='email@gmail.com';
+        insert c;
+        bsource__BS_Deal_Support_Request__c DSRobj=new bsource__BS_Deal_Support_Request__c();
+        DSRobj.Name='DSRName';
+        insert DSRobj;
+        DSRUIModel.Topic objTopic = new DSRUIModel.Topic('test','test');
+        objTopic.apiId ='test';
+        objTopic.categoryId='Testing';
+        objTopic.categoryName ='test';
+        objTopic.duration ='test';
+        objTopic.notes='Testing';
+        objTopic.dsrId =DSRobj.Id;
+        Briefing_Topic__c objBriefingTopic = new Briefing_Topic__c();
+        objBriefingTopic.bsource__Category_Name__c ='General';
+        objBriefingTopic.bsource__Deal_Support_Request__c =DSRobj.Id;
+        insert objBriefingTopic;
+        DSRUIModel.Topic objTopic2= new DSRUIModel.Topic(objBriefingTopic);
+        DSRUIModel.Attendee objAttendee = new DSRUIModel.Attendee(c,'test',true);
+        DSRUIModel.WizardState WizardState = new DSRUIModel.WizardState();
+        WizardState.selectedSite ='test';
+        WizardState.selectedSiteName ='test';
+        WizardState.selectedAlternateDate ='test';
+        WizardState.selectedStartTime ='test';
+        WizardState.selectedEndTime ='test';
+        WizardState.selectedMeetingDurationType ='test';
+        //system.debug(WizardState.canChangeSites);
+          //system.debug(WizardState.canChangeDSRName);
+          //system.debug(WizardState.isStageAttendees);  
+        //system.debug(WizardState.isStageReview);
+          system.debug(WizardState.isStageAddInfo);
+          
+        WizardState.getSelectedPrimaryDateObj();
+    
+        system.assert(objBriefingTopic!=null, 'Is not null');
+        // WizardState.getSelectedAlternateDateObj();
+        //objTopic.toBriefingTopicRecord();
+    }
+     public static testmethod void testDSRUIModelClass5() {
+        Account acc = new Account();
+        acc.Name = 'test';
+        insert acc;   
+        
+        Contact c=new Contact();
+        c.AccountId = acc.Id;
+        c.LastName='LName';
+        c.Email='email@gmail.com';
+        insert c;
+        bsource__BS_Deal_Support_Request__c DSRobj=new bsource__BS_Deal_Support_Request__c();
+        DSRobj.Name='DSRName';
+        insert DSRobj;
+        DSRUIModel.Topic objTopic = new DSRUIModel.Topic('test','test');
+        objTopic.apiId ='test';
+        objTopic.categoryId='Testing';
+        objTopic.categoryName ='test';
+        objTopic.duration ='test';
+        objTopic.notes='Testing';
+        objTopic.dsrId =DSRobj.Id;
+        Briefing_Topic__c objBriefingTopic = new Briefing_Topic__c();
+        objBriefingTopic.bsource__Category_Name__c ='General';
+        objBriefingTopic.bsource__Deal_Support_Request__c =DSRobj.Id;
+        insert objBriefingTopic;
+        DSRUIModel.Topic objTopic2= new DSRUIModel.Topic(objBriefingTopic);
+        DSRUIModel.Attendee objAttendee = new DSRUIModel.Attendee(c,'test',true);
+        DSRUIModel.WizardState WizardState = new DSRUIModel.WizardState();
+        WizardState.selectedSite ='test';
+        WizardState.selectedSiteName ='test';
+        WizardState.selectedAlternateDate ='test';
+        WizardState.selectedStartTime ='test';
+        WizardState.selectedEndTime ='test';
+        WizardState.selectedMeetingDurationType ='test';
+    
+          system.debug(WizardState.isStageSite);
+          
+        WizardState.getSelectedPrimaryDateObj();
+    
+        system.assert(objBriefingTopic!=null, 'Is not null');
+        // WizardState.getSelectedAlternateDateObj();
+        //objTopic.toBriefingTopicRecord();
+    }
+     public static testmethod void testDSRUIModelClass6() {
+        Account acc = new Account();
+        acc.Name = 'test';
+        insert acc;   
+        
+        Contact c=new Contact();
+        c.AccountId = acc.Id;
+        c.LastName='LName';
+        c.Email='email@gmail.com';
+        insert c;
+        bsource__BS_Deal_Support_Request__c DSRobj=new bsource__BS_Deal_Support_Request__c();
+        DSRobj.Name='DSRName';
+        insert DSRobj;
+        DSRUIModel.Topic objTopic = new DSRUIModel.Topic('test','test');
+        objTopic.apiId ='test';
+        objTopic.categoryId='Testing';
+        objTopic.categoryName ='test';
+        objTopic.duration ='test';
+        objTopic.notes='Testing';
+        objTopic.dsrId =DSRobj.Id;
+        Briefing_Topic__c objBriefingTopic = new Briefing_Topic__c();
+        objBriefingTopic.bsource__Category_Name__c ='General';
+        objBriefingTopic.bsource__Deal_Support_Request__c =DSRobj.Id;
+        insert objBriefingTopic;
+        DSRUIModel.Topic objTopic2= new DSRUIModel.Topic(objBriefingTopic);
+        DSRUIModel.Attendee objAttendee = new DSRUIModel.Attendee(c,'test',true);
+        DSRUIModel.WizardState WizardState = new DSRUIModel.WizardState();
+        WizardState.selectedSite ='test';
+        WizardState.selectedSiteName ='test';
+        WizardState.selectedAlternateDate ='test';
+        WizardState.selectedStartTime ='test';
+        WizardState.selectedEndTime ='test';
+        WizardState.selectedMeetingDurationType ='test';
+    
+          system.debug(WizardState.oppId);
+          
+        WizardState.getSelectedPrimaryDateObj();
+    
+        system.assert(objBriefingTopic!=null, 'Is not null');
+        // WizardState.getSelectedAlternateDateObj();
+        //objTopic.toBriefingTopicRecord();
+    }
+     public static testmethod void testDSRUIModelClass7() {
+        Account acc = new Account();
+        acc.Name = 'test';
+        insert acc;   
+        
+        Contact c=new Contact();
+        c.AccountId = acc.Id;
+        c.LastName='LName';
+        c.Email='email@gmail.com';
+        insert c;
+        bsource__BS_Deal_Support_Request__c DSRobj=new bsource__BS_Deal_Support_Request__c();
+        DSRobj.Name='DSRName';
+        insert DSRobj;
+        DSRUIModel.Topic objTopic = new DSRUIModel.Topic('test','test');
+        objTopic.apiId ='test';
+        objTopic.categoryId='Testing';
+        objTopic.categoryName ='test';
+        objTopic.duration ='test';
+        objTopic.notes='Testing';
+        objTopic.dsrId =DSRobj.Id;
+        Briefing_Topic__c objBriefingTopic = new Briefing_Topic__c();
+        objBriefingTopic.bsource__Category_Name__c ='General';
+        objBriefingTopic.bsource__Deal_Support_Request__c =DSRobj.Id;
+        insert objBriefingTopic;
+        DSRUIModel.Topic objTopic2= new DSRUIModel.Topic(objBriefingTopic);
+        DSRUIModel.Attendee objAttendee = new DSRUIModel.Attendee(c,'test',true);
+        DSRUIModel.WizardState WizardState = new DSRUIModel.WizardState();
+        WizardState.selectedSite ='test';
+        WizardState.selectedSiteName ='test';
+        WizardState.selectedAlternateDate ='test';
+        WizardState.selectedStartTime ='test';
+        WizardState.selectedEndTime ='test';
+        WizardState.selectedMeetingDurationType ='test';
+    
+          system.debug(WizardState.isStageTopics);
+          
+        WizardState.getSelectedPrimaryDateObj();
+    
+        system.assert(objBriefingTopic!=null, 'Is not null');
+        // WizardState.getSelectedAlternateDateObj();
+        //objTopic.toBriefingTopicRecord();
+    }
+     public static testmethod void testDSRUIModelClass8() {
+        Account acc = new Account();
+        acc.Name = 'test';
+        insert acc;   
+        
+        Contact c=new Contact();
+        c.AccountId = acc.Id;
+        c.LastName='LName';
+        c.Email='email@gmail.com';
+        insert c;
+        bsource__BS_Deal_Support_Request__c DSRobj=new bsource__BS_Deal_Support_Request__c();
+        DSRobj.Name='DSRName';
+        insert DSRobj;
+        DSRUIModel.Topic objTopic = new DSRUIModel.Topic('test','test');
+        objTopic.apiId ='test';
+        objTopic.categoryId='Testing';
+        objTopic.categoryName ='test';
+        objTopic.duration ='test';
+        objTopic.notes='Testing';
+        objTopic.dsrId =DSRobj.Id;
+        Briefing_Topic__c objBriefingTopic = new Briefing_Topic__c();
+        objBriefingTopic.bsource__Category_Name__c ='General';
+        objBriefingTopic.bsource__Deal_Support_Request__c =DSRobj.Id;
+        insert objBriefingTopic;
+        DSRUIModel.Topic objTopic2= new DSRUIModel.Topic(objBriefingTopic);
+        DSRUIModel.Attendee objAttendee = new DSRUIModel.Attendee(c,'test',true);
+        DSRUIModel.WizardState WizardState = new DSRUIModel.WizardState();
+        WizardState.selectedSite ='test';
+        WizardState.selectedSiteName ='test';
+        WizardState.selectedAlternateDate ='test';
+        WizardState.selectedStartTime ='test';
+        WizardState.selectedEndTime ='test';
+        WizardState.selectedMeetingDurationType ='test';
+    
+          system.debug(WizardState.canChangeDates);
+          
+        WizardState.getSelectedPrimaryDateObj();
+    
+        system.assert(objBriefingTopic!=null, 'Is not null');
+        // WizardState.getSelectedAlternateDateObj();
+        //objTopic.toBriefingTopicRecord();
+    }
+     public static testmethod void testDSRUIModelClass9() {
+        Account acc = new Account();
+        acc.Name = 'test';
+        insert acc;   
+        
+        Contact c=new Contact();
+        c.AccountId = acc.Id;
+        c.LastName='LName';
+        c.Email='email@gmail.com';
+        insert c;
+        bsource__BS_Deal_Support_Request__c DSRobj=new bsource__BS_Deal_Support_Request__c();
+        DSRobj.Name='DSRName';
+        insert DSRobj;
+        DSRUIModel.Topic objTopic = new DSRUIModel.Topic('test','test');
+        objTopic.apiId ='test';
+        objTopic.categoryId='Testing';
+        objTopic.categoryName ='test';
+        objTopic.duration ='test';
+        objTopic.notes='Testing';
+        objTopic.dsrId =DSRobj.Id;
+        Briefing_Topic__c objBriefingTopic = new Briefing_Topic__c();
+        objBriefingTopic.bsource__Category_Name__c ='General';
+        objBriefingTopic.bsource__Deal_Support_Request__c =DSRobj.Id;
+        insert objBriefingTopic;
+        DSRUIModel.Topic objTopic2= new DSRUIModel.Topic(objBriefingTopic);
+        DSRUIModel.Attendee objAttendee = new DSRUIModel.Attendee(c,'test',true);
+        DSRUIModel.WizardState WizardState = new DSRUIModel.WizardState();
+        WizardState.selectedSite ='test';
+        WizardState.selectedSiteName ='test';
+        WizardState.selectedAlternateDate ='test';
+        WizardState.selectedStartTime ='test';
+        WizardState.selectedEndTime ='test';
+        WizardState.selectedMeetingDurationType ='test';
+    
+          system.debug(WizardState.canChangeTopics);
+          
+        WizardState.getSelectedPrimaryDateObj();
+    
+        system.assert(objBriefingTopic!=null, 'Is not null');
+        // WizardState.getSelectedAlternateDateObj();
+        //objTopic.toBriefingTopicRecord();
+    }
+     public static testmethod void testDSRUIModelClass10() {
+        Account acc = new Account();
+        acc.Name = 'test';
+        insert acc;   
+        
+        Contact c=new Contact();
+        c.AccountId = acc.Id;
+        c.LastName='LName';
+        c.Email='email@gmail.com';
+        insert c;
+        bsource__BS_Deal_Support_Request__c DSRobj=new bsource__BS_Deal_Support_Request__c();
+        DSRobj.Name='DSRName';
+        insert DSRobj;
+        DSRUIModel.Topic objTopic = new DSRUIModel.Topic('test','test');
+        objTopic.apiId ='test';
+        objTopic.categoryId='Testing';
+        objTopic.categoryName ='test';
+        objTopic.duration ='test';
+        objTopic.notes='Testing';
+        objTopic.dsrId =DSRobj.Id;
+        Briefing_Topic__c objBriefingTopic = new Briefing_Topic__c();
+        objBriefingTopic.bsource__Category_Name__c ='General';
+        objBriefingTopic.bsource__Deal_Support_Request__c =DSRobj.Id;
+        insert objBriefingTopic;
+        DSRUIModel.Topic objTopic2= new DSRUIModel.Topic(objBriefingTopic);
+        DSRUIModel.Attendee objAttendee = new DSRUIModel.Attendee(c,'test',true);
+        DSRUIModel.WizardState WizardState = new DSRUIModel.WizardState();
+        WizardState.selectedSite ='test';
+        WizardState.selectedSiteName ='test';
+        WizardState.selectedAlternateDate ='test';
+        WizardState.selectedStartTime ='test';
+        WizardState.selectedEndTime ='test';
+        WizardState.selectedMeetingDurationType ='test';
+    
+          system.debug(WizardState.canChangeAddInfo);
+          
+        WizardState.getSelectedPrimaryDateObj();
+    
+        system.assert(objBriefingTopic!=null, 'Is not null');
+        // WizardState.getSelectedAlternateDateObj();
+        //objTopic.toBriefingTopicRecord();
+    }
+     public static testmethod void testDSRUIModelClass11() {
+        Account acc = new Account();
+        acc.Name = 'test';
+        insert acc;   
+        
+        Contact c=new Contact();
+        c.AccountId = acc.Id;
+        c.LastName='LName';
+        c.Email='email@gmail.com';
+        insert c;
+        bsource__BS_Deal_Support_Request__c DSRobj=new bsource__BS_Deal_Support_Request__c();
+        DSRobj.Name='DSRName';
+        insert DSRobj;
+        DSRUIModel.Topic objTopic = new DSRUIModel.Topic('test','test');
+        objTopic.apiId ='test';
+        objTopic.categoryId='Testing';
+        objTopic.categoryName ='test';
+        objTopic.duration ='test';
+        objTopic.notes='Testing';
+        objTopic.dsrId =DSRobj.Id;
+        Briefing_Topic__c objBriefingTopic = new Briefing_Topic__c();
+        objBriefingTopic.bsource__Category_Name__c ='General';
+        objBriefingTopic.bsource__Deal_Support_Request__c =DSRobj.Id;
+        insert objBriefingTopic;
+        DSRUIModel.Topic objTopic2= new DSRUIModel.Topic(objBriefingTopic);
+        DSRUIModel.Attendee objAttendee = new DSRUIModel.Attendee(c,'test',true);
+        DSRUIModel.WizardState WizardState = new DSRUIModel.WizardState();
+        WizardState.selectedSite ='test';
+        WizardState.selectedSiteName ='test';
+        WizardState.selectedAlternateDate ='test';
+        WizardState.selectedStartTime ='test';
+        WizardState.selectedEndTime ='test';
+        WizardState.selectedMeetingDurationType ='test';
+    
+          system.debug(WizardState.canChangeAttendees);
+          
+        WizardState.getSelectedPrimaryDateObj();
+    
+        system.assert(objBriefingTopic!=null, 'Is not null');
+        // WizardState.getSelectedAlternateDateObj();
+        //objTopic.toBriefingTopicRecord();
+    }
+     public static testmethod void testDSRUIModelClass12() {
+        Account acc = new Account();
+        acc.Name = 'test';
+        insert acc;   
+        
+        Contact c=new Contact();
+        c.AccountId = acc.Id;
+        c.LastName='LName';
+        c.Email='email@gmail.com';
+        insert c;
+        bsource__BS_Deal_Support_Request__c DSRobj=new bsource__BS_Deal_Support_Request__c();
+        DSRobj.Name='DSRName';
+        insert DSRobj;
+        DSRUIModel.Topic objTopic = new DSRUIModel.Topic('test','test');
+        objTopic.apiId ='test';
+        objTopic.categoryId='Testing';
+        objTopic.categoryName ='test';
+        objTopic.duration ='test';
+        objTopic.notes='Testing';
+        objTopic.dsrId =DSRobj.Id;
+        Briefing_Topic__c objBriefingTopic = new Briefing_Topic__c();
+        objBriefingTopic.bsource__Category_Name__c ='General';
+        objBriefingTopic.bsource__Deal_Support_Request__c =DSRobj.Id;
+        insert objBriefingTopic;
+        DSRUIModel.Topic objTopic2= new DSRUIModel.Topic(objBriefingTopic);
+        DSRUIModel.Attendee objAttendee = new DSRUIModel.Attendee(c,'test',true);
+        DSRUIModel.WizardState WizardState = new DSRUIModel.WizardState();
+        WizardState.selectedSite ='test';
+        WizardState.selectedSiteName ='test';
+        WizardState.selectedAlternateDate ='test';
+        WizardState.selectedStartTime ='test';
+        WizardState.selectedEndTime ='test';
+        WizardState.selectedMeetingDurationType ='test';
+    
+          system.debug(WizardState.canChangeDSR);
+          
+        WizardState.getSelectedPrimaryDateObj();
+    
+        system.assert(objBriefingTopic!=null, 'Is not null');
+        // WizardState.getSelectedAlternateDateObj();
+        //objTopic.toBriefingTopicRecord();
+    }
+     public static testmethod void testDSRUIModelClass13() {
+        Account acc = new Account();
+        acc.Name = 'test';
+        insert acc;   
+        
+        Contact c=new Contact();
+        c.AccountId = acc.Id;
+        c.LastName='LName';
+        c.Email='email@gmail.com';
+        insert c;
+        bsource__BS_Deal_Support_Request__c DSRobj=new bsource__BS_Deal_Support_Request__c();
+        DSRobj.Name='DSRName';
+        insert DSRobj;
+        DSRUIModel.Topic objTopic = new DSRUIModel.Topic('test','test');
+        objTopic.apiId ='test';
+        objTopic.categoryId='Testing';
+        objTopic.categoryName ='test';
+        objTopic.duration ='test';
+        objTopic.notes='Testing';
+        objTopic.dsrId =DSRobj.Id;
+        Briefing_Topic__c objBriefingTopic = new Briefing_Topic__c();
+        objBriefingTopic.bsource__Category_Name__c ='General';
+        objBriefingTopic.bsource__Deal_Support_Request__c =DSRobj.Id;
+        insert objBriefingTopic;
+        DSRUIModel.Topic objTopic2= new DSRUIModel.Topic(objBriefingTopic);
+        DSRUIModel.Attendee objAttendee = new DSRUIModel.Attendee(c,'test',true);
+        DSRUIModel.WizardState WizardState = new DSRUIModel.WizardState();
+        WizardState.selectedSite ='test';
+        WizardState.selectedSiteName ='test';
+        WizardState.selectedAlternateDate ='test';
+        WizardState.selectedStartTime ='test';
+        WizardState.selectedEndTime ='test';
+        WizardState.selectedMeetingDurationType ='test';
+    
+          system.debug(WizardState.canChangeDates);
+          
+        WizardState.getSelectedPrimaryDateObj();
+    
         system.assert(objBriefingTopic!=null, 'Is not null');
         // WizardState.getSelectedAlternateDateObj();
         //objTopic.toBriefingTopicRecord();

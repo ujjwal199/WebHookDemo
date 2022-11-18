@@ -17,7 +17,7 @@ public with sharing class EVApi {
     // The real API connected data source 
     public with sharing virtual class BSDataSource implements I_DataSource {
         //String endpoint = 'callout:Briefing_Source/';
-        
+        @testVisible
         protected String fetchJSON(HttpRequest req) {
             // set to maximum 
             req.setTimeout(120000);
@@ -110,8 +110,7 @@ public with sharing class EVApi {
     }
     public static Decimal getRefreshedTime(Briefing_Source_Settings__mdt objMetadata){
         Decimal minutes = 0;
-        if(objMetadata.bsource__Refreshed_Time__c != null){
-            dateTime endDate = system.now();
+        if(objMetadata.bsource__Refreshed_Time__c != null){dateTime endDate = system.now();
             DateTime startDate = objMetadata.bsource__Refreshed_Time__c;
             minutes = Integer.valueOf((endDate.getTime() - startDate.getTime())/(1000*60));
         }

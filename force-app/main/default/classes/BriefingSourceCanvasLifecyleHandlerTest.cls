@@ -28,7 +28,7 @@ private class BriefingSourceCanvasLifecyleHandlerTest {
 		Canvas.Test.testCanvasLifecycle(new BriefingSourceCanvasLifecyleHandler(), renderContext);
 
 		Map<String, Object> parameters = (Map<String, Object>) JSON.deserializeUntyped(renderContext.getEnvironmentContext().getParametersAsJSON());
-
+   
 		System.assertEquals(opportunity.Id, parameters.get('oppId'),'Id should not null');
         BriefingSourceCanvasLifecyleHandler objBriefingSourceCanvasLifecyleHandler= new BriefingSourceCanvasLifecyleHandler();
         objBriefingSourceCanvasLifecyleHandler.isValidField('Account','Name');

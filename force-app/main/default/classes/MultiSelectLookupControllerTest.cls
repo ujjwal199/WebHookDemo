@@ -157,7 +157,7 @@ public class MultiSelectLookupControllerTest {
         ocrlist=lstResult[0].Id;
         accountslist=[select Id from Account Limit 1].Id;
         List<MultiSelectLookupController.SObjectQueryResult> objList= MultiSelectLookupController.retrieveRecords(objectName,fieldAPINames,filterFieldAPIName,strInput,accountslist,ocrlist,recid,initiatedfrom);
-        //system.assert(objList[0].recordId==lstResult[0].Id);  
+        system.assert(objList[0].recordId==lstResult[0].Id);  
         system.assert(objList.size()==0,'objList should not be 0 ');        
     }    
     @isTest static void retrieveRecords_OpportunitywithNullAccount(){ 
