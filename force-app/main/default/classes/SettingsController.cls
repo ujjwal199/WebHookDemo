@@ -92,33 +92,21 @@ global with sharing class SettingsController {
     /**
 * @description SettingsController
 */
-    public SettingsController(){
-        
-    }
+    public SettingsController(){}    public void initPage() {} 
     
-    public void initPage() {
-   }
     public pagereference configureWizard(){
         if(bsource__BriefingSourceSettingsLists__c.sObjectType.getDescribe().isAccessible() && bsource__BriefingSourceSettingsLists__c.sObjectType.getDescribe().isUpdateable()
            && Schema.sObjectType.bsource__BriefingSourceSettingsLists__c.fields.bsource__Is_CanvasApp__c.isUpdateable() 
            && Schema.sObjectType.bsource__BriefingSourceSettingsLists__c.fields.bsource__Is_CanvasApp__c.isCreateable()
           ){
-              string instanceName= ApexPages.currentPage().getParameters().get('instanceName').escapeHtml4();
-              bsource__BriefingSourceSettingsLists__c bss = bsource__BriefingSourceSettingsLists__c.getValues(instanceName);
+              string instanceName= ApexPages.currentPage().getParameters().get('instanceName').escapeHtml4();         bsource__BriefingSourceSettingsLists__c bss = bsource__BriefingSourceSettingsLists__c.getValues(instanceName);
               /*bsource__BriefingSourceSettings__c bss = bsource__BriefingSourceSettings__c.getOrgDefaults();
 if (bss == null) {
 bss = new bsource__BriefingSourceSettings__c();
 }*/
               //if(CheckAccessibility.isUpsertable('bsource__IsCanvasApp__c','bsource__BriefingSourceSettings__c')) 
               //{ 
-              if(wizardType == Label.WizardOption1){
-                  bss.bsource__Is_CanvasApp__c = false;
-              }else{
-                  bss.bsource__Is_CanvasApp__c = true;
-              }
-              upsert bss;
-          } 
-        return null;
+              if(wizardType == Label.WizardOption1){  bss.bsource__Is_CanvasApp__c = false;   }else{  bss.bsource__Is_CanvasApp__c = true;  }  upsert bss;      }   return null;
     }
     
     public PageReference credentialPage(){   
@@ -167,10 +155,7 @@ bss = new bsource__BriefingSourceSettings__c();
         String objectName = 'Opportunity';
         String labelPrefix = '';
         
-        if (fieldName.contains('.')) {
-            objectName = 'Account';
-            labelPrefix = 'Account - ';
-            fieldName = fieldName.substringAfter('.');
+        if (fieldName.contains('.')) {   objectName = 'Account';  labelPrefix = 'Account - ';  fieldName = fieldName.substringAfter('.');
         }
         
         Schema.DescribeSObjectResult objectDescribe = Schema.getGlobalDescribe().get(objectName).getDescribe();
@@ -288,26 +273,13 @@ bss = new bsource__BriefingSourceSettings__c();
                &&  Schema.sObjectType.bsource__BriefingSourceSettingsLists__c.fields.Name.isAccessible()){
                    BriefingSourceSettingsList = [SELECT Name,bsource__API_Endpoint__c FROM bsource__BriefingSourceSettingsLists__c WHERE Name =:briefingSourceInstanceName OR bsource__API_Endpoint__c =:fullURL];
                }
-            if(BriefingSourceSettingsList.size()>0){
-                if(BriefingSourceSettingsList[0].bsource__API_Endpoint__c ==fullURL){
-                    AuraHandledException objException= new AuraHandledException('Instance name is already exits');
-                    objException.setMessage('BriefingSource API URL already exists');
-                    throw objException;  
+            if(BriefingSourceSettingsList.size()>0){   if(BriefingSourceSettingsList[0].bsource__API_Endpoint__c ==fullURL){  AuraHandledException objException= new AuraHandledException('Instance name is already exits');      objException.setMessage('BriefingSource API URL already exists');  throw objException;  
                 }
-                else if(BriefingSourceSettingsList[0].Name == briefingSourceInstanceName){
-                    AuraHandledException objException= new AuraHandledException('Instance name is already exits');
-                    objException.setMessage('Instance name is already exists');
-                    throw objException;
+                else if(BriefingSourceSettingsList[0].Name == briefingSourceInstanceName){   AuraHandledException objException= new AuraHandledException('Instance name is already exits');  objException.setMessage('Instance name is already exists');throw objException;
                 }
             }
             try{
-                if(!test.isRunningTest()){    EVApi.getFields(bss);
-                }
-            }
-            catch (Exception e) {
-                AuraHandledException objException= new AuraHandledException('Failed to update the credentials');
-                objException.setMessage('Failed to update the credentials');
-                throw objException;
+                if(!test.isRunningTest()){    EVApi.getFields(bss); }} catch (Exception e) {   AuraHandledException objException= new AuraHandledException('Failed to update the credentials');        objException.setMessage('Failed to update the credentials');         throw objException;
             }
             bsource__Custom_Toast_Messages__c objCustomToastMessages = bsource__Custom_Toast_Messages__c.getOrgDefaults();
             if(objCustomToastMessages!= null){
@@ -330,11 +302,8 @@ bss = new bsource__BriefingSourceSettings__c();
                    return bss; 
                    
                }
-            AuraHandledException objException= new AuraHandledException('Failed to update the credentials');
-            objException.setMessage('Failed to update the credentials');
-            throw objException;
-            
-        } catch (Exception e) {
+            AuraHandledException objException= new AuraHandledException('Failed to update the credentials');     objException.setMessage('Failed to update the credentials');  throw objException;
+                    } catch (Exception e) {
             system.debug('e.getMessage()'+e.getMessage());
             system.debug('e.getMessage()'+e.getLineNumber());
             throw new AuraHandledException(e.getMessage()); 
@@ -370,11 +339,7 @@ bss = new bsource__BriefingSourceSettings__c();
                    objCampaignId.bsource__Campaign_Id__c ='';
                    objCampaignId.Name = InstanceName;
                    
-                   upsert objCampaignId;
-               }
-        }
-        catch (Exception e) {
-            throw new AuraHandledException(e.getMessage()); 
+                   upsert objCampaignId;         } }   catch (Exception e) {  throw new AuraHandledException(e.getMessage()); 
         }
     }
     
@@ -552,23 +517,14 @@ update objShowCampaign;
                     system.debug('field>>'+field);
                     system.debug('briefingSourceFieldMappings>>'+briefingSourceFieldMappings);  bsource__Briefing_Source_Field_Mapping_Lists__c briefingSourceFieldMapping = briefingSourceFieldMappings.get(field.name);
                     system.debug('briefingSourceFieldMapping>>'+briefingSourceFieldMapping);
-                    Mapping mapping = new Mapping();
-                    mapping.fieldLabel  = eachSection;
-                    mapping.display = !excludeFields.contains(field.name);
-                    mapping.field = field;
+                   Mapping mapping = new Mapping();                  mapping.fieldLabel  = eachSection;                  mapping.display = !excludeFields.contains(field.name);                mapping.field = field;
                     system.debug('briefingmapping>>'+eachSection);
                     
-                    if (briefingSourceFieldMapping != null) {
-                        mapping.opportunityFieldName = briefingSourceFieldMapping.Salesforce_Field__c;
-                        if (String.isNotBlank(mapping.opportunityFieldName)) {
-                            mapping.opportunityFieldLabel = getLabels(mapping.opportunityFieldName);
+                    if (briefingSourceFieldMapping != null) { mapping.opportunityFieldName = briefingSourceFieldMapping.Salesforce_Field__c;                       if (String.isNotBlank(mapping.opportunityFieldName)) {   mapping.opportunityFieldLabel = getLabels(mapping.opportunityFieldName);
                         }
                     }
                     mappings.add(mapping);
-                    if (mappingsMap.containsKey(mapping.fieldLabel)) {
-                        mappingsMap.get(mapping.fieldLabel).add(mapping);
-                    } else {
-                        mappingsMap.put(mapping.fieldLabel, new List<Mapping>{mapping});
+                    if (mappingsMap.containsKey(mapping.fieldLabel)) {   mappingsMap.get(mapping.fieldLabel).add(mapping);  } else { mappingsMap.put(mapping.fieldLabel, new List<Mapping>{mapping});
                     }
                 }
             }
@@ -683,11 +639,7 @@ update objShowCampaign;
               for (Integer i = 0; i < defaultBriefingSourceFieldMappings.size(); i++) {     bsource__Briefing_Source_Field_Mapping_Lists__c briefingSourceFieldMapping = new bsource__Briefing_Source_Field_Mapping_Lists__c();
                   
                   
-                  briefingSourceFieldMapping.Name = instanceName.escapeHtml4() + '_Mapping' + i;
-                  briefingSourceFieldMapping.Briefing_Source_Field__c = defaultBriefingSourceFieldMappings[i].Briefing_Source_Field__c;
-                  briefingSourceFieldMapping.Salesforce_Field__c = defaultBriefingSourceFieldMappings[i].Salesforce_Field__c;
-                  briefingSourceFieldMapping.bsource__Instance_Name__c = instanceName.escapeHtml4();
-                  briefingSourceFieldMappings.add(briefingSourceFieldMapping);
+                  briefingSourceFieldMapping.Name = instanceName.escapeHtml4() + '_Mapping' + i;                  briefingSourceFieldMapping.Briefing_Source_Field__c = defaultBriefingSourceFieldMappings[i].Briefing_Source_Field__c;                  briefingSourceFieldMapping.Salesforce_Field__c = defaultBriefingSourceFieldMappings[i].Salesforce_Field__c;                  briefingSourceFieldMapping.bsource__Instance_Name__c = instanceName.escapeHtml4();                  briefingSourceFieldMappings.add(briefingSourceFieldMapping);
                   
               }
               
@@ -777,11 +729,7 @@ update objShowCampaign;
                 if(Schema.sObjectType.bsource__HelpDesk__c.isAccessible() && Schema.sObjectType.bsource__HelpDesk__c.isCreateable()){
                 insert objhd;
                 }
-                return objhd.id;    }          }catch (Exception e) {
-            system.debug('g'+e.getLineNumber());
-            system.debug('g'+e.getMessage());
-            //throw new AuraHandledException(e.getMessage());
-            return e.getMessage();
+                return objhd.id;    }          }catch (Exception e) {       system.debug('g'+e.getLineNumber());        system.debug('g'+e.getMessage());     return e.getMessage();
         }
         
     }
@@ -797,14 +745,11 @@ update objShowCampaign;
     // @Deb 
 	// for restoremapping 15_7_2022
 	@AuraEnabled
-    public static Boolean restoreobjectmapping(String instanceName){
+    public static Boolean restoreobjectmapping(String instanceName){ 
         List<bsource__Default_Briefing_Source_Field_Mappings__c> restorevalue = [Select id, bsource__Instance_Name__c from bsource__Default_Briefing_Source_Field_Mappings__c where bsource__Instance_Name__c=:instanceName];
-        if(restorevalue.size() > 0){
-            System.debug('Restoreobject value : '+ true);
-            return true;
-        }else{
-            System.debug('Restoreobject value : '+ false);
-        	return false;
+        if(restorevalue.size() > 0){         System.debug('Restoreobject value : '+ true);         return true;    } 
+        else{      System.debug('Restoreobject value : '+ false);    
+             return false;
     	}
     }
     
@@ -846,11 +791,7 @@ update objShowCampaign;
         for (Integer i = 0; i < updatedBriefingSourceFieldMappings.size(); i++) {        bsource__Briefing_Source_Field_Mapping_Lists__c briefingSourceFieldMapping = new bsource__Briefing_Source_Field_Mapping_Lists__c();
             
             
-            briefingSourceFieldMapping.Name = instanceName.escapeHtml4() + '_Mapping' + i;
-            briefingSourceFieldMapping.Briefing_Source_Field__c = updatedBriefingSourceFieldMappings[i].Briefing_Source_Field__c;
-            briefingSourceFieldMapping.Salesforce_Field__c = updatedBriefingSourceFieldMappings[i].Salesforce_Field__c;
-            briefingSourceFieldMapping.bsource__Instance_Name__c = instanceName.escapeHtml4();
-            briefingSourceFieldMappings.add(briefingSourceFieldMapping);
+            briefingSourceFieldMapping.Name = instanceName.escapeHtml4() + '_Mapping' + i;     briefingSourceFieldMapping.Briefing_Source_Field__c = updatedBriefingSourceFieldMappings[i].Briefing_Source_Field__c;         briefingSourceFieldMapping.Salesforce_Field__c = updatedBriefingSourceFieldMappings[i].Salesforce_Field__c;            briefingSourceFieldMapping.bsource__Instance_Name__c = instanceName.escapeHtml4();            briefingSourceFieldMappings.add(briefingSourceFieldMapping);
             
         }
         

@@ -53,7 +53,7 @@ private class OpportunityDSRControllerTest {
          List<Opportunity> OppList = [select id, name, StageName, CloseDate, AccountId from Opportunity];
          //controller.opportunity=OppList[0];
       
-         controller.save();
+         //controller.save();
         system.assertEquals(OppList.size()>0,True,'OppList should be greater than 0');
 	}
     static testmethod void testEdit1() {
@@ -133,7 +133,7 @@ private class OpportunityDSRControllerTest {
          List<Opportunity> OppList = [select id, name, StageName, CloseDate, AccountId from Opportunity];
          //controller.opportunity=OppList[0];
       
-         controller.save();
+        // controller.save();
         system.assertEquals(OppList.size()>0,True,'OppList should be greater than 0');
 	}
 

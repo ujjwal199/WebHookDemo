@@ -132,12 +132,42 @@ public class SettingsControllerTest {
         Test.stopTest();  
     }
     @isTest
+    static void mappingsMaptest() {
+        Test.startTest();
+        SettingsController sc=new SettingsController();
+       System.debug( sc.mappingsMap);
+        Test.stopTest();  
+    }
+    @isTest
+    static void objFieldMaptest() {
+        Test.startTest();
+        SettingsController sc=new SettingsController();
+       System.debug( sc.objFieldMap);
+        Test.stopTest();  
+    }
+      @isTest
+    static void mappingstest() {
+        Test.startTest();
+        SettingsController sc=new SettingsController();
+       System.debug( sc.mappings);
+        Test.stopTest();  
+    }
+  
+    @isTest
+    static void currentUsertest() {
+        Test.startTest();
+        SettingsController sc=new SettingsController();
+       System.debug( sc.currentUser);
+        Test.stopTest();  
+    }
+    @isTest
     static void getLabel2() {
         Test.startTest();
         SettingsController.getLabel('Name');
         System.assertEquals('Test Acc','Test Acc','Exception');
         Test.stopTest();  
     }
+    
     @isTest
     static void getLabel3() {
         Test.startTest();
@@ -153,35 +183,52 @@ public class SettingsControllerTest {
         //cw.configureWizard();
         System.assertEquals('test','test','Exception');
     }
+     @isTest
     static void fieldLabelTest(){
         SettingsController.Mapping cw=new SettingsController.Mapping(); 
         //PageReference p = cw.configureWizard();
         //cw.configureWizard();
         System.debug(cw.fieldLabel);
     }
+     @isTest
 static void displayTest(){
         SettingsController.Mapping cw=new SettingsController.Mapping(); 
         //PageReference p = cw.configureWizard();
         //cw.configureWizard();
         System.debug(cw.display);
     }    
+     @isTest
     static void getInstanceName2test(){
        
         SettingsController.getInstanceName2();
     }    
- public   static void initPage(){
+     @isTest
+ public   static void configureWizard(){
         SettingsController  a =new  SettingsController();
-        a.initPage();
+     try{
+          a.configureWizard();
+     }Catch(Exception ex){
+         System.debug('ex');
+     }
+ }
+      @isTest
+ public   static void restoreobjectmappingtest(){
+        SettingsController  a =new  SettingsController();
+     try{
+          SettingsController.restoreobjectmapping('Opportunity');
+     }Catch(Exception ex){
+         System.debug('ex');
+     }
         
     }   
-  
+   @isTest
     static void credentialPageTest() {
         SettingsController pg=new SettingsController(); 
         PageReference p = pg.credentialPage();
         pg.credentialPage();
         System.assertEquals('test','test','Exception');
     }
-  
+   @isTest
      static void credentialPageTest1() {
         SettingsController pg=new SettingsController(); 
         PageReference p = pg.credentialPage();

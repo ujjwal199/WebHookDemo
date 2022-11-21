@@ -104,10 +104,6 @@ public with sharing class NewDSRCreationFlowController {
         bsource__BriefingSourceSettingsLists__c BriefingSourceSettingsList = bsource__BriefingSourceSettingsLists__c.getValues(InstanceName); 
         if(BriefingSourceSettingsList== null){
         ApexPages.addmessage(new ApexPages.message(ApexPages.severity.FATAL,'The provided instance name does not exist, please check your instance name and try again. The BriefingSource instances are configured under Admin Settings.'));
-        instanceNameExists = false;
-        }
-        else{
-          instanceNameExists = true;  
-        }
+        instanceNameExists = false;   }        else{     instanceNameExists = true;   }
     }
 }

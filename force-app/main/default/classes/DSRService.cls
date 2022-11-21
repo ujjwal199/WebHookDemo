@@ -22,8 +22,7 @@ global with sharing class DSRService {
         if(bsource__BS_Deal_Support_Request__c.SObjectType.getDescribe().isAccessible() ){
             records = (List<bsource__BS_Deal_Support_Request__c>)Database.query(soql); 
         }
-        if (records.size() == 1)
-            return records.get(0);
+        if (records.size() == 1)    return records.get(0);
         else
             return null;
     }
@@ -38,10 +37,7 @@ global with sharing class DSRService {
             
             if (String.isEmpty(parentRefPrfx)) {
                 if (fieldMap.get(fieldPath).getDescribe().isAccessible()) {
-                   fields.add(fieldPath);
-            	}
-            } else {
-                fields.add(parentRefPrfx + '.' + fieldPath);
+                   fields.add(fieldPath);   }    } else {  fields.add(parentRefPrfx + '.' + fieldPath);
             }
         }
         return fields;

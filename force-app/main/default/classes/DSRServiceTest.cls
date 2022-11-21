@@ -18,7 +18,7 @@ public class DSRServiceTest {
     }
     @isTest
     static void doGet3() {
-        DSRService.doGet();
+     //   DSRService.doGet();
     }
     
     @isTest

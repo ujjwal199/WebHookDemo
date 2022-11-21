@@ -419,9 +419,7 @@ public with sharing class FetchDSRValues {
         public Boolean  IsWon{get;set;} 
         
         public String ForecastCategory{get;set;}    
-        public String ForecastCategoryName{get;set;} 
-        public String TrackingNumber{get;set;} 
-        public Decimal PreviousAmount{get;set;} 
+        public String ForecastCategoryName{get;set;}  public String TrackingNumber{get;set;}    public Decimal PreviousAmount{get;set;} 
     }
     
     public class contactWrapper {

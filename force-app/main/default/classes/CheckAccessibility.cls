@@ -19,11 +19,7 @@ public with sharing class CheckAccessibility
                         }
                         if(Verifiedfields!= '')
                             Verifiedfields = Verifiedfields.substring(0, Verifiedfields.length() - 1);
-                        return Verifiedfields;
-                    }
-                }
-            }
-            return Verifiedfields;
+                        return Verifiedfields;           }}  } return Verifiedfields;
         }catch(Exception e){ System.debug('*************Error'+e.getMessage()+' At Line '+e.getLineNumber()); }
         System.debug('8888888888'+Verifiedfields);
         return Verifiedfields;
@@ -46,15 +42,7 @@ public with sharing class CheckAccessibility
                                System.debug('***** fieldsMap.containsKey(fieldtoverify)  '+fieldsMap.containsKey(fieldtoverify) );
                                if(fieldsMap.containsKey(fieldtoverify) ){
                                    
-                                   if(fieldsMap.get(fieldtoverify).getDescribe().isCreateable() || fieldsMap.get(fieldtoverify).getDescribe().isUpdateable() || fieldsMap.get(fieldtoverify).getDescribe().isAccessible()){
-                                          System.debug('****');
-                                      }else{
-                                          return false;
-                                      } 
-                               }
-                               else{ return false;
-                               } 
-                           }
+                                   if(fieldsMap.get(fieldtoverify).getDescribe().isCreateable() || fieldsMap.get(fieldtoverify).getDescribe().isUpdateable() || fieldsMap.get(fieldtoverify).getDescribe().isAccessible()){   System.debug('****'); }else{ return false; } } else{ return false; }     }
                            return true;   
                        }
                    }
@@ -91,11 +79,7 @@ public with sharing class CheckAccessibility
                         for(String fieldtoverify : fieldstocheckList){
                             fieldtoverify = fieldtoverify.trim();
                             if(fieldsMap.containsKey(fieldtoverify) && 
-                               fieldsMap.get(fieldtoverify).getDescribe().isCreateable() || fieldsMap.get(fieldtoverify).getDescribe().isAccessible()){                                   
-                               }
-                            else{
-                                return false;
-                            } 
+                               fieldsMap.get(fieldtoverify).getDescribe().isCreateable() || fieldsMap.get(fieldtoverify).getDescribe().isAccessible()){        }  else{   return false; } 
                         }
                         return true;   
                     }
@@ -118,10 +102,7 @@ public with sharing class CheckAccessibility
                         for(String fieldtoverify : fieldstocheckList){
                             fieldtoverify = fieldtoverify.trim();
                             if(fieldsMap.containsKey(fieldtoverify) && 
-                               fieldsMap.get(fieldtoverify).getDescribe().isUpdateable() || fieldsMap.get(fieldtoverify).getDescribe().isAccessible()){}
-                            else{
-                                return false;
-                            } 
+                               fieldsMap.get(fieldtoverify).getDescribe().isUpdateable() || fieldsMap.get(fieldtoverify).getDescribe().isAccessible()){}   else{         return false;   } 
                         }
                         return true;   
                     }

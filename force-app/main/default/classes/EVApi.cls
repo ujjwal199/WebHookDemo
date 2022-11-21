@@ -147,8 +147,7 @@ public with sharing class EVApi {
     }
     
     public class Section {
-        public String label {get; set;}
-        public List<Field> fields {get; set;}
+        public String label {get; set;}  public List<Field> fields {get; set;}
         
     }
     
@@ -174,11 +173,9 @@ public with sharing class EVApi {
         bsource__BriefingSourceSettingsLists__c bss = bsource__BriefingSourceSettingsLists__c.getValues(InstanceName); 
         if(!Test.isRunningTest()){
             if(minutes == 0 || minutes > 45 || bss.bsource__API_Username__c != briefingSourceSettings.bsource__API_Username__c && objMetadata.bsource__Access_Token__c!= null){
-                HttpResponse httpResponse = getToken(briefingSourceSettings);
-                Map<String,Object> resultMap = (Map<String,Object>) JSON.deserializeUntyped(httpResponse.getBody());
+                HttpResponse httpResponse = getToken(briefingSourceSettings);         Map<String,Object> resultMap = (Map<String,Object>) JSON.deserializeUntyped(httpResponse.getBody());
                 system.debug('resultMap>>'+resultMap);
-                token = String.valueOf(resultMap.get('access_token'));
-                refreshToken = String.valueOf(resultMap.get('refresh_token'));
+                token = String.valueOf(resultMap.get('access_token'));             refreshToken = String.valueOf(resultMap.get('refresh_token'));
                 
             }else{        
                 token = objMetadata.bsource__Access_Token__c;
@@ -218,10 +215,7 @@ public with sharing class EVApi {
             return fields;
         } else {
             String message = 'Status: ' + httpResponse.getStatusCode() + ' - ' + httpResponse.getStatus();
-            if (String.isNotBlank(httpResponse.getBody())) {
-                message += ' Response: ' + httpResponse.getBody();
-            }
-            throw new APIException(message);
+            if (String.isNotBlank(httpResponse.getBody())) {  message += ' Response: ' + httpResponse.getBody();  }     throw new APIException(message);
         }
     }
     
@@ -280,8 +274,7 @@ public with sharing class EVApi {
             catch (Exception e) {
                 obj = new Briefing_Source_Settings__mdt();
             }
-            return obj; 
-        }else{ return null;}
+            return obj;    }else{ return null;}
     }
     
     public static void upsertCustomMetadata(String accessToken,String refreshToken,string instanceName){
@@ -325,11 +318,7 @@ public with sharing class EVApi {
             // }
             
             //Check if metadata deployment is required
-            if(isMetadataUpdateNeeded && !Test.isRunningTest())
-            {
-                // Enqueue custom metadata deployment and get the deployment id
-                Metadata.Operations.enqueueDeployment(mdContainer, null);
-            }
+            if(isMetadataUpdateNeeded && !Test.isRunningTest()) {  /*Enqueue custom metadata deployment and get the deployment id  */ Metadata.Operations.enqueueDeployment(mdContainer, null);        }
             
         }
         

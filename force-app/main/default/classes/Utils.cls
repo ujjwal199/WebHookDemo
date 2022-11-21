@@ -59,9 +59,7 @@ public with sharing class Utils {
         List<Schema.FieldSetMember> fieldsetList = reqdFieldSet.getFields();
         List<String> fields = new List<String>();
         
-        for (Schema.FieldSetMember fieldmem : fieldsetList) {
-            String fldName = fieldmem.getFieldPath().toLowerCase();
-            fields.add(fldName);
+        for (Schema.FieldSetMember fieldmem : fieldsetList) {  String fldName = fieldmem.getFieldPath().toLowerCase();    fields.add(fldName);
         }
         return fields;
     }

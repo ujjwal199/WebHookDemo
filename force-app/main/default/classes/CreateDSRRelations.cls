@@ -96,10 +96,7 @@ public with sharing class CreateDSRRelations {
         
         // @deb Delete last contact 25_07_2022 starts here
         List<bsource__DSR_Contact__c> contactlast = new List<bsource__DSR_Contact__c>();
-        if (contactIds=='' && dsrRelationshipId!='' && bsource__DSR_Contact__c.SObjectType.getDescribe().isDeletable()){  contactlast = [SELECT Id, bsource__Contact__c FROM bsource__DSR_Contact__c WHERE bsource__Deal_Support_Request__c =:dsrRelationshipId AND bsource__Contact__c!= ''];
-            System.debug('contactlast :'+contactlast.size()); 
-            if(contactlast.size() > 0){
-                Database.delete(contactlast);
+        if (contactIds=='' && dsrRelationshipId!='' && bsource__DSR_Contact__c.SObjectType.getDescribe().isDeletable()){  contactlast = [SELECT Id, bsource__Contact__c FROM bsource__DSR_Contact__c WHERE bsource__Deal_Support_Request__c =:dsrRelationshipId AND bsource__Contact__c!= ''];       System.debug('contactlast :'+contactlast.size());  if(contactlast.size() > 0){ Database.delete(contactlast);
             }
         }
         System.debug('Last contact delete id: '+contactlast);

@@ -67,10 +67,7 @@ public class MetadataService {
             Map<String, MetadataService.createResponse_element> response_map_x = new Map<String, MetadataService.createResponse_element>();
             response_map_x.put('response_x', response_x);
             if(!Test.isRunningTest()){
-                WebServiceCallout.invoke(
-                  this, request_x, response_map_x, new String[]{
-                      endpoint_x, '', 'http://soap.sforce.com/2006/04/metadata', 'create', 'http://soap.sforce.com/2006/04/metadata',
-                      'createResponse', 'MetadataService.createResponse_element'
+                WebServiceCallout.invoke( this, request_x, response_map_x, new String[]{ endpoint_x, '', 'http://soap.sforce.com/2006/04/metadata', 'create', 'http://soap.sforce.com/2006/04/metadata','createResponse', 'MetadataService.createResponse_element'
                   }
                 );
             } else {

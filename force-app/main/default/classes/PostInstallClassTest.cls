@@ -105,9 +105,14 @@ public class PostInstallClassTest {
           bsource__Briefing_Source_Field_Mapping__c briefingSourceFieldMappingLists = new bsource__Briefing_Source_Field_Mapping__c();
                       briefingSourceFieldMappingLists.bsource__Briefing_Source_Field__c='sadadasda';
                       briefingSourceFieldMappingLists.bsource__Salesforce_Field__c='opportunity';
-        insert briefingSourceFieldMappingLists;
+        briefingSourceFieldMappingLists.Name='test';
+           insert briefingSourceFieldMappingLists;
          PostInstallClass postinstall = new PostInstallClass();
         Test.testInstall(postinstall, null);
+          bsource__Campaign_Ids_Lists__c CampaignIdList = new bsource__Campaign_Ids_Lists__c();
+                   CampaignIdList.Name = 'Opportunity';
+                   CampaignIdList.bsource__Campaign_Id__c='a001P00000x3LR2QAM';
+                   insert CampaignIdList;
        
      }
 }

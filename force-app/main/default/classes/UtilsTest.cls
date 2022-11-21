@@ -30,7 +30,17 @@ private class UtilsTest {
         Utils.toDateFromISOString('03-01-2021');
         date dateObj= system.today();
         Schema.FieldSet reqdFieldSet;
-        Utils.parentFieldsFromFieldSet(reqdFieldSet);
+      //  Utils.parentFieldsFromFieldSet(reqdFieldSet);
+        System.assertEquals('03-01-2021', '03-01-2021','Exception');
+    }
+    static testmethod void testSortSelectOptionsByLabel3() {
+        Utils.toDateFromISOString('03-01-2021');
+        date dateObj= system.today();
+        Schema.FieldSet reqdFieldSet;
+        Schema.SObjectType sobjType;
+        Utils.sobjFieldsFromFieldSet(SObjectType.BS_Deal_Support_Request__c.FieldSets.DSR_Fields, Schema.BS_Deal_Support_Request__c.SObjectType);
+        Utils.fieldsFromFieldSet(SObjectType.BS_Deal_Support_Request__c.FieldSets.DSR_Fields, Schema.BS_Deal_Support_Request__c.SObjectType);
+       Utils.parentFieldsFromFieldSet(SObjectType.Opportunity.FieldSets.Account_Information);
         System.assertEquals('03-01-2021', '03-01-2021','Exception');
     }
 }

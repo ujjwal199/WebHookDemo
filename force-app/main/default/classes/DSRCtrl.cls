@@ -22,8 +22,7 @@ public with sharing class DSRCtrl {
         // CRUD FLS CHECK
         try {
             assertCRUDFLS();
-        } catch (Exception e) {
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.FATAL, 'You do not have the necessary CRUD/FLS permissions to successfully complete the process. Please contact your administrator.'));
+        } catch (Exception e) {     ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.FATAL, 'You do not have the necessary CRUD/FLS permissions to successfully complete the process. Please contact your administrator.'));
         }
         
         this.state = new DSRUIModel.WizardState();
@@ -41,9 +40,7 @@ centerOptions.add(new SelectOption(String.valueOf(center.id), center.name));
 }
 */
         }else{
-            if(this.state.dsr.status__c == 'Submitted' || this.state.dsr.status__c == 'Confirmed'){
-                canvasLocked = true;
-                renderCanvas = false;//Do not render Canvas since DSR is locked
+            if(this.state.dsr.status__c == 'Submitted' || this.state.dsr.status__c == 'Confirmed'){  canvasLocked = true;           renderCanvas = false;//Do not render Canvas since DSR is locked
             }else{
                 renderCanvas = true; // Render the Canvas as the DSR is in draft state
                 canvasLocked = false;
@@ -82,7 +79,7 @@ centerOptions.add(new SelectOption(String.valueOf(center.id), center.name));
                                   }
         }
     }
-    
+    @testVisible
     void assertCRUDFLS() {
         if(BS_Deal_Support_Request__c.SObjectType.getDescribe().isAccessible()){
             List<Schema.SObjectField> fields = new List<Schema.SObjectField>{

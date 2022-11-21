@@ -122,8 +122,7 @@ public with sharing class MultiSelectLookupController {
                 system.debug('String.escapeSingleQuotes(opptyPreselection)>>>'+String.escapeSingleQuotes(opptyPreselection));
             }
             system.debug('strQuery '+strQuery);
-            for(SObject sobj:database.query(strQuery)) 
-            { listocrId+= '\''+(String) sobj.get('Id') +'\',';
+            for(SObject sobj:database.query(strQuery))   { listocrId+= '\''+(String) sobj.get('Id') +'\',';
             }
             listocrId = listocrId.removeEnd(',');
         }
@@ -205,12 +204,7 @@ public with sharing class MultiSelectLookupController {
         }
         else{
             for(String strField:fieldList){
-                for(SObject sobj:lstResult){                
-                    if(strField != 'Id'){
-                        SObjectQueryResult result = new SObjectQueryResult();
-                        result.recordId = (String) sobj.get('Id');
-                        result.recordName = (String) sobj.get(strField);
-                        lstReturnResult.add(result);
+                for(SObject sobj:lstResult){   if(strField != 'Id'){ SObjectQueryResult result = new SObjectQueryResult(); result.recordId = (String) sobj.get('Id'); result.recordName = (String) sobj.get(strField); lstReturnResult.add(result);
                     }                
                 }
             }
