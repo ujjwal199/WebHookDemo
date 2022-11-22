@@ -98,6 +98,35 @@ public class PostInstallClassTest {
         PostInstallClass postinstall = new PostInstallClass();
         Test.testInstall(postinstall, null);
         system.assert(objShowContacts!=null, 'Is not null');
+         
+         try{
+           
+             List<Briefing_Source_Settings__mdt>   objList = [select id,DeveloperName,MasterLabel,bsource__Access_Token__c,bsource__Refresh_Token__c,bsource__Refreshed_Time__c from Briefing_Source_Settings__mdt ];
+              System.debug(objList);
+                     Map<String,SObject> MtdList = new Map<String,SObject>();   
+                for (  Briefing_Source_Settings__mdt DATA : objList) {
+                      MtdList.put(DATA.DeveloperName,DATA);
+                   }
+                Set<String> InstanceNameMtds=MtdList.keySet();
+                For(Sobject mtdData:MtdList.values()){
+                    bsource__BriefingSourceSettingsLists__c bss = bsource__BriefingSourceSettingsLists__c.getValues( String.valueOf(mtdData.get('DeveloperName'))); 
+                    String tokens = String.valueOf(mtdData.get('bsource__Access_Token__c'));
+                    String RefreshTokens= String.valueOf(mtdData.get('bsource__Access_Token__c'));
+                    if(bss != null){ 
+                        bss.bsource__Access_Token__c = tokens;
+                        Upsert bss;
+                    }
+                    
+                    
+                }
+                
+                
+            }
+            catch (Exception e) {
+            System.debug('ex');
+            }
+        
+        
     }
     @isTest
     public static void test22()

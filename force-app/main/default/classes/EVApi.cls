@@ -176,9 +176,40 @@ public with sharing class EVApi {
                 HttpResponse httpResponse = getToken(briefingSourceSettings);         Map<String,Object> resultMap = (Map<String,Object>) JSON.deserializeUntyped(httpResponse.getBody());
                 system.debug('resultMap>>'+resultMap);
                 token = String.valueOf(resultMap.get('access_token'));             refreshToken = String.valueOf(resultMap.get('refresh_token'));
+                if(
+            bsource__BriefingSourceSettingsLists__c.SObjectType.getDescribe().isAccessible() &&  bsource__BriefingSourceSettingsLists__c.SObjectType.getDescribe().isCreateable() &&
+                    bsource__BriefingSourceSettingsLists__c.SObjectType.getDescribe().isUpdateable() &&
+            Schema.SObjectType.bsource__BriefingSourceSettingsLists__c.fields.bsource__Access_Token__c.isAccessible() &&
+            Schema.SObjectType.bsource__BriefingSourceSettingsLists__c.fields.bsource__Refresh_Token__c.isAccessible()&&
+                          Schema.SObjectType.bsource__BriefingSourceSettingsLists__c.fields.bsource__Access_Token__c.isUpdateable() &&
+            Schema.SObjectType.bsource__BriefingSourceSettingsLists__c.fields.bsource__Refresh_Token__c.isUpdateable()&&
+                          Schema.SObjectType.bsource__BriefingSourceSettingsLists__c.fields.bsource__Access_Token__c.isCreateable() &&
+            Schema.SObjectType.bsource__BriefingSourceSettingsLists__c.fields.bsource__Refresh_Token__c.isCreateable()
+                ){    
+
+                 bss.bsource__Access_Token__c=token;                 bss.bsource__Refresh_Token__c=refreshToken;     
+                    Upsert bss;
+                  } 
+                
                 
             }else{        
                 token = objMetadata.bsource__Access_Token__c;
+                  if(
+            bsource__BriefingSourceSettingsLists__c.SObjectType.getDescribe().isAccessible() &&  bsource__BriefingSourceSettingsLists__c.SObjectType.getDescribe().isCreateable() &&
+                    bsource__BriefingSourceSettingsLists__c.SObjectType.getDescribe().isUpdateable() &&
+            Schema.SObjectType.bsource__BriefingSourceSettingsLists__c.fields.bsource__Access_Token__c.isAccessible() &&
+            Schema.SObjectType.bsource__BriefingSourceSettingsLists__c.fields.bsource__Refresh_Token__c.isAccessible()&&
+                          Schema.SObjectType.bsource__BriefingSourceSettingsLists__c.fields.bsource__Access_Token__c.isUpdateable() &&
+            Schema.SObjectType.bsource__BriefingSourceSettingsLists__c.fields.bsource__Refresh_Token__c.isUpdateable()&&
+                          Schema.SObjectType.bsource__BriefingSourceSettingsLists__c.fields.bsource__Access_Token__c.isCreateable() &&
+            Schema.SObjectType.bsource__BriefingSourceSettingsLists__c.fields.bsource__Refresh_Token__c.isCreateable()
+               
+                  ){
+                  
+                bss.bsource__Access_Token__c=token;     
+                      Upsert bss;
+                  }
+                 
             } 
         } 
         HttpRequest httpRequest = createFieldRequest(briefingSourceSettings,token,'api/salesforce/forms/fields');
@@ -218,6 +249,8 @@ public with sharing class EVApi {
             if (String.isNotBlank(httpResponse.getBody())) {  message += ' Response: ' + httpResponse.getBody();  }     throw new APIException(message);
         }
     }
+    
+    
     
     public static HttpResponse getToken(bsource__BriefingSourceSettingsLists__c briefingSourceSettings){
         system.debug('inside get token');
