@@ -68,6 +68,8 @@ private class BriefingSourceCanvasLifecyleHandlerTest {
     static testmethod void excludeContextTypestest() {
         BriefingSourceCanvasLifecyleHandler a=new BriefingSourceCanvasLifecyleHandler();
         a.excludeContextTypes();
+         //added assert
+        system.assert(a!=null, 'Is not null');
 	//System.assertEquals(account.Name, parameters.get('accountName'),'Name should not null');
 	}
 

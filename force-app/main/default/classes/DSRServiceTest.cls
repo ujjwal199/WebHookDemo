@@ -16,11 +16,7 @@ public class DSRServiceTest {
         DSRService.doGet();
         System.assertEquals(Null,res.statusCode,'statusCode should be null');
     }
-    @isTest
-    static void doGet3() {
-     //   DSRService.doGet();
-    }
-    
+        
     @isTest
     static void doGet2() {
         String currentNamespace = DSRServiceTest.class.getName().substringBefore('DSRServiceTest').removeEnd('.');

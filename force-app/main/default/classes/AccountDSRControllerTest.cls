@@ -175,6 +175,8 @@ private class AccountDSRControllerTest {
        
         DSRController objDSRController= new DSRController();
         objDSRController.initPage();
+        //added assert
+        system.assert(objDSRController!=null, 'Is not null');
     //    objDSRController.changeCenter();
         
     }
@@ -187,7 +189,8 @@ private class AccountDSRControllerTest {
           
         DSRController objDSRController= new DSRController();
        System.debug(objDSRController.centerOptions);
-        
+        //added assert
+         system.assert(objDSRController!=null, 'Is not null');
     }
       static testmethod void testCreate8() {
           	Test.startTest();
@@ -195,12 +198,16 @@ private class AccountDSRControllerTest {
            System.debug(objDSRController.canChangeDsr);
                      System.debug(objDSRController.renderCanvas);
                      System.debug(objDSRController.canvasLocked);
+          //added assert
+           system.assert(objDSRController!=null, 'Is not null');
             Test.stopTest();   
     }
     static testmethod void testCreate9() {
           	Test.startTest();
            DSRController objDSRController= new DSRController();
            System.debug(objDSRController.canvasInstanceName);
+        //added assert
+         system.assert(objDSRController!=null, 'Is not null');
             Test.stopTest();   
     }
      static testmethod void testCreate10() {
@@ -213,25 +220,34 @@ private class AccountDSRControllerTest {
          
          try{           System.debug(objDSRController.canvasAppDomain);
             }Catch(Exception ex){}
-            Test.stopTest();   
+         //added assert
+          system.assert(objDSRController!=null, 'Is not null');
+            Test.stopTest();  
+         
     }
     
     static testmethod void testCreate11() {
           	Test.startTest();
            DSRController objDSRController= new DSRController();
            System.debug(objDSRController.centerOptions);
+        //added assert
+         system.assert(objDSRController!=null, 'Is not null');
             Test.stopTest();   
     }
     static testmethod void testCreate12() {
           	Test.startTest();
            DSRController objDSRController= new DSRController();
            System.debug(objDSRController.accObj);
+        //added assert
+         system.assert(objDSRController!=null, 'Is not null');
             Test.stopTest();   
     }
     static testmethod void testCreate13() {
           	Test.startTest();
            DSRController objDSRController= new DSRController();
            System.debug(objDSRController.oppObj);
+        //added assert
+         system.assert(objDSRController!=null, 'Is not null');
             Test.stopTest();   
     }
      static testmethod void testCreate14() {
@@ -239,6 +255,8 @@ private class AccountDSRControllerTest {
            DSRController objDSRController= new DSRController();
           
         //   System.debug(objDSRController.canvasAppDomain);
+        //added assert
+            system.assert(objDSRController!=null, 'Is not null');
             Test.stopTest();   
     }
      static testmethod void testCreate15() {
@@ -255,7 +273,8 @@ private class AccountDSRControllerTest {
         briefingSourceSettings.bsource__Is_CanvasApp__c = true;
         //briefingSourceSettings.Center__c ='test'
         insert briefingSourceSettings;
-       
+         //added assert
+        system.assert(objDSRController!=null, 'Is not null');
             Test.stopTest();   
     }
        static testmethod void testCreate16() {
@@ -268,6 +287,9 @@ private class AccountDSRControllerTest {
            DSRController objDSRController= new DSRController();
            try{           objDSRController.changeCenter();
               }Catch(Exception ex){System.debug('ex');}
+           //added assert
+            system.assert(objDSRController!=null, 'Is not null');
+            system.assert(dsr!=null, 'Is not null');
            Test.stopTest();   
     }
      

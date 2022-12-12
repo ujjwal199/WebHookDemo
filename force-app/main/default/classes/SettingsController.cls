@@ -310,12 +310,76 @@ bss = new bsource__BriefingSourceSettings__c();
         }
     }
     @AuraEnabled  
-    public static void insertCustomSetting(bsource__BriefingSourceSettingsLists__c bss,String instanceName){
-        try{
-            if(Schema.sObjectType.bsource__BriefingSourceSettingsLists__c.isAccessible() && Schema.sObjectType.bsource__BriefingSourceSettingsLists__c.isUpdateable()
-               && Schema.sObjectType.bsource__BriefingSourceSettingsLists__c.isCreateable()){ 
-                   upsert bss;
+    public static void insertCustomSetting(String bssJSONString,String instanceName){
+        bsource__BriefingSourceSettingsLists__c bss = (bsource__BriefingSourceSettingsLists__c)JSON.deserialize(bssJSONString, bsource__BriefingSourceSettingsLists__c.class);
+        try{ 
+            if(bss != null){
+                System.debug(bss);
+              if(Schema.sObjectType.bsource__BriefingSourceSettingsLists__c.isAccessible()  && Schema.sObjectType.bsource__BriefingSourceSettingsLists__c.isUpdateable() && Schema.sObjectType.bsource__BriefingSourceSettingsLists__c.isCreateable()
+                 
+                 && Schema.sObjectType.bsource__BriefingSourceSettingsLists__c.fields.Name.isAccessible()&& Schema.sObjectType.bsource__BriefingSourceSettingsLists__c.fields.Name.isCreateable()    && Schema.sObjectType.bsource__BriefingSourceSettingsLists__c.fields.Name.isUpdateable()
+
+               && Schema.sObjectType.bsource__BriefingSourceSettingsLists__c.fields.bsource__API_Endpoint__c.isAccessible()     && Schema.sObjectType.bsource__BriefingSourceSettingsLists__c.fields.bsource__API_Endpoint__c.isCreateable()    && Schema.sObjectType.bsource__BriefingSourceSettingsLists__c.fields.bsource__API_Endpoint__c.isUpdateable()
+
+               
+               && Schema.sObjectType.bsource__BriefingSourceSettingsLists__c.fields.bsource__API_Password__c.isAccessible()  && Schema.sObjectType.bsource__BriefingSourceSettingsLists__c.fields.bsource__API_Password__c.isCreateable()  && Schema.sObjectType.bsource__BriefingSourceSettingsLists__c.fields.bsource__API_Password__c.isUpdateable()
+
+                 
+               && Schema.sObjectType.bsource__BriefingSourceSettingsLists__c.fields.bsource__API_Username__c.isAccessible() && Schema.sObjectType.bsource__BriefingSourceSettingsLists__c.fields.bsource__API_Username__c.isCreateable()  && Schema.sObjectType.bsource__BriefingSourceSettingsLists__c.fields.bsource__API_Username__c.isUpdateable()
+
+               
+               && Schema.sObjectType.bsource__BriefingSourceSettingsLists__c.fields.bsource__Client_Id__c.isAccessible() && Schema.sObjectType.bsource__BriefingSourceSettingsLists__c.fields.bsource__Client_Id__c.isCreateable() && Schema.sObjectType.bsource__BriefingSourceSettingsLists__c.fields.bsource__Client_Id__c.isUpdateable()
+
+               && Schema.sObjectType.bsource__BriefingSourceSettingsLists__c.fields.bsource__Client_Secret__c.isAccessible()   && Schema.sObjectType.bsource__BriefingSourceSettingsLists__c.fields.bsource__Client_Secret__c.isCreateable() && Schema.sObjectType.bsource__BriefingSourceSettingsLists__c.fields.bsource__Client_Secret__c.isUpdateable()
+
+               
+               && Schema.sObjectType.bsource__BriefingSourceSettingsLists__c.fields.bsource__Is_CanvasApp__c.isAccessible()&& Schema.sObjectType.bsource__BriefingSourceSettingsLists__c.fields.bsource__Is_CanvasApp__c.isCreateable() && Schema.sObjectType.bsource__BriefingSourceSettingsLists__c.fields.bsource__Is_CanvasApp__c.isUpdateable()
+
+               && Schema.sObjectType.bsource__BriefingSourceSettingsLists__c.fields.bsource__isConnected__c.isAccessible()    && Schema.sObjectType.bsource__BriefingSourceSettingsLists__c.fields.bsource__isConnected__c.isCreateable()  && Schema.sObjectType.bsource__BriefingSourceSettingsLists__c.fields.bsource__isConnected__c.isUpdateable()
+
+               && Schema.sObjectType.bsource__BriefingSourceSettingsLists__c.fields.bsource__Briefing_Source_Instance_Name__c.isAccessible()    && Schema.sObjectType.bsource__BriefingSourceSettingsLists__c.fields.bsource__Briefing_Source_Instance_Name__c.isCreateable()  && Schema.sObjectType.bsource__BriefingSourceSettingsLists__c.fields.bsource__Briefing_Source_Instance_Name__c.isUpdateable()
+
+               && Schema.sObjectType.bsource__BriefingSourceSettingsLists__c.fields.bsource__Refreshed_Time__c.isAccessible()  && Schema.sObjectType.bsource__BriefingSourceSettingsLists__c.fields.bsource__Refreshed_Time__c.isCreateable()  && Schema.sObjectType.bsource__BriefingSourceSettingsLists__c.fields.bsource__Refreshed_Time__c.isUpdateable()
+
+               && Schema.sObjectType.bsource__BriefingSourceSettingsLists__c.fields.bsource__Refresh_Token__c.isAccessible() && Schema.sObjectType.bsource__BriefingSourceSettingsLists__c.fields.bsource__Refresh_Token__c.isCreateable() 
+                 && Schema.sObjectType.bsource__BriefingSourceSettingsLists__c.fields.bsource__Refresh_Token__c.isUpdateable()){ 
+                   
+                    bsource__BriefingSourceSettingsLists__c bsc=new bsource__BriefingSourceSettingsLists__c();
+                if(bss.bsource__API_Endpoint__c != null){
+                      bsc.bsource__API_Endpoint__c=bss.bsource__API_Endpoint__c;
+                }
+                 if(bss.bsource__API_Password__c != null){
+                      bsc.bsource__API_Password__c=bss.bsource__API_Password__c;
+                }
+                 if(bss.bsource__API_Username__c != null){
+                      bsc.bsource__API_Username__c=bss.bsource__API_Username__c;
+                }
+                 if(bss.Name != null){
+                      bsc.Name=bss.Name;
+                     bsc.bsource__Briefing_Source_Instance_Name__c=bss.Name;
+
+                }
+                if(bss.bsource__isConnected__c != null){
+                      bsc.bsource__isConnected__c=bss.bsource__isConnected__c;
+                }
+                 if(bss.bsource__Client_Id__c != null){
+                      bsc.bsource__Client_Id__c=bss.bsource__Client_Id__c;
+                }
+                                 if(bss.bsource__Client_Secret__c != null){
+                      bsc.bsource__Client_Secret__c=bss.bsource__Client_Secret__c;
+                }
+                    if(bss.bsource__Refreshed_Time__c != null){
+                      bsc.bsource__Refreshed_Time__c=bss.bsource__Refreshed_Time__c;
+                }
+                    if(bss.bsource__Is_CanvasApp__c != null){
+                      bsc.bsource__Is_CanvasApp__c=bss.bsource__Is_CanvasApp__c;
+                }    
+                upsert bsc;
+                   
                }
+                
+                  
+       }
             if(Schema.sObjectType.bsource__Show_Contact_Lists__c.isAccessible() && Schema.sObjectType.bsource__Show_Contact_Lists__c.isUpdateable()
                && Schema.sObjectType.bsource__Show_Contact_Lists__c.isCreateable()
                && Schema.sObjectType.bsource__Show_Contact_Lists__c.fields.Name.isCreateable() 
@@ -339,7 +403,8 @@ bss = new bsource__BriefingSourceSettings__c();
                    objCampaignId.bsource__Campaign_Id__c ='';
                    objCampaignId.Name = InstanceName;
                    
-                   upsert objCampaignId;         } }   catch (Exception e) {  throw new AuraHandledException(e.getMessage()); 
+                   upsert objCampaignId;         }
+}   catch (Exception e) {  throw new AuraHandledException(e.getMessage()); 
         }
     }
     

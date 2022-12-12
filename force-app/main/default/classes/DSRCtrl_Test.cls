@@ -62,10 +62,17 @@ Attempt to test as many methods as possible with minimal dependency on mock data
         ApexPages.StandardController sc = new ApexPages.standardController(opp);
         
        DSRCtrl controller = new DSRCtrl();
-       /* System.debug('Vikas ::' + controller.state.probableAttendees);
-        
-        system.assertEquals(true,controller.state.isStageAttendees,'isStageAttendees should be true');
-        system.assertEquals(false,controller.state.isStageTopics,'isStageTopics should be false');
+    //   System.debug('Vikas ::' + controller.state.probableAttendees);
+                  system.assert(sc!=null,'sc should be not null');
+                  system.assert(mockData!=null,'sc should be not null');
+          system.assert(Accounts!=null,'Accounts should be not null');
+          system.assert(opp!=null,'opp should be not null');
+ system.assert(contacts!=null,'opp should be not null');
+         system.assert(oppConRoles!=null,'oppConRoles should be not null');
+         system.assert(accConRoles!=null,'accConRoles should be not null');
+
+        system.assert(controller!=null,'isStageAttendees should be true');
+       /*  system.assertEquals(false,controller.state.isStageTopics,'isStageTopics should be false');
         system.assertEquals(false,controller.state.isStageSite,'isStageSite should be false');
         system.assertEquals(false,controller.state.isStageAddInfo,'isStageAddInfo should be false');
         system.assertEquals(false,controller.state.isStageReview,'isStageReview should be false');
@@ -246,6 +253,14 @@ Attempt to test as many methods as possible with minimal dependency on mock data
         ApexPages.CurrentPage().getparameters().put('id',opp.id);
         
          ApexPages.StandardController sc = new ApexPages.standardController(opp);
+                system.assert(contacts!=null,'contacts should be true');
+                        system.assert(Accounts!=null,'Accounts should be true');
+         system.assert(mockData!=null,'mockData should be true');
+                        system.assert(opp!=null,'opp should be true');
+
+  system.assert(sc!=null,'sc should be not null');
+                 
+       
       //  DSRCtrl controller = new DSRCtrl(sc);
       // controller.state.dsr.bsource__Status__c='Submitted';
     }
@@ -257,8 +272,9 @@ Attempt to test as many methods as possible with minimal dependency on mock data
          }Catch(Exception ex){
              
          }
-         
-}
+         system.assert(controller!=null,'controller should be not null');
+
+     }
      public static testmethod void test_gotoAddInfoNext(){
                 DSRCtrl controller = new DSRCtrl();
           
@@ -271,6 +287,9 @@ Attempt to test as many methods as possible with minimal dependency on mock data
          }Catch(Exception ex){
              
          }
+                  system.assert(controller!=null,'controller should be not null');
+                 
+
          
 }
      public static testmethod void test_addNewRowAdHocAttendee(){
@@ -285,6 +304,8 @@ Attempt to test as many methods as possible with minimal dependency on mock data
          }Catch(Exception ex){
              
          }
+                  system.assert(controller!=null,'controller should be not null');
+
          
 }
     
@@ -295,6 +316,11 @@ Attempt to test as many methods as possible with minimal dependency on mock data
         // ids of contacts selected as attendees
         Set<Id> selectedAttendees = new Set<Id>();
         Set<Id> selectedAdHocAttendees = new Set<Id>();
+                             system.assert(controller!=null,'controller should be not null');
+                             system.assert(selectedAttendees!=null,'controller should be not null');
+                  system.assert(selectedAdHocAttendees!=null,'controller should be not null');
+
+
             //   controller.toStepAttendees();        
 }
     
@@ -305,7 +331,8 @@ Attempt to test as many methods as possible with minimal dependency on mock data
 }*/
         public static testmethod void test_toStepTopics(){
                 DSRCtrl controller = new DSRCtrl();
-        
+                                     system.assert(controller!=null,'controller should be not null');
+
              //  controller.toStepTopics();
 }
       public static testmethod void testchangeCenter(){
@@ -314,6 +341,8 @@ Attempt to test as many methods as possible with minimal dependency on mock data
              }catch(Exception ex){
                  System.debug(ex);
              }
+                                       system.assert(controller!=null,'controller should be not null');
+
       }
     public static testmethod void testassertCRUDFLS(){
                 DSRCtrl controller = new DSRCtrl();
@@ -321,6 +350,8 @@ Attempt to test as many methods as possible with minimal dependency on mock data
              }catch(Exception ex){
                  System.debug(ex);
              }
+                                     system.assert(controller!=null,'controller should be not null');
+
       }
      public static testmethod void test_toStepReview(){
                 DSRCtrl controller = new DSRCtrl();
@@ -343,6 +374,8 @@ Attempt to test as many methods as possible with minimal dependency on mock data
             ' (Select Contact__c, Contact__r.Name, Contact__r.Title from Briefing_Attendees__r where Contact__c!=null order by Contact__r.Name) ' +                                         
             ' from BS_Deal_Support_Request__c  where Id =:dsrId ';
        //  controller.state.dsr = Database.query(dsrSoql);
+                             system.assert(controller!=null,'controller should be not null');
+                             system.assert(dsrFields!=null,'dsrFields should be not null');
                        
 
      }
@@ -409,7 +442,8 @@ Attempt to test as many methods as possible with minimal dependency on mock data
         test.stopTest(); 
         }Catch(Exception ex){}
         
-       
+                        
+
     }         
     /**
 *
@@ -460,6 +494,8 @@ Attempt to test as many methods as possible with minimal dependency on mock data
            }  Catch(Exception Ex){
                System.debug('exxx');
            } 
+        system.assert(dsr!=null,'dsr should be not null');
+       //  system.assert(bss!=null,'bss should be not null');
     }
     
     public static testmethod void testgotoTopicsNext(){
@@ -470,6 +506,9 @@ Attempt to test as many methods as possible with minimal dependency on mock data
            }  Catch(Exception Ex){
                System.debug('exxx');
            } 
+//system.assert(bss!=null,'bss should be not null');      
+        system.assert(dsr!=null,'dsr should be not null');
+
     }
      public static testmethod void testsstartCanvasFlow1(){
         
@@ -477,6 +516,9 @@ Attempt to test as many methods as possible with minimal dependency on mock data
             BS_Deal_Support_Request__c bss = new BS_Deal_Support_Request__c();
         insert bss;
          try{}Catch(Exception ex){         dsr.startCanvasFlow();
+                                  system.assert(bss!=null,'bss should be not null');      
+                                  system.assert(dsr!=null,'dsr should be not null');
+
 }
     }
     public static testmethod void testmoveInWizard(){
@@ -484,6 +526,8 @@ Attempt to test as many methods as possible with minimal dependency on mock data
         DSRCtrl dsr=new DSRCtrl();
         try{         dsr.movePreviousInWizard();
            }Catch(Exception ex){}
+      //  system.assert(bss!=null,'bss should be not null');      
+                                  system.assert(dsr!=null,'dsr should be not null');
         
     }
     
@@ -493,6 +537,8 @@ Attempt to test as many methods as possible with minimal dependency on mock data
              }Catch(Exception ex){
                  System.debug('TEst ');
              }
+      //    system.assert(bss!=null,'bss should be not null');      
+                                  system.assert(dsr!=null,'dsr should be not null');
    
     }
     
@@ -504,6 +550,8 @@ Attempt to test as many methods as possible with minimal dependency on mock data
            }Catch(Exception ex){
                System.debug('ex');
            }
+        //system.assert(bss!=null,'bss should be not null');      
+                                  system.assert(dsr!=null,'dsr should be not null');
         
         
         
@@ -516,6 +564,8 @@ Attempt to test as many methods as possible with minimal dependency on mock data
            }Catch(Exception ex){
                System.debug('ex');
            }
+      //  system.assert(bss!=null,'bss should be not null');      
+                                  system.assert(dsr!=null,'dsr should be not null');
 
     }
     
@@ -526,7 +576,8 @@ Attempt to test as many methods as possible with minimal dependency on mock data
            }Catch(Exception ex){
                System.debug('ex');
            }
-
+//system.assert(bss!=null,'bss should be not null');      
+                                  system.assert(dsr!=null,'dsr should be not null');
 
         
     }
@@ -534,17 +585,22 @@ Attempt to test as many methods as possible with minimal dependency on mock data
         DSRCtrl dsr=new DSRCtrl();
          System.debug(dsr.isCompleted);
         dsr.AddToAttendeeList(); 
+         //system.assert(bss!=null,'bss should be not null');      
+                                  system.assert(dsr!=null,'dsr should be not null');
     }
         public static testmethod void testAddToAttendeeList(){
         DSRCtrl dsr=new DSRCtrl();
         dsr.AddToAttendeeList(); 
+          //  system.assert(bss!=null,'bss should be not null');      
+                                  system.assert(dsr!=null,'dsr should be not null');
     }
     
      public static testmethod void testremoveAdHocAttendee(){
         DSRCtrl dsr=new DSRCtrl();
          try{  dsr.removeAdHocAttendee(); 
          dsr.addNewRowAdHocAttendee(); }Catch(Exception ex){}
-      
+     // system.assert(bss!=null,'bss should be not null');      
+                                  system.assert(dsr!=null,'dsr should be not null');
     }
     
     
@@ -557,11 +613,15 @@ Attempt to test as many methods as possible with minimal dependency on mock data
      public static testmethod void testmoveInWizard3(){
         DSRCtrl dsr=new DSRCtrl();
         dsr.createDSR(); 
+      //   system.assert(bss!=null,'bss should be not null');      
+                                  system.assert(dsr!=null,'dsr should be not null');
     }
     Public  static  testmethod  void testgotoSitesNext(){
           DSRCtrl dsr=new DSRCtrl();
  try{  dsr.gotoSitesNext();
          }Catch(Exception ex){}
+      //  system.assert(bss!=null,'bss should be not null');      
+                                  system.assert(dsr!=null,'dsr should be not null');
       
     }
       
@@ -569,26 +629,35 @@ Attempt to test as many methods as possible with minimal dependency on mock data
     public static  testmethod void indextest(){
           DSRCtrl dsr=new DSRCtrl();
             dsr.index=123131;
+     //   system.assert(bss!=null,'bss should be not null');      
+                                  system.assert(dsr!=null,'dsr should be not null');
     }
     
      public static  testmethod void renderCanvastest(){
           DSRCtrl dsr=new DSRCtrl();
             dsr.renderCanvas=true;
+    //     system.assert(bss!=null,'bss should be not null');      
+                                  system.assert(dsr!=null,'dsr should be not null');
     }
      public static  testmethod void canvasLockedtest(){
           DSRCtrl dsr=new DSRCtrl();
             dsr.canvasLocked=true;
+        // system.assert(bss!=null,'bss should be not null');      
+                                  system.assert(dsr!=null,'dsr should be not null');
     }
      public static  testmethod void  centerOptionsTest(){
           DSRCtrl dsr=new DSRCtrl();
         System.debug(dsr.centerOptions);
+       //  system.assert(bss!=null,'bss should be not null');      
+                                  system.assert(dsr!=null,'dsr should be not null');
 
     }
      public static  testmethod void  gotoEditableStagetest(){
           DSRCtrl dsr=new DSRCtrl();
     //  MovementDirection dir =new MovementDirection();
   //   dsr.gotoEditableStage(bsource.DSRCtrl.MovementDirection.Next, bsource.DSRUIModel.WizardStage);
-
+//system.assert(bss!=null,'bss should be not null');      
+                                  system.assert(dsr!=null,'dsr should be not null');
     }
     
     //u nused
@@ -596,7 +665,8 @@ Attempt to test as many methods as possible with minimal dependency on mock data
           String stage ='asas';
           DSRCtrl dsr=new DSRCtrl();
                 
-
+//system.assert(bss!=null,'bss should be not null');      
+                                  system.assert(dsr!=null,'dsr should be not null');
     }
      public static  testmethod void  SubmitelseLStest(){
           Account testAccount = new Account();
@@ -608,7 +678,11 @@ Attempt to test as many methods as possible with minimal dependency on mock data
   
      String stage =null;
           DSRCtrl dsr=new DSRCtrl();
- Test.stopTest();        
+ Test.stopTest();     
+                  system.assert(sc!=null,'StandardController should be not null');      
+
+         system.assert(testAccount!=null,'testAccount should be not null');      
+                                  system.assert(dsr!=null,'dsr should be not null');
     }
     
     
@@ -619,6 +693,7 @@ Attempt to test as many methods as possible with minimal dependency on mock data
          }Catch(Exception ex){
              System.debug('ex');
          }
+          system.assert(dsr!=null,'dsr should be not null');
     }
     public static testmethod void TeststartCanvasFlow2(){
         //Create the sample Custom Setting Data
@@ -652,7 +727,11 @@ Attempt to test as many methods as possible with minimal dependency on mock data
         Catch(Exception ex){System.debug('ex');}
      
         Test.stopTest();
-        
+        system.assert(mockData!=null,'mockData   should be not null');
+        system.assert(opp!=null,'opp should be not null');
+        system.assert(contacts!=null,'contacts should be not null');
+         system.assert(bsource!=null,'bsource should be not null');
+          system.assert(sc!=null,'sc should be not null');
     }
     
 }

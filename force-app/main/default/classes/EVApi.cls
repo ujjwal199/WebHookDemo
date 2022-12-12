@@ -157,7 +157,7 @@ public with sharing class EVApi {
         public String label {get; set;}
         
     }
- 
+ 	
     public static Map<String,List<parseJSON.FormFields>> getFields(bsource__BriefingSourceSettingsLists__c briefingSourceSettings) {
         system.debug('inside getFields init');
         //Decimal minutes = 0;
@@ -167,48 +167,25 @@ public with sharing class EVApi {
         Decimal minutes = getRefreshedTime(briefingSourceSettings);
         system.debug('briefingSourceSettings>>'+briefingSourceSettings);
         String InstanceName = briefingSourceSettings.Name;
+        
                 system.debug('nAME briefingSourceSettings >>'+briefingSourceSettings.Name);
 
         Briefing_Source_Settings__mdt objMetadata = getCustomMetadata(InstanceName);
         bsource__BriefingSourceSettingsLists__c bss = bsource__BriefingSourceSettingsLists__c.getValues(InstanceName); 
+        
         if(!Test.isRunningTest()){
             if(minutes == 0 || minutes > 45 || bss.bsource__API_Username__c != briefingSourceSettings.bsource__API_Username__c && objMetadata.bsource__Access_Token__c!= null){
                 HttpResponse httpResponse = getToken(briefingSourceSettings);         Map<String,Object> resultMap = (Map<String,Object>) JSON.deserializeUntyped(httpResponse.getBody());
                 system.debug('resultMap>>'+resultMap);
                 token = String.valueOf(resultMap.get('access_token'));             refreshToken = String.valueOf(resultMap.get('refresh_token'));
-                if(
-            bsource__BriefingSourceSettingsLists__c.SObjectType.getDescribe().isAccessible() &&  bsource__BriefingSourceSettingsLists__c.SObjectType.getDescribe().isCreateable() &&
-                    bsource__BriefingSourceSettingsLists__c.SObjectType.getDescribe().isUpdateable() &&
-            Schema.SObjectType.bsource__BriefingSourceSettingsLists__c.fields.bsource__Access_Token__c.isAccessible() &&
-            Schema.SObjectType.bsource__BriefingSourceSettingsLists__c.fields.bsource__Refresh_Token__c.isAccessible()&&
-                          Schema.SObjectType.bsource__BriefingSourceSettingsLists__c.fields.bsource__Access_Token__c.isUpdateable() &&
-            Schema.SObjectType.bsource__BriefingSourceSettingsLists__c.fields.bsource__Refresh_Token__c.isUpdateable()&&
-                          Schema.SObjectType.bsource__BriefingSourceSettingsLists__c.fields.bsource__Access_Token__c.isCreateable() &&
-            Schema.SObjectType.bsource__BriefingSourceSettingsLists__c.fields.bsource__Refresh_Token__c.isCreateable()
-                ){    
-
-                 bss.bsource__Access_Token__c=token;                 bss.bsource__Refresh_Token__c=refreshToken;     
-                    Upsert bss;
-                  } 
-                
+     
+             
                 
             }else{        
                 token = objMetadata.bsource__Access_Token__c;
-                  if(
-            bsource__BriefingSourceSettingsLists__c.SObjectType.getDescribe().isAccessible() &&  bsource__BriefingSourceSettingsLists__c.SObjectType.getDescribe().isCreateable() &&
-                    bsource__BriefingSourceSettingsLists__c.SObjectType.getDescribe().isUpdateable() &&
-            Schema.SObjectType.bsource__BriefingSourceSettingsLists__c.fields.bsource__Access_Token__c.isAccessible() &&
-            Schema.SObjectType.bsource__BriefingSourceSettingsLists__c.fields.bsource__Refresh_Token__c.isAccessible()&&
-                          Schema.SObjectType.bsource__BriefingSourceSettingsLists__c.fields.bsource__Access_Token__c.isUpdateable() &&
-            Schema.SObjectType.bsource__BriefingSourceSettingsLists__c.fields.bsource__Refresh_Token__c.isUpdateable()&&
-                          Schema.SObjectType.bsource__BriefingSourceSettingsLists__c.fields.bsource__Access_Token__c.isCreateable() &&
-            Schema.SObjectType.bsource__BriefingSourceSettingsLists__c.fields.bsource__Refresh_Token__c.isCreateable()
-               
-                  ){
+                system.debug('chekc length'+token.length());
+                
                   
-                bss.bsource__Access_Token__c=token;     
-                      Upsert bss;
-                  }
                  
             } 
         } 
@@ -220,6 +197,7 @@ public with sharing class EVApi {
         HttpResponse httpResponse = http.send(httpRequest);
         System.debug('httpResponse--->'+httpResponse.getBody());
         if (httpResponse.getStatusCode() == 200) {
+            
             if(Test.isRunningtest()){
                 httpResponse.setBody('{"data": [{"id": 1,"name": "Meeting Details","updated_at": "2021-03-06 09:15:55","active": true,"system": false,"custom": false,"order": 1,"alias": "meeting_details","parent_id": null,"blocked": false,"isSubSection": false,"subSections": [],"formFields": [{"id": 322,"name": "select_box_example","label": "Select Box Example","short_label": "Select Box Example","active": true,"custom": false,"type": "SELECT_BOX","field_type": "FORM","value_type": "","options": ["option 1","option 2","option 3"],"min_length": null,"max_length": null,"system": false,"order": 0,"widget": "NOTES","form_section_id": 1,"show_in_grid": false,"updated_at": "2021-03-04 14:25:04","file_links": null,"dynamic_table_columns_config": [],"show_in_cep": true,"show_in_webinar": false,"logicRules": [],"props": [],"dataIndex": "select_box_example","renderer": null,"title": "Select Box Example","type_formatted": "Selectbox","full_row": false}]}]}');
             }
@@ -243,6 +221,28 @@ public with sharing class EVApi {
             //    updateCustomMetadata(token,refreshToken);
             // }
             upsertCustomMetadata(token,refreshToken,InstanceName);
+            
+            //update access token in custom setting
+                                  if(token.length()>255){
+                                    System.debug('Access token is larger than life ');
+                                       }
+                                  else{
+                                            try{  
+                                                
+                                                if(bsource__BriefingSourceSettingsLists__c.sObjectType.getDescribe().isAccessible() 
+                                                   && bsource__BriefingSourceSettingsLists__c.sObjectType.getDescribe().isCreateable()   
+                                                   && Schema.sObjectType.bsource__BriefingSourceSettingsLists__c.fields.bsource__Access_Token__c.isAccessible()
+                                                   && Schema.sObjectType.bsource__BriefingSourceSettingsLists__c.fields.bsource__Access_Token__c.isCreateable()
+                                                   && Schema.sObjectType.bsource__BriefingSourceSettingsLists__c.fields.bsource__Access_Token__c.isUpdateable()){
+                                                 bsource__BriefingSourceSettingsLists__c bssUpdate= bsource__BriefingSourceSettingsLists__c.getValues(InstanceName);
+                                                 bssUpdate.bsource__Access_Token__c=token;
+                                                 Upsert bssUpdate;
+                                                   }
+            
+                       
+                                               }catch(Exception ex)   {System.debug('ex insert faileder  at line >>>>>'+ex.getLineNumber()+ 'ex cause >>'+ ex.getMessage());}
+                 
+                                       }
             return fields;
         } else {
             String message = 'Status: ' + httpResponse.getStatusCode() + ' - ' + httpResponse.getStatus();

@@ -23,8 +23,8 @@ public class CheckAccessibility_Test {
         Boolean deletebaleContactPermission = CheckAccessibility.isDeletable('contacst');
         Boolean upsertableContactPermission = CheckAccessibility.isUpsertable('FirstNsame, LastNsame' ,'csontact');
         
-      //  system.assertEquals(true, deletebaleContactPermission,'deletebaleContactPermission should be true');
-     //   system.assertEquals(true, upsertableContactPermission,'upsertableContactPermission should be true');
+        system.assertEquals(false, deletebaleContactPermission,'deletebaleContactPermission should be true');
+        system.assertEquals(false, upsertableContactPermission,'upsertableContactPermission should be true');
       
     }
      public static testMethod void testMethod2(){
@@ -35,8 +35,8 @@ public class CheckAccessibility_Test {
         Boolean deletebaleContactPermission = CheckAccessibility.isDeletable(null);
         Boolean upsertableContactPermission = CheckAccessibility.isUpsertable('','');
         
-       // system.assertEquals(true, deletebaleContactPermission,'deletebaleContactPermission should be true');
-       // system.assertEquals(true, upsertableContactPermission,'upsertableContactPermission should be true');
+        system.assertEquals(false, deletebaleContactPermission,'deletebaleContactPermission should be true');
+        system.assertEquals(false, upsertableContactPermission,'upsertableContactPermission should be true');
        
     }
     

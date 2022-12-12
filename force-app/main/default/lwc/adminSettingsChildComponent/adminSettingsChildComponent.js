@@ -97,7 +97,8 @@ export default class AdminSettingsChildComponent extends LightningElement {
             getBriefingSourceInfo({ InstanceName: this._instancename })
                 .then((result) => {
                     console.log('resut552626266', result)
-                    if (result != null && result.BriefingSourceSettingsList != null && result.BriefingSourceSettingsList.bsource__API_Endpoint__c != null &&
+                    if (result != null && result.BriefingSourceSettingsList != null 
+                        && result.BriefingSourceSettingsList.bsource__API_Endpoint__c != null &&
                         result.BriefingSourceSettingsList.bsource__API_Username__c != null &&
                         result.BriefingSourceSettingsList.bsource__API_Password__c != null &&
                         result.BriefingSourceSettingsList.bsource__Client_Id__c != null &&
@@ -169,6 +170,9 @@ export default class AdminSettingsChildComponent extends LightningElement {
         console.log('event', element.dataset.name);
         if (status) {
             if (element.dataset.name == 'ConnectToBriefingSource') {
+                console.log('AFter connected name', this.BriefingSourceSettingsInfo.Name);
+                console.log('AFter connected name', this.BriefingSourceSettingsInfo);
+
                 saveBreifingSourceCredsSetting({
                         url: this.BriefingSourceSettingsInfo.bsource__API_Endpoint__c,
                         username: this.BriefingSourceSettingsInfo.bsource__API_Username__c,
@@ -178,10 +182,17 @@ export default class AdminSettingsChildComponent extends LightningElement {
                         briefingSourceInstanceName: this.BriefingSourceSettingsInfo.Name
                     })
                     .then((result) => {
-                        return insertCustomSetting({ bss: result, instanceName: this.BriefingSourceSettingsInfo.Name });
+                        console.log('result..>> from apex before insert custom settings',result);
+                        console.log( 'this.BriefingSourceSettingsInfo.Name..>> from apex before insert custom settings',this.BriefingSourceSettingsInfo.Name);
+                        console.log( 'this.BriefingSourceSettingsInfo.Name..>> from apex before insert custom settings',this.BriefingSourceSettingsInfo);
+                       
+                        return insertCustomSetting({ bssJSONString:  JSON.stringify(result), instanceName: this.BriefingSourceSettingsInfo.Name });
                     })
 
                 .then((result) => {
+                    console.log('result..>> from apex after>> insert custom settings',result);
+                    console.log( 'this.BriefingSourceSettingsInfo.Name..>> from apex after>> insert custom settings',this.BriefingSourceSettingsInfo.Name);
+
                         this.Connected = true;
                         this.loadBriefingSourceFields(this.BriefingSourceSettingsInfo.Name);
                         //eval("$A.get('e.force:refreshView').fire();");

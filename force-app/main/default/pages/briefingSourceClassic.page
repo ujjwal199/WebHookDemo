@@ -1,5 +1,5 @@
 <apex:page controller="NewDSRCreationFlowController" sidebar="true" showHeader="true">
-    <apex:pageMessages id="showmsg"></apex:pageMessages>
+    <!--<apex:pageMessages id="showmsg"></apex:pageMessages>-->
     <apex:outputPanel rendered="{!instanceNameExists}">
     <apex:includeLightning />
     

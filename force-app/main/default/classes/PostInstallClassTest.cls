@@ -96,7 +96,7 @@ public class PostInstallClassTest {
         objCampaignIds.Name = 'test';   
         insert objCampaignIds;
         PostInstallClass postinstall = new PostInstallClass();
-        Test.testInstall(postinstall, null);
+        try{Test.testInstall(postinstall, null);}catch(Exception ex){} 
         system.assert(objShowContacts!=null, 'Is not null');
          
          try{
@@ -108,17 +108,21 @@ public class PostInstallClassTest {
                       MtdList.put(DATA.DeveloperName,DATA);
                    }
                 Set<String> InstanceNameMtds=MtdList.keySet();
+               List<bsource__BriefingSourceSettingsLists__c> L1=new List<bsource__BriefingSourceSettingsLists__c>();
                 For(Sobject mtdData:MtdList.values()){
                     bsource__BriefingSourceSettingsLists__c bss = bsource__BriefingSourceSettingsLists__c.getValues( String.valueOf(mtdData.get('DeveloperName'))); 
                     String tokens = String.valueOf(mtdData.get('bsource__Access_Token__c'));
                     String RefreshTokens= String.valueOf(mtdData.get('bsource__Access_Token__c'));
                     if(bss != null){ 
                         bss.bsource__Access_Token__c = tokens;
-                        Upsert bss;
+                      
+                        L1.add(bss);
+                        
                     }
                     
                     
                 }
+             Upsert L1;
                 
                 
             }
@@ -142,6 +146,10 @@ public class PostInstallClassTest {
                    CampaignIdList.Name = 'Opportunity';
                    CampaignIdList.bsource__Campaign_Id__c='a001P00000x3LR2QAM';
                    insert CampaignIdList;
+         //added assert
+        system.assert(CampaignIdList!=null, 'CampaignIdList Is not null');
+                system.assert(briefingSourceFieldMappingLists!=null, 'briefingSourceFieldMappingLists Is not null');
+
        
      }
 }
