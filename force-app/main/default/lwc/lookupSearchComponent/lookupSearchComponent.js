@@ -31,7 +31,7 @@ export default class LookupSearchComponent extends LightningElement {
     @track insideClick;
 
     /*connectedCallback(){
-        console.log('Inside connected callback');
+
     }*/
 
     //  @Deb
@@ -64,44 +64,35 @@ export default class LookupSearchComponent extends LightningElement {
     }
 
     get globalSelectedItemsisnull(){
-        console.log('globalSelectedItemsisnull',this.globalSelectedItems);
+       
         return this.globalSelectedItems.length>0?true:false;
     }
     get setlookupHeight(){
         return this.globalSelectedItems.length>0?'slds-popover slds-popover_full-width height-lookup':'slds-popover slds-popover_full-width '
     }
     connectedCallback() {
-        console.log('Get account label :', this.AccountLabelName);
-        console.log('Get Opportunity label :', this.OpportunityLabelName);
-        console.log('Get Contact label :', this.ContactLabelName);
-        console.log('Get Campaign label :', this.CampaignLabelName);
+      
         // Object API's name
-        console.log('Object Api Names :', this.objectApiName);
+       
     }
 
     // Code ends here for selected labels Name
 
     renderedCallback() {
-        console.log('Inside renderedCallback in Lookup Search Component ', this.items);
         if (this.items && this.items.length == 0) {
-            console.log('No items!!');
             this.isDialogDisplay = false;
         }
 
-        console.log('%cItems = ', 'font-size: 25px; color: blue', this.items);
-        console.log('%cGLobal selected items = ', 'font-size: 25px; color: red', this.globalSelectedItems);
+
 
     }
 
     //This method is called when user enters search input. It displays the data from database.
     onchangeSearchInput(event) {
         this.isDisplayMessage = false;
-        console.log('Searched for', event.target.value);
-        console.log('Obj>>' + this.objectApiName);
-        console.log('recid>>' + this.recid);
+       
         this.searchInput = event.target.value;
-        console.log('this.searchInput.trim()>>>'+this.searchInput.trim());
-        console.log('this.searchInput.trim().length>>>'+this.searchInput.trim().length);
+       
         if (this.searchInput.trim().length > 2) {
             retrieveRecords({
                     objectName: this.objectApiName,
@@ -114,7 +105,7 @@ export default class LookupSearchComponent extends LightningElement {
                     initiatedfrom: this.initiatedfrom
                 })
                 .then(result => {
-                   console.log('result>>>',result);
+                  
                     this.items = [];
                     this.value = [];
                     this.previousSelectedItems = [];
@@ -141,14 +132,13 @@ export default class LookupSearchComponent extends LightningElement {
 
                         var resultValueArray = [];
                         result.forEach(res => {
-                            // console.log('Result item', res.recordId);
+                           
                             resultValueArray.push(res.recordId);
                         });
 
                         // this.globalSelectedItems.forEach((element, index) => {
 
                         //     if(resultValueArray.indexOf(element.value) < 0){
-                        //         console.log('%cGlobal item that needs to be removed is', 'background: blue; color: white;', element.label, ' and index on global array = ', index);
                         //         this.globalSelectedItems.splice(index, 1);
 
                         //     }
@@ -185,7 +175,6 @@ export default class LookupSearchComponent extends LightningElement {
 
     @api
     loadOpportunityCmpHandler() {
-        //console.log('Inside loadOpportunityCmpHandler');
         retrieveRecords({
                 objectName: this.objectApiName,
                 fieldAPINames: this.fieldApiNames,
@@ -198,24 +187,20 @@ export default class LookupSearchComponent extends LightningElement {
             })
             .then(result => {
 
-                console.log('retrieve records ', result);
-                console.log('globalSelectedItems ', this.globalSelectedItems);
+              
 
                 var resultValueArray = [];
 
                 var indexOfElementsThatNeedToBeRemoved = [];
 
                 result.forEach(res => {
-                    // console.log('Result item', res.recordId);
                     resultValueArray.push(res.recordId);
                 });
 
                 this.globalSelectedItems.forEach((element, index) => {
-                    console.log('Global Item from loadOpportunityCmpHandler and its index', element, index);
 
                     if (resultValueArray.indexOf(element.value) < 0) {
 
-                        console.log('%cGlobal item that needs to be removed is', 'background: blue; color: white;', element.label, ' and index on global array = ', index);
                         // this.globalSelectedItems.splice(index, 1);
                         indexOfElementsThatNeedToBeRemoved.push(index);
 
@@ -224,14 +209,12 @@ export default class LookupSearchComponent extends LightningElement {
                 });
 
                 indexOfElementsThatNeedToBeRemoved.sort(function(a, b) { return b - a });
-                console.log('%cindexOfElementsThatNeedToBeRemoved after sorting', 'background: pink; color: white', indexOfElementsThatNeedToBeRemoved);
 
                 for (var i = 0; i < indexOfElementsThatNeedToBeRemoved.length; i++) {
-                    console.log('Inside removal loop with loop counter = ', i, ' and element on counter is ', indexOfElementsThatNeedToBeRemoved[i]);
-                    console.log('%cRemoving item ', 'background: purple; color: white;', this.globalSelectedItems[indexOfElementsThatNeedToBeRemoved[i]], ' from global array which has index', indexOfElementsThatNeedToBeRemoved[i]);
+                   
                     this.globalSelectedItems.splice(indexOfElementsThatNeedToBeRemoved[i]);
                 }
-                console.log('this.globalSelectedItems', this.globalSelectedItems);
+         
 
                 this.items = [];
                 this.value = [];
@@ -265,10 +248,10 @@ export default class LookupSearchComponent extends LightningElement {
     //this method removes the pill item
     handleRemoveRecord(event) {
         const removeItem = event.target.dataset.item; //"0011a000004e1bJAAQ"
-        console.log('removeItem',removeItem);
+      
         //this will prepare globalSelectedItems array excluding the item to be removed.
         this.globalSelectedItems = this.globalSelectedItems.filter(item => item.value != removeItem);
-        console.log('this.globalSelectedItems removeItem',this.globalSelectedItems);
+    
         const arrItems = this.globalSelectedItems;
 
         //added this line on 9/7
@@ -277,7 +260,7 @@ export default class LookupSearchComponent extends LightningElement {
         this.initializeValues();
         this.value = [];
 
-        //console.log("remove arrItems"+arrItems);
+      
         const evtCustomEvent = new CustomEvent('remove', {
             detail: { removeItem, arrItems }
         });
@@ -366,7 +349,7 @@ export default class LookupSearchComponent extends LightningElement {
         return false;
     }
     close() { 
-        console.log('we should close now');
+     
         //remove previous selected items first as there could be changes in checkbox selection
         this.previousSelectedItems.map(p=>{
             this.globalSelectedItems = this.globalSelectedItems.filter(item => item.value != p.value);

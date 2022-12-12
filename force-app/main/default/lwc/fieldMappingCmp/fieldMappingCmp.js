@@ -23,8 +23,7 @@ export default class FieldMappingCmp extends LightningElement {
         }
         this.fieldsDataForChild = tempArr;
 
-         console.log("fieldsDataTemp 44",this.fieldsDataForChild)
-         console.log("fieldsDataTemp data",this.fieldsDataForChild.length);
+       
         
     }
     

@@ -41,7 +41,7 @@ export default class ContactDsrRelations extends LightningElement {
 
     @api
     clearExistingOpportunities(){
-        console.log('%cInside clearExistingOpportunities', 'background: green; color: white');  
+         
         this.template.querySelector('c-lookup-search-component').loadOpportunityCmpHandler();
     }
 

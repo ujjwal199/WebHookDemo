@@ -12,18 +12,18 @@ export default class OpportunityDsrRelations extends LightningElement {
 
     //captures the retrieve event propagated from lookup component
     selectItemEventHandler(event){
-        console.log('Inside selectItemEventHandler on Opportunity', event.detail.arrItems);
+       
         
         let args = JSON.parse(JSON.stringify(event.detail.arrItems));
-        console.log('Inside selectItemEventHandler on Opportunity with args', args);
+        
         
         this.displayItem(args);        
     }
 
     handleAccountRemoval(event){
-        console.log('Inside handleAccountRemoval on Opportunity', event.detail.arrItems);
+       
         let args = JSON.parse(JSON.stringify(event.detail.arrItems));
-        console.log('Inside handleAccountRemoval on Opportunity with args', args);
+      
         
         this.displayItem(args);        
 
@@ -31,9 +31,9 @@ export default class OpportunityDsrRelations extends LightningElement {
 
     //captures the remove event propagated from lookup component
     deleteItemEventHandler(event){
-        console.log('Inside deleteItemEventHandler on Opportunity',event.detail.arrItems);
+       
         let args = JSON.parse(JSON.stringify(event.detail.arrItems));
-        console.log('Inside deleteItemEventHandler on Opportunity args',args);
+       
         this.displayItem(args);
     }
 
@@ -63,7 +63,6 @@ export default class OpportunityDsrRelations extends LightningElement {
     // created by Shatarchi
     @api
     clearExistingOpportunities(){
-        console.log('%cInside clearExistingOpportunities', 'background: green; color: white');  
         this.template.querySelector('c-lookup-search-component').loadOpportunityCmpHandler();
     }
 

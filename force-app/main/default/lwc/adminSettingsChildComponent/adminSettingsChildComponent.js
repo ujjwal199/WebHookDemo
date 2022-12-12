@@ -48,7 +48,7 @@ export default class AdminSettingsChildComponent extends LightningElement {
         this._instancename = value;
     }
     get getIsLoaded() {
-        console.log('this._isLoaded', this._isLoaded);
+
         return this._isLoaded;
     }
     @api index;
@@ -56,17 +56,17 @@ export default class AdminSettingsChildComponent extends LightningElement {
     @track availableFieldsForPassingInPickList;
     connectedCallback() {
         this._isLoaded = true;
-        console.log('this._instancename', this._instancename);
+      
         getFields({ instanceName: this._instancename })
             .then((result) => {
                 //extra
                 this.availableFieldsForPassingInPickList = result;
-                console.log('availableFields', result);
+           
                 this.loadBriefingSourceFields(this._instancename);
 
             })
             .catch((err) => {
-                console.log(err);
+              
             }).finally(() => {
                 this.init();
             })
@@ -78,11 +78,11 @@ export default class AdminSettingsChildComponent extends LightningElement {
             .then((result) => {
                 //extra
                 this.restoreobjectvalue = result;
-                console.log('restoreobjectvalue', result);
+             
 
             })
             .catch((err) => {
-                console.log(err);
+              
             })
     }
 
@@ -96,7 +96,7 @@ export default class AdminSettingsChildComponent extends LightningElement {
         const getBriefingSourceInfoPromise = new Promise((resolve, reject) => {
             getBriefingSourceInfo({ InstanceName: this._instancename })
                 .then((result) => {
-                    console.log('resut552626266', result)
+                 
                     if (result != null && result.BriefingSourceSettingsList != null 
                         && result.BriefingSourceSettingsList.bsource__API_Endpoint__c != null &&
                         result.BriefingSourceSettingsList.bsource__API_Username__c != null &&
@@ -111,10 +111,10 @@ export default class AdminSettingsChildComponent extends LightningElement {
                         this.BriefingSourceSettingsInfo.bsource__Client_Secret__c = result.BriefingSourceSettingsList.bsource__Client_Secret__c;
                         this.BriefingSourceSettingsInfo.Name = result.BriefingSourceSettingsList.Name;
 
-                        console.log('result.bsource__isConnected__c', result.bsource__isConnected__c);
+                      
                         if (result.BriefingSourceSettingsList.bsource__isConnected__c) {
                             this.Connected = true;
-                            console.log('result', result);
+                          
                         }
                     }
                     if (result.ShowContact != null && result.ShowContact.bsource__Show_Contact_Checkbox__c != null) {
@@ -152,9 +152,9 @@ export default class AdminSettingsChildComponent extends LightningElement {
                 getStatePromise,
             ])
             .then(() => {
-                console.log('%cSuccess', 'background:green;');
+               
             }).catch((err) => {
-                console.log('%cERROR', 'background:red;', err, JSON.parse(JSON.stringify(err)));
+               
             })
             .finally(() => {
                 this.loadedCompletely = true;
@@ -165,13 +165,10 @@ export default class AdminSettingsChildComponent extends LightningElement {
         this.isloading(true);
         let status = this.isInputValid();
         const element = event.target;
-        console.log('evstatusent', status);
-        console.log('evstatusent', this.BriefingSourceSettingsInfo);
-        console.log('event', element.dataset.name);
+       
         if (status) {
             if (element.dataset.name == 'ConnectToBriefingSource') {
-                console.log('AFter connected name', this.BriefingSourceSettingsInfo.Name);
-                console.log('AFter connected name', this.BriefingSourceSettingsInfo);
+               
 
                 saveBreifingSourceCredsSetting({
                         url: this.BriefingSourceSettingsInfo.bsource__API_Endpoint__c,
@@ -182,17 +179,13 @@ export default class AdminSettingsChildComponent extends LightningElement {
                         briefingSourceInstanceName: this.BriefingSourceSettingsInfo.Name
                     })
                     .then((result) => {
-                        console.log('result..>> from apex before insert custom settings',result);
-                        console.log( 'this.BriefingSourceSettingsInfo.Name..>> from apex before insert custom settings',this.BriefingSourceSettingsInfo.Name);
-                        console.log( 'this.BriefingSourceSettingsInfo.Name..>> from apex before insert custom settings',this.BriefingSourceSettingsInfo);
+                       
                        
                         return insertCustomSetting({ bssJSONString:  JSON.stringify(result), instanceName: this.BriefingSourceSettingsInfo.Name });
                     })
 
                 .then((result) => {
-                    console.log('result..>> from apex after>> insert custom settings',result);
-                    console.log( 'this.BriefingSourceSettingsInfo.Name..>> from apex after>> insert custom settings',this.BriefingSourceSettingsInfo.Name);
-
+                    
                         this.Connected = true;
                         this.loadBriefingSourceFields(this.BriefingSourceSettingsInfo.Name);
                         //eval("$A.get('e.force:refreshView').fire();");
@@ -200,7 +193,7 @@ export default class AdminSettingsChildComponent extends LightningElement {
                         this.message = 'Successfully connected with BriefingSource.';
                         this.variant = 'success';
                         this.template.querySelector('c-lwc-custom-toast').showCustomNotice();
-                        console.log('result', result);
+                       
                         this.isloading(false);
                     })
                     .catch((err) => {
@@ -219,7 +212,7 @@ export default class AdminSettingsChildComponent extends LightningElement {
                     });
             } else if (element.dataset.name == 'SaveContactStep') {
                 if (this.Connected) {
-                    console.log('this.BriefingSourceSettingsInfo.bsource__Show_Contact_Checkbox__c', this.BriefingSourceSettingsInfo.bsource__Show_Contact_Checkbox__c)
+                  
                     saveContact({
                             showContactCheckbox: this.BriefingSourceSettingsInfo.bsource__Show_Contact_Checkbox__c,
                             InstanceName: this.briefingInstanceName
@@ -228,11 +221,11 @@ export default class AdminSettingsChildComponent extends LightningElement {
                             this.message = 'Contact saved.';
                             this.variant = 'success';
                             this.template.querySelector('c-lwc-custom-toast').showCustomNotice();
-                            console.log('result', result);
+                           
                             this.isloading(false);
                         })
                         .catch((err) => {
-                            console.log('Error getContactRecord', err);
+                           
                         })
                         .finally(() => {
 
@@ -265,11 +258,11 @@ export default class AdminSettingsChildComponent extends LightningElement {
                                 this.variant = 'error';
                                 this.template.querySelector('c-lwc-custom-toast').showCustomNotice();
                             }
-                            console.log('result', result);
+                          
                             this.isloading(false);
                         })
                         .catch((err) => {
-                            console.log('Error getContactRecord', err);
+                           
                         })
                         .finally(() => {
 
@@ -288,10 +281,10 @@ export default class AdminSettingsChildComponent extends LightningElement {
     }
 
     handleChange(event) {
-        console.log('element333')
+      
         this.instanceNameErrorMsg = '';
         const element = event.target;
-        console.log('element', element)
+       
         if (element.type == 'checkbox') {
             this.BriefingSourceSettingsInfo[element.dataset.name] = element.checked;
         } else {
@@ -308,8 +301,7 @@ export default class AdminSettingsChildComponent extends LightningElement {
                 event.target.value.replace('#', '');
                 this.instanceNameErrorMsg = 'You can not use # in BriefingSource InstanceName';
             }
-            console.log('element33', element)
-            console.log('element.dataset.name', element.dataset.name)
+           
             this.BriefingSourceSettingsInfo[element.dataset.name] = element.value;
         }
     }
@@ -322,15 +314,14 @@ export default class AdminSettingsChildComponent extends LightningElement {
                 window.location.reload();
             })
             .catch((err) => {
-                console.log('Error getContactRecord', err);
+              
             })
             .finally(() => {
 
             });
     }
     AddBriefingSource(event) {
-        console.log(this._instancename);
-        console.log(this._instancename, this.lstTabs.length);
+      
         var TabId = this.lstTabs.length;
         var addbriefing = { Id: TabId, Name: `Tab ${TabId}` };
         this.lstTabs = [...this.lstTabs, addbriefing]
@@ -341,8 +332,7 @@ export default class AdminSettingsChildComponent extends LightningElement {
         }
         //extra 
     handlePicklistChange(event) {
-        console.log('event.currentTarget.value', event.detail.payload.value);
-        console.log('event.currentTarget.value', event.detail.payload.apiname);
+       
         if (event.detail.payload.value && event.detail.payload.apiname) {
             this.BriefingSourcefields[event.detail.payload.apiname] = event.detail.payload.value;
         }
@@ -350,14 +340,14 @@ export default class AdminSettingsChildComponent extends LightningElement {
 
     SaveMapping() {
         this.isloading(true);
-        console.log('this.BriefingSourcefields', this.BriefingSourcefields);
+       
         const data = Object.keys(this.BriefingSourcefields).map(item => {
             return {
                 key: item,
                 field: this.BriefingSourcefields[item]
             }
         });
-        console.log('data', data);
+       
         saveBreifingSourceMapping({
                 briefingSourceFields: data,
                 instanceName: this._instancename
@@ -366,13 +356,13 @@ export default class AdminSettingsChildComponent extends LightningElement {
             .then((result) => {
                 //this.loadBriefingSourceFields(this._instancename);
                 this.BriefingSourcefields = {};
-                console.log('Test saveBreifingSourceMapping');
+              
                 this.message = 'Mappings were Saved successfully.';
                 this.variant = 'success';
                 this.template.querySelector('c-lwc-custom-toast').showCustomNotice();
             })
             .catch((err) => {
-                console.log('Error getContactRecord', err);
+              
             })
             .finally(() => {
                 this.isloading(false);
@@ -402,15 +392,15 @@ export default class AdminSettingsChildComponent extends LightningElement {
                             // objArray.push({ fieldLabel: obj, ...result[obj]});
                             objArray.push({ fieldLabel: obj, records: newObjArray });
                         }
-                        console.log('objArray2222', objArray) 
+                      
                         this.mappingsMap = objArray;
                         this.isloading(false);
-                        console.log("objArrayobjArray", objArray)
+                      
                     }
                     resolve();
                 })
                 .catch((err) => {
-                    console.log('Error getContactRecord', err);
+                   
                     reject(err);
                 })
                 .finally(() => {
@@ -423,17 +413,17 @@ export default class AdminSettingsChildComponent extends LightningElement {
 
     restoreDefaults() {
         this.isloading(true);
-        console.log('restoreDefaults', this.briefingInstanceName);
+       
         restoreMappingDefaults({ instanceName: this.briefingInstanceName })
             .then((data) => {
-                console.log('result', this.briefingInstanceName);
+               
                 this.loadBriefingSourceFields(this.briefingInstanceName);
                 this.message = 'Values Restore Successfully.';
                 this.variant = 'success';
                 this.template.querySelector('c-lwc-custom-toast').showCustomNotice();
             })
             .catch((err) => {
-                console.log('Error getContactRecord', err);
+                
             })
             .finally(() => {
                 this.isloading(false);
@@ -475,7 +465,7 @@ export default class AdminSettingsChildComponent extends LightningElement {
 
     // Method for calling helpdsek data
     HelpdeskMethod() {
-        console.log('instancename inside HelpdeskMethod: ', this._instancename);
+      
         getHelpDeskRecord({ instanceName: this._instancename })
             .then((result) => {
                 //extra
@@ -486,7 +476,7 @@ export default class AdminSettingsChildComponent extends LightningElement {
                 this.OpportunityHelpText = this.Helpdesk[0].bsource__Opportunity_Help_Text__c;
             })
             .catch((err) => {
-                console.log(err);
+              
             })
     }
     showModalBox() {
@@ -540,10 +530,10 @@ export default class AdminSettingsChildComponent extends LightningElement {
         // New code for Popup modal and save Helpdesk data ends here 
     clearMappingHandler() {
         this.isloading(true);
-        console.log('restoreDefaults', this.briefingInstanceName);
+       
         clearBriefingSourceMapping({ instanceName: this.briefingInstanceName })
             .then((data) => {
-                console.log('result', this.briefingInstanceName);
+               
                 this.loadBriefingSourceFields(this.briefingInstanceName);
                 this.message = 'Values Deleted Successfully.';
                 this.variant = 'success';
@@ -554,7 +544,7 @@ export default class AdminSettingsChildComponent extends LightningElement {
                 }
             })
             .catch((err) => {
-                console.log('Error getContactRecord', err);
+               
             })
             .finally(() => {
                 this.isloading(false);

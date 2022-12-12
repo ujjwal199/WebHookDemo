@@ -12,7 +12,7 @@
                                    },
                                    "LightningComponentid", // the Id of div tag where your component will be rendered
                                    function(cmp) {
-                                       console.log('Calling the LWC Component');
+                                      
                                    });
     });
     </script>

@@ -15,7 +15,7 @@ export default class AdminSettingsParentComponent extends LightningElement {
 	@track variant;
 	@api sessionId;
 	connectedCallback(){
-		console.log('sessionId',this.sessionId)
+		
 		getInstanceName2()
 		.then((result) => {
 			let i = 0;
@@ -38,9 +38,9 @@ export default class AdminSettingsParentComponent extends LightningElement {
 		
 		whiteListRemoteSiteSetting()
 		.then((result) => {
-			console.log('result'+result);
+			
 			if(result != 'false'){
-				console.log('createRSS');
+				
 				this.createRSS(result,this.sessionId);
 			}
 		})
@@ -54,10 +54,10 @@ export default class AdminSettingsParentComponent extends LightningElement {
 	
 	addBriefingSource(event) {
 		const addedAlready = this.lstTabs.find(item => typeof item.Id == 'number');
-		console.log('addBriefingSource');
+		
 		if(!addedAlready){
 			const tabId = this.lstTabs.length;
-			console.log('this.lstTabs.length',this.lstTabs.length);
+			
 			let isActive;
 			if(tabId == 0){
 				isActive=true;
@@ -84,7 +84,7 @@ export default class AdminSettingsParentComponent extends LightningElement {
 				}
 				prepTab.push(JSON.parse(JSON.stringify(tab)));
 			});
-			console.log('prepTab',prepTab);
+			
 			this.lstTabs = prepTab;
 			setTimeout(() => {
 				let temp = this.template.querySelector('div[data-name='+tabName+']');
@@ -105,7 +105,7 @@ export default class AdminSettingsParentComponent extends LightningElement {
 		this.processing = true;
 		let tabName = event.currentTarget.dataset.name;
 		let tabId = event.currentTarget.dataset.id;
-		console.log('handleChangeActive',tabName);
+	
 		let prepTab = [];
 		this.lstTabs.map(tab=>{
 			tab.bottomLine = false;
@@ -121,7 +121,7 @@ export default class AdminSettingsParentComponent extends LightningElement {
 			}
 			prepTab.push(JSON.parse(JSON.stringify(tab)));
 		});
-		console.log('prepTab',prepTab);
+		
 		this.lstTabs = prepTab;
 		setTimeout(() => {
 			let temp = this.template.querySelector('div[data-name='+tabName+']');
@@ -140,7 +140,7 @@ export default class AdminSettingsParentComponent extends LightningElement {
 		event.stopPropagation();
 		let tabName = event.currentTarget.dataset.name;
 		let tabId = event.currentTarget.dataset.id;
-		console.log('tabId',tabId);
+		
 		let tablabel;
 		if(tabId.length > 16){
 			tablabel= 'Are you sure? This will disconnect the BriefingSource instance from Salesforce?';
@@ -156,7 +156,7 @@ export default class AdminSettingsParentComponent extends LightningElement {
 		  }).then((result) => {
 			if(result){
 				if(tabId.length > 16){
-					console.log('instanceName',tabName)
+					
 					Disconnected({ InstanceName: tabName })
 					.then((result) => {
 						let tempVar = [];
@@ -187,7 +187,7 @@ export default class AdminSettingsParentComponent extends LightningElement {
 								tempVar.push(tab)
 							}
 						});
-						console.log('tempVar',tempVar);
+					
 						this.lstTabs = tempVar ? JSON.parse(JSON.stringify(tempVar)) : this.lstTabs;
 					})
 				}else{
@@ -277,8 +277,7 @@ export default class AdminSettingsParentComponent extends LightningElement {
 				for(var errorIdx = 0; errorIdx < errors.length; errorIdx++){
 					messageText+= errors.item(errorIdx).getElementsByTagName('message').item(0).innerHTML + '\n';
 				}
-				console.log(messageText);
-				console.log('RemoteSiteSetting created.');
+				
 				// saveCredentials(url, username, password,cId,cSecret);
 			}
 		}

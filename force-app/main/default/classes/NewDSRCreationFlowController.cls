@@ -91,12 +91,21 @@ public with sharing class NewDSRCreationFlowController {
               bsource__BS_Deal_Support_Request__c dsrObject;
               List<String> campaignIdAdmin = new List<String>();
               List<bsource__DSR_Campaign__c> dsrRelationsList = new List<bsource__DSR_Campaign__c>();
+              String DsrtrimName;
+               if(nameDsr.length()>80){
+                      //trim name
+                      DsrtrimName=nameDSR.mid(0,80);
+                  }else{
+                     DsrtrimName=nameDSR;
+                  }
               if(objectName == 'Account' ){
-                  dsrObject = new bsource__BS_Deal_Support_Request__c(Name=nameDSR, Status__c='Draft',bsource__Account__c=recId,
+                 
+                  
+                  dsrObject = new bsource__BS_Deal_Support_Request__c(Name=DsrtrimName,bsource__Dsr_Name__c=nameDSR, Status__c='Draft',bsource__Account__c=recId,
                                                                       bsource__BriefingSource_InstanceName__c=InstanceName,bsource__BriefingSource_API_URL__c=bss.bsource__API_Endpoint__c);
               }
               if(objectName == 'Opportunity'){
-                  dsrObject = new bsource__BS_Deal_Support_Request__c(Name=nameDSR, Status__c='Draft',bsource__Opportunity__c=recId,
+                  dsrObject = new bsource__BS_Deal_Support_Request__c(Name=DsrtrimName,bsource__Dsr_Name__c=nameDSR, Status__c='Draft',bsource__Opportunity__c=recId,
                                                                       bsource__BriefingSource_InstanceName__c=InstanceName,bsource__BriefingSource_API_URL__c=bss.bsource__API_Endpoint__c );
               }
               if(dsrObject !=null){

@@ -48,57 +48,51 @@ export default class SelectDsrRelations extends NavigationMixin(LightningElement
     contactht;
     opportunityht;
     connectedCallback() {
-            console.log('test');
-            console.log('vfpageflow', this.vfpageflow);
+          
             this.ShowAccount();
         }
         //  Code to Show helpdesk records
     ShowAccount() {
-            console.log('instancename from getHelpdeskrecord : ', this.instancename);
+          
             getHelpDeskRecord({ instanceName: this.instancename })
                 .then((result) => {
                     //extra
                     this.Helpdesk = result;
-                    console.log('Helpdesk records', result);
-                    console.log('AccountHelpText before convert:', this.Helpdesk[0].bsource__Account_Help_Text__c);
+                   
                     this.accountht = this.Helpdesk[0].bsource__Account_Help_Text__c;
                     // Extra code added for Helpdesk section visibilty and hide 14_07_2022
                     if (this.accountht != undefined || this.accountht != null) {
                         this.accountdetails = true;
-                        console.log('accountht : ', this.accountht);
-                        console.log('account deatils : ', this.accountdetails);
+                       
 
                     }
                     //this.accountht.replace('/(<([^>]+)>)/ig', '');
                     //var input = this.Helpdesk[0].bsource__Account_Help_Text__c;
                     //this.accountht = input.replaceAll('<[/a-zAZ0-9]*>', '');
-                    console.log('CampaignHelpText :', this.Helpdesk[0].bsource__Campaign_Help_Text__c);
+                 
                     this.campaignht = this.Helpdesk[0].bsource__Campaign_Help_Text__c
                         // Extra code added for Helpdesk section visibilty and hide 14_07_2022
                     if (this.campaignht != undefined || this.campaignht != null) {
                         this.campaigndetails = true;
-                        console.log('campaignht : ', this.campaignht);
-                        console.log('campaign deatils : ', this.campaigndetails);
+                       
                     }
-                    console.log('ContactHelpText :', this.Helpdesk[0].bsource__Contact_Help_Text__c);
+                 
                     this.contactht = this.Helpdesk[0].bsource__Contact_Help_Text__c;
                     // Extra code added for Helpdesk section visibilty and hide 14_07_2022
                     if (this.contactht != undefined || this.contactht != null) {
                         this.contactdetails = true;
-                        console.log('contactht : ', this.contactht);
-                        console.log('contact deatils : ', this.contactdetails);
+                      
                     }
-                    console.log('OpportunityHelpText :', this.Helpdesk[0].bsource__Opportunity_Help_Text__c);
+                 
                     this.opportunityht = this.Helpdesk[0].bsource__Opportunity_Help_Text__c;
                     // Extra code added for Helpdesk section visibilty and hide 14_07_2022
                     if (this.opportunityht != undefined || this.opportunityht != null) {
                         this.opportunitydetails = true;
-                        console.log('opportunityht : ', this.opportunityht);
-                        console.log('opportunity deatils : ', this.opportunitydetails);
+                     
                     }
                 })
                 .catch((err) => {
-                    console.log(err);
+                   
                 })
 
         }
@@ -108,7 +102,6 @@ export default class SelectDsrRelations extends NavigationMixin(LightningElement
     //     return (this.campaignAdminPresent === this.campaignadmin);
     // }
     get isCampaignAdmin() {
-        console.log('this.campaignadmin', this.campaignadmin)
         return this.campaignadmin == 'true' ? true : false;
     }
 
@@ -127,8 +120,7 @@ export default class SelectDsrRelations extends NavigationMixin(LightningElement
     handleSaveNext() {
         this.togglerFixHandler();
         this.togglerFixHandlerForOpp();
-        console.log('Inside handleSaveNext with object name', this.objectname);
-        // console.log('listAccountId>>'+this.listAccountId);
+       
 
         if (this.objectname === 'Account') {
             var getselectedStep = this.selectedStep;
@@ -162,13 +154,13 @@ export default class SelectDsrRelations extends NavigationMixin(LightningElement
 
                 })
                 .catch(error => {
-                    console.log(error);
+                 
                 });
 
         } else if (getselectedStep === 'selOppty') {
             if (this.showcontact == 'false') {
                 if (this.campaignadmin === 'false') {
-                    console.log('this.listOpptyId1',this.listOpptyId);
+                   
                     saveOpptyDSRRecords({
                             opptyIds: this.listOpptyId,
                             dsrRelationshipId: this.dsrid,
@@ -211,7 +203,7 @@ export default class SelectDsrRelations extends NavigationMixin(LightningElement
                             }
                         })
                         .catch(error => {
-                            console.log(error);
+                          
                         });
                 } else {
                     this.selectedStep = 'selCampaign';
@@ -219,7 +211,7 @@ export default class SelectDsrRelations extends NavigationMixin(LightningElement
                     this.isSelectStepCampaign = true;
                     this.hideBack = true;
                     this.showCampaignComponent();
-                    console.log('this.listOpptyId2',this.listOpptyId);
+                   
                     saveOpptyDSRRecords({
                             opptyIds: this.listOpptyId,
                             dsrRelationshipId: this.dsrid,
@@ -230,7 +222,7 @@ export default class SelectDsrRelations extends NavigationMixin(LightningElement
                             this.listOpptyId ='';
                         })
                         .catch(error => {
-                            console.log(error);
+                           
                         });
                 }
             } else {
@@ -240,7 +232,7 @@ export default class SelectDsrRelations extends NavigationMixin(LightningElement
                 this.hideBack = true;
 
                 this.showContactComponent();
-                console.log('this.listOpptyId3',this.listOpptyId);
+               
                 saveOpptyDSRRecords({
                         opptyIds: this.listOpptyId,
                         dsrRelationshipId: this.dsrid,
@@ -251,7 +243,7 @@ export default class SelectDsrRelations extends NavigationMixin(LightningElement
                         this.listOpptyId ='';
                     })
                     .catch(error => {
-                        console.log(error);
+                       
                     });
             }
         } else if (getselectedStep === 'selContact') {
@@ -297,7 +289,7 @@ export default class SelectDsrRelations extends NavigationMixin(LightningElement
                         }
                     })
                     .catch(error => {
-                        console.log(error);
+                       
                     });
             } else {
                 this.selectedStep = 'selCampaign';
@@ -313,7 +305,7 @@ export default class SelectDsrRelations extends NavigationMixin(LightningElement
                         this.listContactId ='';
                     })
                     .catch(error => {
-                        console.log(error);
+                      
                     });
 
             }
@@ -403,7 +395,7 @@ export default class SelectDsrRelations extends NavigationMixin(LightningElement
                 }
             })
             .catch(error => {
-                console.log(error);
+              
             });
     }
 
@@ -429,17 +421,17 @@ export default class SelectDsrRelations extends NavigationMixin(LightningElement
 
 
     getAccountList(event) {
-        console.log('Inside getAccountList on selectDsrRelations');
+     
         this.listAccountId = event.detail && event.detail.listAccountIds ? JSON.parse(JSON.stringify(event.detail.listAccountIds)) : [];
     }
 
     handleAccountUnselect() {
-        console.log('Inside handleAccountUnselect');
+       
         // this.template.querySelector('c-opportunity-dsr-relations').clearExistingOpportunities();
     }
 
     getOpptyList(event) {
-        console.log('JSON.stringify(event.detail.listOpptyIds)>>' + JSON.stringify(event.detail.listOpptyIds));
+       
         this.listOpptyId = JSON.parse(JSON.stringify(event.detail.listOpptyIds));
     }
 
@@ -530,8 +522,7 @@ export default class SelectDsrRelations extends NavigationMixin(LightningElement
 
     handleDivClick(event) {
         if (event.currentTarget.dataset.close) {
-            console.log(this.objectname);
-            console.log(this.isSelectStepCampaign);
+         
             if (this.objectname == 'Account') {
                 this.template.querySelector('c-account-dsr-relations').closeDropDown();
             }

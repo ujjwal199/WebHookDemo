@@ -44,7 +44,7 @@ function reduceErrors(errors) {
 function showError(cmp, errors, methodName) {
     if (errors) {
         
-        console.log('%cError ', 'background: red', methodName, errors);
+      
         reduceErrors(errors).forEach((error) => {
             // const evt = new ShowToastEvent({
             //     title: 'Error',

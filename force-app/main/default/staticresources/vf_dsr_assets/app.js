@@ -230,7 +230,7 @@ var _DSRApp = (function($) {
             },
             
             toNextSection : function() {
-                console.log('onNextFromSites');    
+               
                 var errors = this.validate();
                 if (errors.length)  {
                     app.util.showErrors(errors);
@@ -276,7 +276,7 @@ var _DSRApp = (function($) {
                         that.updateRightPanel({siteName: siteName});
                         
                         if (event.status) {
-                            console.log(result);
+                           
                             that._prepareCalendars(result);
                         } else if (event.type === 'exception') {
                             document.getElementById("responseErrors").innerHTML =
@@ -313,7 +313,7 @@ var _DSRApp = (function($) {
                     altFormat: "DD, d MM, yy",
                     onSelect : function(date, calObj) {
                         var dateVal = $(this).multiDatesPicker('value');
-                        console.log(dateVal);  
+                      
                         var displayVal = dateVal && $.datepicker.formatDate(calObj.settings.altFormat, new Date(date)) || '';
                         $(calObj.settings.altField).html(displayVal); 
                         app.state.hiddenInput(calObj.settings.altFieldInputId, calObj.currentYear + '-' + (calObj.currentMonth + 1) + '-' + calObj.currentDay );

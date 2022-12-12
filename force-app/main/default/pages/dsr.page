@@ -540,7 +540,7 @@ body .bPageBlock .helpIcon, body .tagDropDown .tagHelp .helpIcon {
                 window.top.location.href = '/'+e.opportunityId;
             }});
         Sfdc.canvas.controller.subscribe({name : 'bsource.scrollToTop', onData : function (e) {
-            console.log('scrolling..');
+        
             window.scrollTo(0, 0);
         }});
         </script>   

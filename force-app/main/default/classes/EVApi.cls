@@ -92,13 +92,13 @@ public with sharing class EVApi {
             return cr;
         }
     }
-     @testVisible
+    @testVisible
     private static HttpRequest getRequest(String url) {
         string instanceName= ApexPages.currentPage().getParameters().get('instanceName').escapeHtml4();
         bsource__BriefingSourceSettingsLists__c objSettings = bsource__BriefingSourceSettingsLists__c.getValues(instanceName);
         return getRequest(objSettings, url);
     }
-     @testVisible
+    @testVisible
     private static HttpRequest getRequest(bsource__BriefingSourceSettingsLists__c briefingSourceSettings, String url) {
         String password = EncodingUtil.base64Encode(Blob.valueOf(briefingSourceSettings.API_Username__c + ':' + briefingSourceSettings.bsource__API_Password__c));        
         
@@ -107,14 +107,6 @@ public with sharing class EVApi {
         httpReq.setHeader('Authorization', 'Basic ' + password);
         
         return httpReq;
-    }
-    public static Decimal getRefreshedTime(Briefing_Source_Settings__mdt objMetadata){
-        Decimal minutes = 0;
-        if(objMetadata.bsource__Refreshed_Time__c != null){dateTime endDate = system.now();
-            DateTime startDate = objMetadata.bsource__Refreshed_Time__c;
-            minutes = Integer.valueOf((endDate.getTime() - startDate.getTime())/(1000*60));
-        }
-        return minutes;
     }
     
     public class APIException extends Exception {}
@@ -157,7 +149,7 @@ public with sharing class EVApi {
         public String label {get; set;}
         
     }
- 	
+    
     public static Map<String,List<parseJSON.FormFields>> getFields(bsource__BriefingSourceSettingsLists__c briefingSourceSettings) {
         system.debug('inside getFields init');
         //Decimal minutes = 0;
@@ -168,81 +160,64 @@ public with sharing class EVApi {
         system.debug('briefingSourceSettings>>'+briefingSourceSettings);
         String InstanceName = briefingSourceSettings.Name;
         
-                system.debug('nAME briefingSourceSettings >>'+briefingSourceSettings.Name);
-
-        Briefing_Source_Settings__mdt objMetadata = getCustomMetadata(InstanceName);
+        system.debug('nAME briefingSourceSettings >>'+briefingSourceSettings.Name);
+        
+        
         bsource__BriefingSourceSettingsLists__c bss = bsource__BriefingSourceSettingsLists__c.getValues(InstanceName); 
         
         if(!Test.isRunningTest()){
-            if(minutes == 0 || minutes > 45 || bss.bsource__API_Username__c != briefingSourceSettings.bsource__API_Username__c && objMetadata.bsource__Access_Token__c!= null){
+            if(minutes == 0 || minutes > 45 || bss.bsource__API_Username__c != briefingSourceSettings.bsource__API_Username__c && briefingSourceSettings.bsource__Access_Token__c != null){
                 HttpResponse httpResponse = getToken(briefingSourceSettings);         Map<String,Object> resultMap = (Map<String,Object>) JSON.deserializeUntyped(httpResponse.getBody());
                 system.debug('resultMap>>'+resultMap);
                 token = String.valueOf(resultMap.get('access_token'));             refreshToken = String.valueOf(resultMap.get('refresh_token'));
-     
-             
+                
+                
                 
             }else{        
-                token = objMetadata.bsource__Access_Token__c;
-                system.debug('chekc length'+token.length());
-                
-                  
-                 
+                token = briefingSourceSettings.bsource__Access_Token__c; 
             } 
         } 
         HttpRequest httpRequest = createFieldRequest(briefingSourceSettings,token,'api/salesforce/forms/fields');
         httpRequest.setMethod('GET');
         httpRequest.setTimeout(120 * 1000); // 2 minutes
-        system.debug('httpRequest>>'+httpRequest);
         Http http = new Http();
         HttpResponse httpResponse = http.send(httpRequest);
-        System.debug('httpResponse--->'+httpResponse.getBody());
         if (httpResponse.getStatusCode() == 200) {
             
             if(Test.isRunningtest()){
                 httpResponse.setBody('{"data": [{"id": 1,"name": "Meeting Details","updated_at": "2021-03-06 09:15:55","active": true,"system": false,"custom": false,"order": 1,"alias": "meeting_details","parent_id": null,"blocked": false,"isSubSection": false,"subSections": [],"formFields": [{"id": 322,"name": "select_box_example","label": "Select Box Example","short_label": "Select Box Example","active": true,"custom": false,"type": "SELECT_BOX","field_type": "FORM","value_type": "","options": ["option 1","option 2","option 3"],"min_length": null,"max_length": null,"system": false,"order": 0,"widget": "NOTES","form_section_id": 1,"show_in_grid": false,"updated_at": "2021-03-04 14:25:04","file_links": null,"dynamic_table_columns_config": [],"show_in_cep": true,"show_in_webinar": false,"logicRules": [],"props": [],"dataIndex": "select_box_example","renderer": null,"title": "Select Box Example","type_formatted": "Selectbox","full_row": false}]}]}');
             }
             parseJSON parseJSON = parseJSON.parse(httpResponse.getBody());
-            
-            system.debug('parseJSON :: '+parseJSON.data[0]);
-            
             Map<String,List<parseJSON.FormFields>> fields = new Map<String,List<parseJSON.FormFields>>();
             
             for (parseJSON.Data objData : parseJSON.Data) {
-                system.debug('objData>>'+objData);
                 if (objData.formFields != null) {
-                    system.debug('objData.formFields>>'+objData.formFields);
                     List<parseJSON.FormFields> fieldsList = new List<parseJSON.FormFields>();
                     fieldsList.addAll(objData.formFields);
                     fields.put(objData.name,fieldsList);
                 }
             }
-            system.debug('fields final'+fields);
-            // if(token != objMetadata.bsource__Access_Token__c){
-            //    updateCustomMetadata(token,refreshToken);
-            // }
-            upsertCustomMetadata(token,refreshToken,InstanceName);
-            
             //update access token in custom setting
-                                  if(token.length()>255){
-                                    System.debug('Access token is larger than life ');
-                                       }
-                                  else{
-                                            try{  
-                                                
-                                                if(bsource__BriefingSourceSettingsLists__c.sObjectType.getDescribe().isAccessible() 
-                                                   && bsource__BriefingSourceSettingsLists__c.sObjectType.getDescribe().isCreateable()   
-                                                   && Schema.sObjectType.bsource__BriefingSourceSettingsLists__c.fields.bsource__Access_Token__c.isAccessible()
-                                                   && Schema.sObjectType.bsource__BriefingSourceSettingsLists__c.fields.bsource__Access_Token__c.isCreateable()
-                                                   && Schema.sObjectType.bsource__BriefingSourceSettingsLists__c.fields.bsource__Access_Token__c.isUpdateable()){
-                                                 bsource__BriefingSourceSettingsLists__c bssUpdate= bsource__BriefingSourceSettingsLists__c.getValues(InstanceName);
-                                                 bssUpdate.bsource__Access_Token__c=token;
-                                                 Upsert bssUpdate;
-                                                   }
-            
-                       
-                                               }catch(Exception ex)   {System.debug('ex insert faileder  at line >>>>>'+ex.getLineNumber()+ 'ex cause >>'+ ex.getMessage());}
-                 
-                                       }
+            if(token.length()>255){
+                System.debug('Access token is larger than life ');
+            }
+            else{
+                try{  
+                    
+                    if(bsource__BriefingSourceSettingsLists__c.sObjectType.getDescribe().isAccessible() 
+                       && bsource__BriefingSourceSettingsLists__c.sObjectType.getDescribe().isCreateable()   
+                       && Schema.sObjectType.bsource__BriefingSourceSettingsLists__c.fields.bsource__Access_Token__c.isAccessible()
+                       && Schema.sObjectType.bsource__BriefingSourceSettingsLists__c.fields.bsource__Access_Token__c.isCreateable()
+                       && Schema.sObjectType.bsource__BriefingSourceSettingsLists__c.fields.bsource__Access_Token__c.isUpdateable()){
+                           bsource__BriefingSourceSettingsLists__c bssUpdate= bsource__BriefingSourceSettingsLists__c.getValues(InstanceName);
+                           bssUpdate.bsource__Access_Token__c=token;
+                           Upsert bssUpdate;
+                       }
+                    
+                    
+                }catch(Exception ex)   {System.debug('ex insert faileder  at line >>>>>'+ex.getLineNumber()+ 'ex cause >>'+ ex.getMessage());}
+                
+            }
             return fields;
         } else {
             String message = 'Status: ' + httpResponse.getStatusCode() + ' - ' + httpResponse.getStatus();
@@ -253,7 +228,6 @@ public with sharing class EVApi {
     
     
     public static HttpResponse getToken(bsource__BriefingSourceSettingsLists__c briefingSourceSettings){
-        system.debug('inside get token');
         //briefingSourceSettings = bsource__BriefingSourceSettings__c.getOrgDefaults();
         String endPoint = briefingSourceSettings.bsource__API_Endpoint__c;
         //String endPoint = 'https://sfdc-v3.briefingsource.com/';
@@ -268,14 +242,10 @@ public with sharing class EVApi {
         request.setMethod('POST');
         request.setBody(parameters);
         HttpResponse response = http.send(request);
-        system.debug('response status code>>'+response.getStatusCode());
-        system.debug('response.getBody()>>'+response.getBody());
-        
         if(Test.isRunningTest()){
             response.setBody('{"token_type":"Bearer","expires_in":86400,"access_token":"eyJ0eXAiOiJKV1QiLCJh","refresh_token":"def50200ff4068766a28"}');
         }
         Map<String,Object> resultMap = (Map<String,Object>) JSON.deserializeUntyped(response.getBody()); 
-        System.debug('Response :: '+resultMap.get('access_token'));
         String token = String.valueOf(resultMap.get('access_token'));
         
         return response;
@@ -297,65 +267,9 @@ public with sharing class EVApi {
         }
         return minutes;
     }
-    public static Briefing_Source_Settings__mdt getCustomMetadata(String InstanceName){
-        Briefing_Source_Settings__mdt obj; 
-        if(Briefing_Source_Settings__mdt.sObjectType.getDescribe().isAccessible() ){
-            try{
-                obj = [select id,DeveloperName,MasterLabel,bsource__Access_Token__c,bsource__Refresh_Token__c,bsource__Refreshed_Time__c 
-                       from Briefing_Source_Settings__mdt WHERE DeveloperName=:InstanceName];
-            }
-            catch (Exception e) {
-                obj = new Briefing_Source_Settings__mdt();
-            }
-            return obj;    }else{ return null;}
-    }
     
-    public static void upsertCustomMetadata(String accessToken,String refreshToken,string instanceName){
-        //String token = EVApi.getToken();
-        if(bsource__Briefing_Source_Settings__mdt.sObjectType.getDescribe().isAccessible()){
-            Boolean isMetadataUpdateNeeded = false;
-            
-            //Get the customer record from Custom Metadata
-            //bsource__Briefing_Source_Settings__mdt obj = [select id,DeveloperName,MasterLabel,bsource__Access_Token__c,bsource__Refresh_Token__c from bsource__Briefing_Source_Settings__mdt WHERE DeveloperName=:instanceName];
-            
-            
-            //Create a deploy container which will be used for deploying(updating) the Custom Metadata Record
-            Metadata.DeployContainer mdContainer = new Metadata.DeployContainer();
-            // system.debug('obj>>'+obj);
-            //if(obj != null ){
-            
-            //create instance of Metadata.CustomMetadata
-            Metadata.CustomMetadata metadataRec =  new Metadata.CustomMetadata();
-            metadataRec.fullName = 'bsource__Briefing_Source_Settings__mdt.'+instanceName;
-            metadataRec.label = instanceName;
-            
-            //provide the value for the fields and add it to custom metadata instance
-            Metadata.CustomMetadataValue tokenDetail = new Metadata.CustomMetadataValue();
-            tokenDetail.field = 'bsource__Access_Token__c';
-            tokenDetail.value = accessToken;
-            metadataRec.values.add(tokenDetail);
-            
-            Metadata.CustomMetadataValue tokenDetail1 = new Metadata.CustomMetadataValue();
-            tokenDetail1.field = 'bsource__Refresh_Token__c';
-            tokenDetail1.value = refreshToken;
-            metadataRec.values.add(tokenDetail1);
-            
-            Metadata.CustomMetadataValue refreshedTime = new Metadata.CustomMetadataValue();
-            refreshedTime.field = 'bsource__Refreshed_Time__c';
-            refreshedTime.value = system.now();
-            metadataRec.values.add(refreshedTime);
-            
-            //Add the custom metadata instances in the container
-            mdContainer.addMetadata(metadataRec);
-            isMetadataUpdateNeeded = true; 
-            // }
-            
-            //Check if metadata deployment is required
-            if(isMetadataUpdateNeeded && !Test.isRunningTest()) {  /*Enqueue custom metadata deployment and get the deployment id  */ Metadata.Operations.enqueueDeployment(mdContainer, null);        }
-            
-        }
-        
-    }
+    
+    
     public static List<Center> getCenters() {
         string instanceName= ApexPages.currentPage().getParameters().get('instanceName').escapeHtml4();
         bsource__BriefingSourceSettingsLists__c objSettings = bsource__BriefingSourceSettingsLists__c.getValues(instanceName);
@@ -363,31 +277,25 @@ public with sharing class EVApi {
     }
     
     public static List<Center> getCenters(bsource__BriefingSourceSettingsLists__c briefingSourceSettings) {
-        System.debug('briefingSourceSettings------>'+briefingSourceSettings);
-        Briefing_Source_Settings__mdt objMetadata = getCustomMetadata(briefingSourceSettings.Name);
-        Decimal minutes = getRefreshedTime(objMetadata);
+        Decimal minutes = getRefreshedTime(briefingSourceSettings);
         String token='',refreshToken='';
-        system.debug('minutes>>'+minutes);
         if(minutes == 0 || minutes > 45){
             HttpResponse httpResponse = getToken(briefingSourceSettings);
             Map<String,Object> resultMap = (Map<String,Object>) JSON.deserializeUntyped(httpResponse.getBody());
             token = String.valueOf(resultMap.get('access_token'));
             refreshToken = String.valueOf(resultMap.get('refresh_token')); 
         }else{
-            token = objMetadata.bsource__Access_Token__c;
+            token = briefingSourceSettings.bsource__Access_Token__c;
         }
         
         HttpRequest httpRequest = createFieldRequest(briefingSourceSettings,token,'api/centers');
         
         httpRequest.setMethod('GET');
         httpRequest.setTimeout(120 * 1000); // 2 minutes
-        System.debug('String xml = '+httpRequest.getBody());
         Http http = new Http();
         if(!Test.isRunningTest()){
             HttpResponse httpResponse = http.send(httpRequest);
             if (httpResponse.getStatusCode() == 200) {
-                system.debug('httpResponse.getBody()>>'+httpResponse.getBody());
-                
                 CentersResponse centersResponse = (CentersResponse) JSON.deserialize(httpResponse.getBody(), EVApi.CentersResponse.class);
                 return centersResponse.data;
             } else {

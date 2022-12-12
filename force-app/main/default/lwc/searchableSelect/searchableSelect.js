@@ -20,14 +20,14 @@ export default class SearchableSelect extends LightningElement {
     @api instanceName;
     @api labelName;
     connectedCallback() {
-        console.log('selectedfield', this.selectedfield)
+      
         this.optionData = this.options;
         this.showDropdown = false;
         this.value = this.selectedfield;
         let selected = this.optionData.filter(item => item.value == this.value);
         if (selected) {
             selected = JSON.parse(JSON.stringify(selected))
-                // console.log('selected',selected);
+               
             if (selected.length > 0 && selected[0].label) {
                 this.searchString = selected[0].label
             }
@@ -113,7 +113,7 @@ export default class SearchableSelect extends LightningElement {
             else
                 this.showDropdown = false;
         }
-        console.log('this.value',this.value);
+      
 
 
     }
@@ -135,14 +135,14 @@ export default class SearchableSelect extends LightningElement {
 
     removePill(event) {
         var value = event.currentTarget.name;
-        console.log('Delete option value :', value);
+      
         var count = 0;
         var options = JSON.parse(JSON.stringify(this.optionData));
         for (var i = 0; i < options.length; i++) {
             if (options[i].value === value) {
                 options[i].selected = false;
                 this.values.splice(this.values.indexOf(options[i].value), 1);
-                console.log('Delete option value after if :', this.values);
+               
             }
             if (options[i].selected) {
                 count++;
@@ -170,7 +170,7 @@ export default class SearchableSelect extends LightningElement {
             this.searchString = previousLabel;
 
         this.showDropdown = false;
-        console.log('this.value',this.value);
+      
 
         this.dispatchEvent(new CustomEvent('select', {
             detail: {
@@ -184,8 +184,7 @@ export default class SearchableSelect extends LightningElement {
         }));
     }
     resetPicklistValueHandler(){
-        console.log('selectedfield ',this.value);
-        console.log('label ',this.labelName);
+      
         resetPicklistValue({ instanceName: this.instanceName,picklistValue: this.value,labelValue:this.labelName })
         .then((data) => {
             this.searchString='';

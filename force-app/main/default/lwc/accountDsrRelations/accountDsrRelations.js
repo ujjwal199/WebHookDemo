@@ -18,9 +18,9 @@ export default class AccountDsrRelations extends LightningElement {
 
     //captures the remove event propagated from lookup component
     deleteItemEventHandler(event){
-        console.log('Inside deleteItemEventHandler on Account');
+     
         let args = JSON.parse(JSON.stringify(event.detail.arrItems));
-        console.log('Unselected account args = ', args);
+    
         this.displayItem(args);
 
         // calling method to clear existing opp on removal of a selected account
@@ -38,8 +38,8 @@ export default class AccountDsrRelations extends LightningElement {
         this.isItemExists = (args.length>0);
         this.selectedItemsToDisplay = this.values.join(',');
         let listAccountIds = this.selectedItemsToDisplay;
-        console.log('Inside displayItem values = ', this.values);
-        console.log('Inside displayItem selectedItemsToDisplay = ', this.selectedItemsToDisplay);
+    
+  
         const evtCustomEvent = new CustomEvent('getaccounts', { 
             detail: {listAccountIds}
             });

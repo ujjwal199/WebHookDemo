@@ -270,8 +270,7 @@ public class EVApi_Test {
         tf.name='test';
         tf.label='test';
         List<EVApi.Center> returnedCenters = EVApi.getCenters(briefingSourceSettings);
-        EVApi.upsertCustomMetadata('5666777','test','test');
-        //EVApi.getFields(briefingSourceSettings);
+      
         Test.stopTest();
         
     }
@@ -304,8 +303,7 @@ public class EVApi_Test {
         
         Test.startTest();
         Test.setMock(HttpCalloutMock.class, new GenericCalloutMock(httpResponse,'test'));
-        // EVApi.getFieldsClone();
-        //  EVApi.getToken(bsource);
+       
         
         Test.stopTest();
         
@@ -343,7 +341,7 @@ public class EVApi_Test {
         EVApi.getRefreshedTime(briefingSourceSettings);
         EVApi.getFields(briefingSourceSettings);
         EVApi.getRequest(briefingSourceSettings,'Https://google.com');
-       //EVApi.getRequest('Https://google.com');
+      
         EVApi.Field objField= new EVApi.Field();
         objField.label ='test';
         objField.systemName ='testing';

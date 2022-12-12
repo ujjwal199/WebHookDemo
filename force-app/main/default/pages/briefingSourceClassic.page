@@ -14,7 +14,7 @@
         }, 
                                    "lightning",
                                    function(cmp) {
-                                       console.log("button was created");
+                                     
                                        // do some stuff
                                    }
                                   );
