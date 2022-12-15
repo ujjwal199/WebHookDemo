@@ -1,0 +1,9 @@
+.section-container{align-items: center;
+    border: 1px solid transparent;
+    padding: 0 0.5rem;
+    width: 100%;
+    overflow: hidden;
+    font-size: 1rem;
+    line-height: 1.875rem;
+    background-color: rgb(243, 243, 243);
+    display: flex;}

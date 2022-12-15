@@ -356,7 +356,7 @@ public with sharing class FetchDSRValues {
               dsrwrp.opportunities = oppList;
               dsrwrp.contacts = contactList;
               dsrwrp.campaigns = campaignList;
-              dsrwrp.versionNumber ='1.58';
+              dsrwrp.versionNumber ='1.59';
               listWrapper.add(dsrwrp);
               //System.debug('listWrapper'+listWrapper);
               System.debug('serailized'+JSON.serialize(dsrwrp));        

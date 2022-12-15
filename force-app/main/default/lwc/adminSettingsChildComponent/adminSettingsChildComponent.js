@@ -5,6 +5,7 @@ import getBriefingSourceInfo from '@salesforce/apex/SettingsController.getBriefi
 import saveContact from '@salesforce/apex/SettingsController.saveContact';
 import saveCampaigns from '@salesforce/apex/SettingsController.saveCampaigns';
 import getState from '@salesforce/apex/SettingsController.getState';
+import setoauthuser from '@salesforce/apex/SettingsController.setoauthuser';
 import loadBriefingSourceFieldMapping from '@salesforce/apex/SettingsController.loadBriefingSourceFieldMapping';
 import saveBreifingSourceMapping from '@salesforce/apex/SettingsController.saveBreifingSourceMapping';
 import restoreMappingDefaults from '@salesforce/apex/SettingsController.restoreMappingDefaults';
@@ -90,6 +91,17 @@ export default class AdminSettingsChildComponent extends LightningElement {
     get disabledInput() {
         return this.Connected == false ? false : true;
     }
+     setOauthdata(){
+        console.log('setdata-oauth is working');
+         setoauthuser()
+         .then(data=>{
+            console.log('response ',data);
+         })
+         .catch(error=>{
+            showError(this, error, 'SettingsController,setoauthuser');
+         })
+    }
+
     init() {
         this.briefingInstanceName = this._instancename;
 
@@ -136,10 +148,16 @@ export default class AdminSettingsChildComponent extends LightningElement {
                 });
         });
 
+       
+       
         const getStatePromise = new Promise((resolve, reject) => {
             getState()
-                .then((result) => {
+                .then((result) => { 
+                    console.log('test running');
                     this.state = `/services/oauth2/authorize?response_type=code&client_id=3MVG98SW_UPr.JFhOGyUyfetR4zDK3UJPd2jLL148uqD.QQeXkvKZktdENMugBDesyNo.zPcFX0jlzbwvQWER&redirect_uri=https%3A%2F%2Fsfdc.briefingsource.com%2Fauth%2Fcallback&state=${result}`;
+                    console.log('check 1');
+                   //setoauthuser();
+                    console.log('check 2');
                     resolve();
                 })
                 .catch((err) => {

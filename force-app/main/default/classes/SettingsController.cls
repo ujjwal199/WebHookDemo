@@ -543,6 +543,57 @@ update objShowCampaign;
         return EncodingUtil.urlEncode(state, 'UTF-8');
     }
     
+     @AuraEnabled
+    public Static   void  setoauthuser(){
+        String Username  =  UserInfo.getName();
+        id profiles =  UserInfo.getProfileId();
+          if(  Schema.sObjectType.Profile.isAccessible()
+         
+             && Schema.sObjectType.Profile.fields.Id.isAccessible()   
+             && Schema.sObjectType.Profile.fields.Name.isAccessible() ){
+                 System.debug('inside profile if');
+                     list<Profile> l=[SELECT Id, Name FROM Profile where id=:profiles limit 1];
+                 if(l.size() > 0){
+                        System.debug('inside profile size profile>>'+l[0].Name);
+                       String profileName= l[0].Name;
+                                   if(Schema.sObjectType.bsource__OauthHandshakeUser__c.isCreateable() && Schema.sObjectType.bsource__OauthHandshakeUser__c.isAccessible()
+                                      && Schema.sObjectType.bsource__OauthHandshakeUser__c.fields.bsource__profileName__c.isAccessible()
+                                      && Schema.sObjectType.bsource__OauthHandshakeUser__c.fields.bsource__profileName__c.isCreateable()  
+                                       && Schema.sObjectType.bsource__OauthHandshakeUser__c.fields.bsource__profileName__c.isUpdateable()
+                                      && Schema.sObjectType.bsource__OauthHandshakeUser__c.fields.bsource__Username__c.isAccessible()  
+                                      && Schema.sObjectType.bsource__OauthHandshakeUser__c.fields.bsource__Username__c.isCreateable() 
+                                      && Schema.sObjectType.bsource__OauthHandshakeUser__c.fields.bsource__Username__c.isUpdateable()){
+                                           System.debug('Username>>'+Username);
+                                      //     bsource__OauthHandshakeUser__c bssOauth=new bsource__OauthHandshakeUser__c();
+                                         //  bssOauth.bsource__profileName__c=profileName;
+                                         //  bssOauth.bsource__Username__c=Username;
+                                          try{
+                                              List<bsource__OauthHandshakeUser__c> bssOauth =[Select id,bsource__profileName__c,bsource__Username__c From bsource__OauthHandshakeUser__c limit 1 ];
+                                              if( bssOauth.size() > 0){
+                                                   bssOauth[0].bsource__profileName__c=profileName;
+                                                    bssOauth[0].bsource__Username__c=Username;
+                                                    upsert bssOauth;  
+                                                  System.debug('update successfully');
+                                              }
+                                              else{
+                                                   bsource__OauthHandshakeUser__c bssOauth2=new bsource__OauthHandshakeUser__c();
+                                                    bssOauth2.bsource__profileName__c=profileName;
+                                                    bssOauth2.bsource__Username__c=Username;
+                                                    upsert bssOauth2;
+                                              } 
+                                          }
+                                          catch(exception ex) { 
+                                             System.debug('update failed');
+                                           
+                                          }
+        
+                                      }
+                 }
+             }          
+                     
+           
+    }
+    
     @AuraEnabled
     public static String loadBriefingSourceFieldMapping(String InstanceName) {
         Map<String,List<Mapping>> mappingsMap = new Map<String,List<Mapping>>();
