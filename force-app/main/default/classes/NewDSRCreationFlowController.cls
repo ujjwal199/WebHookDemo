@@ -129,8 +129,26 @@ public with sharing class NewDSRCreationFlowController {
               }*/
               return dsrObject.Id; }  else{  return null;}
         
-        
+    
     }
+    
+    
+    @AuraEnabled 
+    Public static  String  getpackagedetails()
+    { 
+        String UserName= System.UserInfo.getName();
+        Id idName=System.UserInfo.getProfileId();
+        List<Profile> profiledata= new List<Profile>();
+        If( Schema.sObjectType.Profile.isAccessible()     && Schema.sObjectType.Profile.fields.id.isAccessible()
+                 && Schema.sObjectType.Profile.fields.Name.isAccessible()){
+                     profiledata= [SELECT Id, Name FROM Profile where id=:idName Limit 1];
+            
+        }
+        String Name=UserName+' ('+profiledata[0].Name+')';
+        return Name;
+    }
+        
+        
     public static void showToastMsg(){
         String instanceName = apexpages.currentpage().getparameters().get('InstanceName');
         bsource__BriefingSourceSettingsLists__c BriefingSourceSettingsList = bsource__BriefingSourceSettingsLists__c.getValues(InstanceName); 

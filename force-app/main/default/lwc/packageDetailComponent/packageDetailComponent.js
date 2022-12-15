@@ -9,7 +9,7 @@ export default class PackageDetailComponent extends LightningElement {
     getpackagedetails().then((result)=>{
 
         console.log('result>>>>>'+result);
-        this.oauth=result[0] +' ('+ result[1]+')';
+        this.oauth=result;
         this.version='1.59';
         
     }).catch((error)=>{

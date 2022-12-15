@@ -7,6 +7,16 @@ public with sharing class FetchDSRValues {
            && Schema.sObjectType.Contact.isAccessible() && Schema.sObjectType.Campaign.isAccessible()
            && Schema.sObjectType.bsource__DSR_Account__c.isAccessible() && Schema.sObjectType.bsource__DSR_Campaign__c.isAccessible()
            && Schema.sObjectType.bsource__DSR_Opportunity__c.isAccessible() && Schema.sObjectType.bsource__DSR_Contact__c.isAccessible()
+           && Schema.sObjectType.bsource__Briefing_Source_Field_Mapping_Lists__c.isAccessible() 
+             && Schema.sObjectType.bsource__BS_Deal_Support_Request__c.isAccessible()
+            && Schema.sObjectType.bsource__BS_Deal_Support_Request__c.fields.id.isAccessible()
+            && Schema.sObjectType.bsource__BS_Deal_Support_Request__c.fields.Name.isAccessible()
+            && Schema.sObjectType.bsource__BS_Deal_Support_Request__c.fields.bsource__BriefingSource_InstanceName__c.isAccessible()
+            && Schema.sObjectType.bsource__Briefing_Source_Field_Mapping_Lists__c.fields.bsource__Briefing_Source_Field__c.isAccessible()
+               && Schema.sObjectType.bsource__Briefing_Source_Field_Mapping_Lists__c.fields.Id.isAccessible()
+               && Schema.sObjectType.bsource__Briefing_Source_Field_Mapping_Lists__c.fields.Name.isAccessible()
+               && Schema.sObjectType.bsource__Briefing_Source_Field_Mapping_Lists__c.fields.bsource__Instance_Name__c.isAccessible()
+           && Schema.sObjectType.bsource__Briefing_Source_Field_Mapping_Lists__c.fields.bsource__Salesforce_Field__c.isAccessible()
           ){
               
               //Fetch DSR accounts
@@ -59,14 +69,45 @@ public with sharing class FetchDSRValues {
                                                                        bsource__Contact__r.HomePhone,bsource__Contact__r.Department,
                                                                        bsource__Contact__r.AssistantName,bsource__Contact__r.LeadSource,bsource__Contact__r.Birthdate
                                                                        ,bsource__Contact__r.PhotoUrl FROM bsource__DSR_Contact__c WHERE
-                                                                       bsource__Deal_Support_Request__c = :dsrId];               
+                                                                       bsource__Deal_Support_Request__c = :dsrId];        
               
+              //fetch DSR Vlaue Using the DSRID
+              List<bsource__BS_Deal_Support_Request__c> dsrvalues=[SELECT Id,name,bsource__BriefingSource_InstanceName__c  From bsource__BS_Deal_Support_Request__c where id=:dsrId];
+              //fetch bsource__Briefing_Source_Field_Mapping_Lists__c
+              List<bsource__Briefing_Source_Field_Mapping_Lists__c> BsFieldMappingList   =[SELECT Id, Name, bsource__Briefing_Source_Field__c,
+                                                                                        bsource__Instance_Name__c, bsource__Salesforce_Field__c 
+                                                                                        FROM bsource__Briefing_Source_Field_Mapping_Lists__c Where bsource__Instance_Name__c=:dsrvalues[0].bsource__BriefingSource_InstanceName__c ];
+              
+            
               //dsrWrapper dsrwrp;			
               List<accountWrapper> accountList = new List<accountWrapper>();
               List<opportunityWrapper> oppList = new List<opportunityWrapper>();
               List<contactWrapper> contactList = new List<contactWrapper>();
               List<campaignWrapper>campaignList = new List<campaignWrapper>();
+              List<bssFieldMappingWrapper>  fieldMappingList=new  List<bssFieldMappingWrapper>();
               //     system.debug('dsrRelationsList'+dsrRelationsList);
+              //     bssDsrMapping value to wrapper class
+                
+              for(bsource__Briefing_Source_Field_Mapping_Lists__c bssDsrMapping : BsFieldMappingList){
+                        
+                    bssFieldMappingWrapper bssfieldMappingwrapperobj= new bssFieldMappingWrapper();
+                   
+                    if(bssDsrMapping.bsource__Briefing_Source_Field__c != null){
+                        bssfieldMappingwrapperobj.BSField=bssDsrMapping.bsource__Briefing_Source_Field__c;      
+                    }
+                     if(bssDsrMapping.Name != null){
+                        bssfieldMappingwrapperobj.Name=bssDsrMapping.Name;
+                    }
+                     if(bssDsrMapping.bsource__Instance_Name__c != null){
+                         bssfieldMappingwrapperobj.InstanceName=bssDsrMapping.bsource__Instance_Name__c;
+                    }
+                     if(bssDsrMapping.bsource__Salesforce_Field__c != null){
+                        bssfieldMappingwrapperobj.SalesforceField=bssDsrMapping.bsource__Salesforce_Field__c;
+                    }
+                    fieldMappingList.add(bssfieldMappingwrapperobj);
+                    
+              }
+              
               
               for(bsource__DSR_Account__c dsrRel : dsrRelationsListAccount){                              
                   if(dsrRel.bsource__Account__c != null){
@@ -357,9 +398,12 @@ public with sharing class FetchDSRValues {
               dsrwrp.contacts = contactList;
               dsrwrp.campaigns = campaignList;
               dsrwrp.versionNumber ='1.59';
+              dsrwrp.bssFieldMappings=fieldMappingList;
               listWrapper.add(dsrwrp);
               //System.debug('listWrapper'+listWrapper);
-              System.debug('serailized'+JSON.serialize(dsrwrp));        
+              System.debug('serailized'+JSON.serialize(dsrwrp));    
+                            System.debug('serailized bssFieldMappings>>>'+JSON.serialize(dsrwrp.bssFieldMappings));        
+
           } 
         return JSON.serialize(dsrwrp);
     }
@@ -370,9 +414,16 @@ public with sharing class FetchDSRValues {
         public List<opportunityWrapper> opportunities {get;set;}
         public List<contactWrapper> contacts {get;set;}
         public List<campaignWrapper> campaigns {get;set;}
+         public List<bssFieldMappingWrapper> bssFieldMappings {get;set;}
         public String versionNumber{get;set;}
+        
     }
-    
+    public class bssFieldMappingWrapper{
+        public String Name{get;set;}
+        public String BSField{get;set;}
+        public String InstanceName{get;set;}
+        public String SalesforceField{get;set;}
+    }
     public class accountWrapper{
         public String dsrId{get;set;}
         public String id{get;set;}
