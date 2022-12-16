@@ -16,7 +16,7 @@
             if (state === "SUCCESS") {
                 component.set("v.objectValues",response.getReturnValue());
                 if(component.get("v.objectValues").instanceName=='true'){
-                    component.set("v.instanceName",component.get("v.objectValues").instanceName);                   
+                  //  component.set("v.objectName",component.get("v.objectValues").instanceName);                   
                     component.set("v.objectName",component.get("v.objectValues").objectName);
                     component.set("v.opptyAccId",component.get("v.objectValues").accountId); 
                     component.set("v.recordName",component.get("v.objectValues").recordName);

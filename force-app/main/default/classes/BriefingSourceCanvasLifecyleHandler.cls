@@ -51,7 +51,7 @@ public with sharing class BriefingSourceCanvasLifecyleHandler implements Canvas.
                //List<bsource__Briefing_Source_Field_Mapping_List__c> BriefingSourceFieldMappingList =  [SELECT ID,bsource__Salesforce_Field__c,bsource__Briefing_Source_Field__c,bsource__Instance_Name__c 
                                                                                                  //      FROM bsource__Briefing_Source_Field_Mapping_List__c WHERE bsource__Instance_Name__c =:instanceName];
                for (bsource__Briefing_Source_Field_Mapping_Lists__c briefingSourceFieldMapping : BriefingSourceFieldMappingLists) {
-                   String salesforceField = briefingSourceFieldMapping.Salesforce_Field__c.toLowerCase();
+                   String salesforceField = briefingSourceFieldMapping.Salesforce_Field__c.toLowerCase(); 
                    
                    if (objectName == 'Account') {
                        salesforceField = salesforceField.replace('account.', '');

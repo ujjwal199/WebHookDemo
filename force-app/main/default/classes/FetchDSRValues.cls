@@ -8,14 +8,14 @@ public with sharing class FetchDSRValues {
            && Schema.sObjectType.bsource__DSR_Account__c.isAccessible() && Schema.sObjectType.bsource__DSR_Campaign__c.isAccessible()
            && Schema.sObjectType.bsource__DSR_Opportunity__c.isAccessible() && Schema.sObjectType.bsource__DSR_Contact__c.isAccessible()
            && Schema.sObjectType.bsource__Briefing_Source_Field_Mapping_Lists__c.isAccessible() 
-             && Schema.sObjectType.bsource__BS_Deal_Support_Request__c.isAccessible()
-            && Schema.sObjectType.bsource__BS_Deal_Support_Request__c.fields.id.isAccessible()
-            && Schema.sObjectType.bsource__BS_Deal_Support_Request__c.fields.Name.isAccessible()
-            && Schema.sObjectType.bsource__BS_Deal_Support_Request__c.fields.bsource__BriefingSource_InstanceName__c.isAccessible()
-            && Schema.sObjectType.bsource__Briefing_Source_Field_Mapping_Lists__c.fields.bsource__Briefing_Source_Field__c.isAccessible()
-               && Schema.sObjectType.bsource__Briefing_Source_Field_Mapping_Lists__c.fields.Id.isAccessible()
-               && Schema.sObjectType.bsource__Briefing_Source_Field_Mapping_Lists__c.fields.Name.isAccessible()
-               && Schema.sObjectType.bsource__Briefing_Source_Field_Mapping_Lists__c.fields.bsource__Instance_Name__c.isAccessible()
+           && Schema.sObjectType.bsource__BS_Deal_Support_Request__c.isAccessible()
+           && Schema.sObjectType.bsource__BS_Deal_Support_Request__c.fields.id.isAccessible()
+           && Schema.sObjectType.bsource__BS_Deal_Support_Request__c.fields.Name.isAccessible()
+           && Schema.sObjectType.bsource__BS_Deal_Support_Request__c.fields.bsource__BriefingSource_InstanceName__c.isAccessible()
+           && Schema.sObjectType.bsource__Briefing_Source_Field_Mapping_Lists__c.fields.bsource__Briefing_Source_Field__c.isAccessible()
+           && Schema.sObjectType.bsource__Briefing_Source_Field_Mapping_Lists__c.fields.Id.isAccessible()
+           && Schema.sObjectType.bsource__Briefing_Source_Field_Mapping_Lists__c.fields.Name.isAccessible()
+           && Schema.sObjectType.bsource__Briefing_Source_Field_Mapping_Lists__c.fields.bsource__Instance_Name__c.isAccessible()
            && Schema.sObjectType.bsource__Briefing_Source_Field_Mapping_Lists__c.fields.bsource__Salesforce_Field__c.isAccessible()
           ){
               
@@ -75,10 +75,10 @@ public with sharing class FetchDSRValues {
               List<bsource__BS_Deal_Support_Request__c> dsrvalues=[SELECT Id,name,bsource__BriefingSource_InstanceName__c  From bsource__BS_Deal_Support_Request__c where id=:dsrId];
               //fetch bsource__Briefing_Source_Field_Mapping_Lists__c
               List<bsource__Briefing_Source_Field_Mapping_Lists__c> BsFieldMappingList   =[SELECT Id, Name, bsource__Briefing_Source_Field__c,
-                                                                                        bsource__Instance_Name__c, bsource__Salesforce_Field__c 
-                                                                                        FROM bsource__Briefing_Source_Field_Mapping_Lists__c Where bsource__Instance_Name__c=:dsrvalues[0].bsource__BriefingSource_InstanceName__c ];
+                                                                                           bsource__Instance_Name__c, bsource__Salesforce_Field__c 
+                                                                                           FROM bsource__Briefing_Source_Field_Mapping_Lists__c Where bsource__Instance_Name__c=:dsrvalues[0].bsource__BriefingSource_InstanceName__c ];
               
-            
+              
               //dsrWrapper dsrwrp;			
               List<accountWrapper> accountList = new List<accountWrapper>();
               List<opportunityWrapper> oppList = new List<opportunityWrapper>();
@@ -87,25 +87,25 @@ public with sharing class FetchDSRValues {
               List<bssFieldMappingWrapper>  fieldMappingList=new  List<bssFieldMappingWrapper>();
               //     system.debug('dsrRelationsList'+dsrRelationsList);
               //     bssDsrMapping value to wrapper class
-                
+              
               for(bsource__Briefing_Source_Field_Mapping_Lists__c bssDsrMapping : BsFieldMappingList){
-                        
-                    bssFieldMappingWrapper bssfieldMappingwrapperobj= new bssFieldMappingWrapper();
-                   
-                    if(bssDsrMapping.bsource__Briefing_Source_Field__c != null){
-                        bssfieldMappingwrapperobj.BSField=bssDsrMapping.bsource__Briefing_Source_Field__c;      
-                    }
-                     if(bssDsrMapping.Name != null){
-                        bssfieldMappingwrapperobj.Name=bssDsrMapping.Name;
-                    }
-                     if(bssDsrMapping.bsource__Instance_Name__c != null){
-                         bssfieldMappingwrapperobj.InstanceName=bssDsrMapping.bsource__Instance_Name__c;
-                    }
-                     if(bssDsrMapping.bsource__Salesforce_Field__c != null){
-                        bssfieldMappingwrapperobj.SalesforceField=bssDsrMapping.bsource__Salesforce_Field__c;
-                    }
-                    fieldMappingList.add(bssfieldMappingwrapperobj);
-                    
+                  
+                  bssFieldMappingWrapper bssfieldMappingwrapperobj= new bssFieldMappingWrapper();
+                  
+                  if(bssDsrMapping.bsource__Briefing_Source_Field__c != null){
+                      bssfieldMappingwrapperobj.BSField=bssDsrMapping.bsource__Briefing_Source_Field__c;      
+                  }
+                  if(bssDsrMapping.Name != null){
+                      bssfieldMappingwrapperobj.Name=bssDsrMapping.Name;
+                  }
+                  if(bssDsrMapping.bsource__Instance_Name__c != null){
+                      bssfieldMappingwrapperobj.InstanceName=bssDsrMapping.bsource__Instance_Name__c;
+                  }
+                  if(bssDsrMapping.bsource__Salesforce_Field__c != null){
+                      bssfieldMappingwrapperobj.SalesforceField=bssDsrMapping.bsource__Salesforce_Field__c;
+                  }
+                  fieldMappingList.add(bssfieldMappingwrapperobj);
+                  
               }
               
               
@@ -218,17 +218,17 @@ public with sharing class FetchDSRValues {
                           objOpp.ExpectedRevenue = dsrRel.bsource__Opportunity__r.ExpectedRevenue;
                       }
                       if(dsrRel.bsource__Opportunity__r.TotalOpportunityQuantity!= null){objOpp.TotalOpportunityQuantity = dsrRel.bsource__Opportunity__r.TotalOpportunityQuantity;
-                      }
+                                                                                        }
                       if(dsrRel.bsource__Opportunity__r.CloseDate!= null){
                           objOpp.CloseDate = dsrRel.bsource__Opportunity__r.CloseDate;
                       }
                       
                       if(dsrRel.bsource__Opportunity__r.Type!= null){ objOpp.Type = dsrRel.bsource__Opportunity__r.Type;
-                      }
+                                                                    }
                       if(dsrRel.bsource__Opportunity__r.NextStep!= null){  objOpp.NextStep = dsrRel.bsource__Opportunity__r.NextStep;
-                      }
+                                                                        }
                       if(dsrRel.bsource__Opportunity__r.LeadSource!= null){ objOpp.LeadSource = dsrRel.bsource__Opportunity__r.LeadSource;
-                      }
+                                                                          }
                       
                       if(dsrRel.bsource__Opportunity__r.IsClosed!= null){
                           objOpp.IsClosed = dsrRel.bsource__Opportunity__r.IsClosed;
@@ -244,9 +244,9 @@ public with sharing class FetchDSRValues {
                           objOpp.ForecastCategoryName = dsrRel.bsource__Opportunity__r.ForecastCategoryName;
                       }
                       if(dsrRel.bsource__Opportunity__r.bsource__TrackingNumber__c!= null){  objOpp.TrackingNumber = dsrRel.bsource__Opportunity__r.bsource__TrackingNumber__c;
-                      }
+                                                                                          }
                       if(dsrRel.bsource__Opportunity__r.bsource__Previous_Amount__c!= null){  objOpp.PreviousAmount = dsrRel.bsource__Opportunity__r.bsource__Previous_Amount__c;
-                      }
+                                                                                           }
                       oppList.add(objOpp);
                   }
               }
@@ -264,7 +264,7 @@ public with sharing class FetchDSRValues {
                           objContact.Name = dsrRel.bsource__Contact__r.Name;
                       }
                       if(dsrRel.bsource__Contact__r.FirstName!= null){   objContact.firstName = dsrRel.bsource__Contact__r.FirstName;
-                      }
+                                                                     }
                       if(dsrRel.bsource__Contact__r.LastName!= null){
                           objContact.lastName = dsrRel.bsource__Contact__r.LastName;
                       }
@@ -272,48 +272,48 @@ public with sharing class FetchDSRValues {
                           objContact.email = dsrRel.bsource__Contact__r.Email;
                       }
                       if(dsrRel.bsource__Contact__r.Title!= null){ objContact.job_title = dsrRel.bsource__Contact__r.Title;
-                      }
+                                                                 }
                       if(dsrRel.bsource__Contact__r.Phone!= null){   objContact.phone = dsrRel.bsource__Contact__r.Phone;
-                      }
+                                                                 }
                       if(dsrRel.bsource__Contact__r.Description!= null){  objContact.comments = dsrRel.bsource__Contact__r.Description;
-                      }
+                                                                       }
                       
                       if(dsrRel.bsource__Contact__r.AccountId!= null){
                           objContact.AccountId = dsrRel.bsource__Contact__r.AccountId;
                       }
                       if(dsrRel.bsource__Contact__r.Salutation!= null){ objContact.Salutation = dsrRel.bsource__Contact__r.Salutation;
-                      }
+                                                                      }
                       if(dsrRel.bsource__Contact__r.MailingStreet!= null){ objContact.MailingStreet = dsrRel.bsource__Contact__r.MailingStreet;
-                      }
+                                                                         }
                       
                       if(dsrRel.bsource__Contact__r.MailingCity!= null){  objContact.MailingCity = dsrRel.bsource__Contact__r.MailingCity;
-                      }
+                                                                       }
                       if(dsrRel.bsource__Contact__r.MailingState!= null){  objContact.MailingState = dsrRel.bsource__Contact__r.MailingState;
-                      }
+                                                                        }
                       if(dsrRel.bsource__Contact__r.MailingPostalCode!= null){   objContact.MailingPostalCode = dsrRel.bsource__Contact__r.MailingPostalCode;
-                      }
+                                                                             }
                       
                       if(dsrRel.bsource__Contact__r.MailingCountry!= null){ objContact.MailingCountry = dsrRel.bsource__Contact__r.MailingCountry;
-                      }
+                                                                          }
                       
                       if(dsrRel.bsource__Contact__r.Fax!= null){  objContact.Fax = dsrRel.bsource__Contact__r.Fax;
-                      }
+                                                               }
                       
                       if(dsrRel.bsource__Contact__r.HomePhone!= null){ objContact.HomePhone = dsrRel.bsource__Contact__r.HomePhone;
-                      }
+                                                                     }
                       
                       if(dsrRel.bsource__Contact__r.Department!= null){  objContact.Department = dsrRel.bsource__Contact__r.Department;
-                      }
+                                                                      }
                       
                       if(dsrRel.bsource__Contact__r.AssistantName!= null){      objContact.AssistantName = dsrRel.bsource__Contact__r.AssistantName;
-                      }
+                                                                         }
                       if(dsrRel.bsource__Contact__r.LeadSource!= null){    objContact.LeadSource = dsrRel.bsource__Contact__r.LeadSource;
-                      }
+                                                                      }
                       if(dsrRel.bsource__Contact__r.Birthdate!= null){ objContact.Birthdate = dsrRel.bsource__Contact__r.Birthdate;
-                      }
+                                                                     }
                       
                       if(dsrRel.bsource__Contact__r.PhotoUrl!= null){ objContact.PhotoUrl = dsrRel.bsource__Contact__r.PhotoUrl;
-                      }
+                                                                    }
                       contactList.add(objContact);
                   }
               }
@@ -338,16 +338,16 @@ public with sharing class FetchDSRValues {
                           objCampaign.Status = dsrRel.bsource__Campaign__r.Status;
                       }
                       if(dsrRel.bsource__Campaign__r.StartDate!= null){     objCampaign.StartDate = dsrRel.bsource__Campaign__r.StartDate;
-                      }
+                                                                      }
                       if(dsrRel.bsource__Campaign__r.EndDate!= null){     objCampaign.EndDate = dsrRel.bsource__Campaign__r.EndDate;
-                      }
+                                                                    }
                       
                       if(dsrRel.bsource__Campaign__r.ExpectedRevenue!= null){   objCampaign.ExpectedRevenue = dsrRel.bsource__Campaign__r.ExpectedRevenue;
-                      }
+                                                                            }
                       if(dsrRel.bsource__Campaign__r.BudgetedCost!= null){     objCampaign.BudgetedCost = dsrRel.bsource__Campaign__r.BudgetedCost;
-                      }
+                                                                         }
                       if(dsrRel.bsource__Campaign__r.ActualCost!= null){   objCampaign.ActualCost = dsrRel.bsource__Campaign__r.ActualCost;
-                      }
+                                                                       }
                       
                       if(dsrRel.bsource__Campaign__r.ExpectedResponse!= null){
                           objCampaign.ExpectedResponse = dsrRel.bsource__Campaign__r.ExpectedResponse;
@@ -360,7 +360,7 @@ public with sharing class FetchDSRValues {
                       }
                       
                       if(dsrRel.bsource__Campaign__r.Description!= null){     objCampaign.Description = dsrRel.bsource__Campaign__r.Description;
-                      }
+                                                                        }
                       if(dsrRel.bsource__Campaign__r.NumberOfLeads!= null){
                           objCampaign.NumberOfLeads = dsrRel.bsource__Campaign__r.NumberOfLeads;
                       }
@@ -402,8 +402,8 @@ public with sharing class FetchDSRValues {
               listWrapper.add(dsrwrp);
               System.debug('listWrapper'+listWrapper);
               System.debug('serailized'+JSON.serialize(dsrwrp));    
-                           System.debug('serailized bssFieldMappings>>>'+JSON.serialize(dsrwrp.bssFieldMappings));        
-
+              System.debug('serailized bssFieldMappings>>>'+JSON.serialize(dsrwrp.bssFieldMappings));        
+              
           } 
         return JSON.serialize(dsrwrp);
     }
@@ -414,7 +414,7 @@ public with sharing class FetchDSRValues {
         public List<opportunityWrapper> opportunities {get;set;}
         public List<contactWrapper> contacts {get;set;}
         public List<campaignWrapper> campaigns {get;set;}
-         public List<bssFieldMappingWrapper> bssFieldMappings {get;set;}
+        public List<bssFieldMappingWrapper> bssFieldMappings {get;set;}
         public String versionNumber{get;set;}
         
     }

@@ -871,7 +871,6 @@ update objShowCampaign;
     
     @AuraEnabled
     public static void clearBriefingSourceMapping(String instanceName) {
-        System.debug('String>> instance>>>0'+InstanceName);
         DELETE [SELECT ID FROM bsource__Default_Briefing_Source_Field_Mappings__c WHERE bsource__Instance_Name__c=:instanceName.escapeHtml4()];
         List<bsource__Briefing_Source_Field_Mapping_Lists__c> briefingSourceFieldMappingsList = new List<bsource__Briefing_Source_Field_Mapping_Lists__c> ();
         List<bsource__Default_Briefing_Source_Field_Mappings__c> defaultBriefingSourceFieldMappingList = new List<bsource__Default_Briefing_Source_Field_Mappings__c>();
