@@ -307,4 +307,14 @@ static void displayTest(){
         briefingSourceFields.add(objbriefingSourceWrapper);
         system.assert(objShowContacts!=null, 'Is not null');
     }
+    Public static  testmethod void testSetOauthdata()
+    {
+        bsource__OauthHandshakeUser__c bssOauth=new bsource__OauthHandshakeUser__c();
+                                         bssOauth.bsource__profileName__c='profileName';
+                                           bssOauth.bsource__Username__c='Username';
+        upsert  bssOauth;
+        SettingsController.setoauthuser();
+         system.assert(bssOauth!=null, 'Is not null');
+    }
+     
 }

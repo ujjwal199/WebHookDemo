@@ -400,9 +400,9 @@ public with sharing class FetchDSRValues {
               dsrwrp.versionNumber ='1.59';
               dsrwrp.bssFieldMappings=fieldMappingList;
               listWrapper.add(dsrwrp);
-              //System.debug('listWrapper'+listWrapper);
+              System.debug('listWrapper'+listWrapper);
               System.debug('serailized'+JSON.serialize(dsrwrp));    
-                            System.debug('serailized bssFieldMappings>>>'+JSON.serialize(dsrwrp.bssFieldMappings));        
+                           System.debug('serailized bssFieldMappings>>>'+JSON.serialize(dsrwrp.bssFieldMappings));        
 
           } 
         return JSON.serialize(dsrwrp);

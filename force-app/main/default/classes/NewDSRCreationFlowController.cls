@@ -34,7 +34,7 @@ public with sharing class NewDSRCreationFlowController {
                 
                 bsource__Campaign_Ids_Lists__c customSettings = bsource__Campaign_Ids_Lists__c.getValues(InstanceName); 
                 if(customSettings!= null && customSettings.bsource__Show_Campaign_Checkbox__c == true){ objectMap.put('campaignIdAdmin','true');
-                }
+                                                                                                      }
                 else{
                     objectMap.put('campaignIdAdmin','false');
                 }
@@ -64,26 +64,28 @@ public with sharing class NewDSRCreationFlowController {
     @AuraEnabled
     public static Id saveDSRObject(String nameDSR, String objectName, Id recId,String InstanceName){
         if(Schema.sObjectType.bsource__BS_Deal_Support_Request__c.isCreateable() && Schema.sObjectType.bsource__BS_Deal_Support_Request__c.isAccessible()
-         
-                      && Schema.sObjectType.bsource__BS_Deal_Support_Request__c.fields.Status__c.isAccessible()          
-                      && Schema.sObjectType.bsource__BS_Deal_Support_Request__c.fields.bsource__Account__c.isAccessible()
-                      && Schema.sObjectType.bsource__BS_Deal_Support_Request__c.fields.bsource__BriefingSource_InstanceName__c.isAccessible()
-                      && Schema.sObjectType.bsource__BS_Deal_Support_Request__c.fields.Name.isAccessible()
-                      && Schema.sObjectType.bsource__BS_Deal_Support_Request__c.fields.Status__c.isCreateable()          
-                      && Schema.sObjectType.bsource__BS_Deal_Support_Request__c.fields.bsource__Account__c.isCreateable()
-                      && Schema.sObjectType.bsource__BS_Deal_Support_Request__c.fields.bsource__BriefingSource_InstanceName__c.isCreateable()
-                      && Schema.sObjectType.bsource__BS_Deal_Support_Request__c.fields.Name.isCreateable()
-                      && Schema.sObjectType.bsource__BS_Deal_Support_Request__c.fields.bsource__BriefingSource_API_URL__c.isCreateable()
-                       && Schema.sObjectType.bsource__BS_Deal_Support_Request__c.fields.bsource__Opportunity__c.isCreateable()
-                       && Schema.sObjectType.bsource__BS_Deal_Support_Request__c.fields.bsource__Opportunity__c.isAccessible()
-
-
-                 && Schema.sObjectType.bsource__BriefingSourceSettingsLists__c.isCreateable() && Schema.sObjectType.bsource__BriefingSourceSettingsLists__c.isAccessible()
-                 && Schema.sObjectType.bsource__BriefingSourceSettingsLists__c.fields.Name.isAccessible()
-                 && Schema.sObjectType.bsource__BriefingSourceSettingsLists__c.fields.Name.isCreateable()
-                 && Schema.sObjectType.bsource__BriefingSourceSettingsLists__c.fields.bsource__API_Endpoint__c.isAccessible() 
-                 && Schema.sObjectType.bsource__BriefingSourceSettingsLists__c.fields.bsource__API_Endpoint__c.isCreateable() 
-
+           
+           && Schema.sObjectType.bsource__BS_Deal_Support_Request__c.fields.Status__c.isAccessible()          
+           && Schema.sObjectType.bsource__BS_Deal_Support_Request__c.fields.bsource__Account__c.isAccessible()
+           && Schema.sObjectType.bsource__BS_Deal_Support_Request__c.fields.bsource__BriefingSource_InstanceName__c.isAccessible()
+           && Schema.sObjectType.bsource__BS_Deal_Support_Request__c.fields.Name.isAccessible()
+           && Schema.sObjectType.bsource__BS_Deal_Support_Request__c.fields.Status__c.isCreateable()          
+           && Schema.sObjectType.bsource__BS_Deal_Support_Request__c.fields.bsource__Account__c.isCreateable()
+           && Schema.sObjectType.bsource__BS_Deal_Support_Request__c.fields.bsource__BriefingSource_InstanceName__c.isCreateable()
+           && Schema.sObjectType.bsource__BS_Deal_Support_Request__c.fields.Name.isCreateable()
+           && Schema.sObjectType.bsource__BS_Deal_Support_Request__c.fields.bsource__BriefingSource_API_URL__c.isCreateable()
+           && Schema.sObjectType.bsource__BS_Deal_Support_Request__c.fields.bsource__Opportunity__c.isCreateable()
+           && Schema.sObjectType.bsource__BS_Deal_Support_Request__c.fields.bsource__Opportunity__c.isAccessible()
+            && Schema.sObjectType.bsource__BS_Deal_Support_Request__c.fields.bsource__DSR_Full_Name__c.isCreateable()
+           && Schema.sObjectType.bsource__BS_Deal_Support_Request__c.fields.bsource__DSR_Full_Name__c.isAccessible()
+           
+           
+           && Schema.sObjectType.bsource__BriefingSourceSettingsLists__c.isCreateable() && Schema.sObjectType.bsource__BriefingSourceSettingsLists__c.isAccessible()
+           && Schema.sObjectType.bsource__BriefingSourceSettingsLists__c.fields.Name.isAccessible()
+           && Schema.sObjectType.bsource__BriefingSourceSettingsLists__c.fields.Name.isCreateable()
+           && Schema.sObjectType.bsource__BriefingSourceSettingsLists__c.fields.bsource__API_Endpoint__c.isAccessible() 
+           && Schema.sObjectType.bsource__BriefingSourceSettingsLists__c.fields.bsource__API_Endpoint__c.isCreateable() 
+           
            && Schema.sObjectType.bsource__DSR_Campaign__c.isCreateable() && Schema.sObjectType.bsource__DSR_Campaign__c.isAccessible()
            && Schema.sObjectType.bsource__Campaign_Id__c.isAccessible()
           ){
@@ -92,68 +94,73 @@ public with sharing class NewDSRCreationFlowController {
               List<String> campaignIdAdmin = new List<String>();
               List<bsource__DSR_Campaign__c> dsrRelationsList = new List<bsource__DSR_Campaign__c>();
               String DsrtrimName;
-               if(nameDsr.length()>80){
-                      //trim name
-                      DsrtrimName=nameDSR.mid(0,80);
-                  }else{
-                     DsrtrimName=nameDSR;
-                  }
+              if(nameDSR.length()>80){
+                  //trim name
+                  DsrtrimName=nameDSR.mid(0,80);
+              }else{
+                  DsrtrimName=nameDSR;
+              }
               if(objectName == 'Account' ){
-                 
                   
-                  dsrObject = new bsource__BS_Deal_Support_Request__c(Name=DsrtrimName,bsource__Dsr_Name__c=nameDSR, Status__c='Draft',bsource__Account__c=recId,
+                  
+                  dsrObject = new bsource__BS_Deal_Support_Request__c(Name=DsrtrimName,bsource__DSR_Full_Name__c=nameDSR, Status__c='Draft',bsource__Account__c=recId,
                                                                       bsource__BriefingSource_InstanceName__c=InstanceName,bsource__BriefingSource_API_URL__c=bss.bsource__API_Endpoint__c);
               }
               if(objectName == 'Opportunity'){
-                  dsrObject = new bsource__BS_Deal_Support_Request__c(Name=DsrtrimName,bsource__Dsr_Name__c=nameDSR, Status__c='Draft',bsource__Opportunity__c=recId,
+                  dsrObject = new bsource__BS_Deal_Support_Request__c(Name=DsrtrimName, bsource__DSR_Full_Name__c=nameDSR, Status__c='Draft',bsource__Opportunity__c=recId,
                                                                       bsource__BriefingSource_InstanceName__c=InstanceName,bsource__BriefingSource_API_URL__c=bss.bsource__API_Endpoint__c );
               }
               if(dsrObject !=null){
-                     database.insert(dsrObject);
+                  database.insert(dsrObject);
               }
-             
-             /* bsource__Campaign_Ids_List__c customSettings = bsource__Campaign_Ids_List__c.getValues(InstanceName); 
-              // bsource__Campaign_Id__c customSettings = bsource__Campaign_Id__c.getOrgDefaults();
-              if(customSettings!= null && customSettings.bsource__Campaign_Id__c != null && customSettings.bsource__Campaign_Id__c != ''){
-                  campaignIdAdmin = customSettings.bsource__Campaign_Id__c.split(',');
-                  System.debug('campaignIdAdmin :: ' +campaignIdAdmin);
-                  for(Id campaignId: campaignIdAdmin){
-                      bsource__DSR_Campaign__c dsrRelations= new bsource__DSR_Campaign__c();
-                      dsrRelations.bsource__Deal_Support_Request__c = dsrObject.Id;
-                      dsrRelations.bsource__Campaign__c = campaignId;
-                      dsrRelationsList.add(dsrRelations);
-                  }
-                  if(dsrRelationsList!=null && !dsrRelationsList.isEmpty() && Schema.sObjectType.bsource__DSR_Campaign__c.isCreateable()){
-                      Database.insert(dsrRelationsList);
-                  }
-              }*/
+              
+              /* bsource__Campaign_Ids_List__c customSettings = bsource__Campaign_Ids_List__c.getValues(InstanceName); 
+// bsource__Campaign_Id__c customSettings = bsource__Campaign_Id__c.getOrgDefaults();
+if(customSettings!= null && customSettings.bsource__Campaign_Id__c != null && customSettings.bsource__Campaign_Id__c != ''){
+campaignIdAdmin = customSettings.bsource__Campaign_Id__c.split(',');
+System.debug('campaignIdAdmin :: ' +campaignIdAdmin);
+for(Id campaignId: campaignIdAdmin){
+bsource__DSR_Campaign__c dsrRelations= new bsource__DSR_Campaign__c();
+dsrRelations.bsource__Deal_Support_Request__c = dsrObject.Id;
+dsrRelations.bsource__Campaign__c = campaignId;
+dsrRelationsList.add(dsrRelations);
+}
+if(dsrRelationsList!=null && !dsrRelationsList.isEmpty() && Schema.sObjectType.bsource__DSR_Campaign__c.isCreateable()){
+Database.insert(dsrRelationsList);
+}
+}*/
               return dsrObject.Id; }  else{  return null;}
         
-    
+        
     }
     
     
     @AuraEnabled 
     Public static  String  getpackagedetails()
     { 
-        String UserName= System.UserInfo.getName();
-        Id idName=System.UserInfo.getProfileId();
-        List<Profile> profiledata= new List<Profile>();
-        If( Schema.sObjectType.Profile.isAccessible()     && Schema.sObjectType.Profile.fields.id.isAccessible()
-                 && Schema.sObjectType.Profile.fields.Name.isAccessible()){
-                     profiledata= [SELECT Id, Name FROM Profile where id=:idName Limit 1];
-            
-        }
-        String Name=UserName+' ('+profiledata[0].Name+')';
-        return Name;
+        String UserName;
+        
+        if( Schema.sObjectType.bsource__OauthHandshakeUser__c.isAccessible()&& Schema.sObjectType.bsource__OauthHandshakeUser__c.fields.bsource__profileName__c.isAccessible()
+           && Schema.sObjectType.bsource__OauthHandshakeUser__c.fields.bsource__Username__c.isAccessible() && Schema.sObjectType.bsource__OauthHandshakeUser__c.fields.id.isAccessible()  ){
+               try{
+                   List<bsource__OauthHandshakeUser__c> bssOauth =[Select id,bsource__profileName__c,bsource__Username__c From bsource__OauthHandshakeUser__c limit 1 ];
+                   if( bssOauth.size() > 0){
+                       UserName=bssOauth[0].bsource__Username__c+' ('+bssOauth[0].bsource__profileName__c+')';
+                   }
+               }Catch(Exception ex){
+                   System.debug(ex);
+               }
+           }
+        
+        return UserName;
     }
-        
-        
+    
+    
     public static void showToastMsg(){
         String instanceName = apexpages.currentpage().getparameters().get('InstanceName');
         bsource__BriefingSourceSettingsLists__c BriefingSourceSettingsList = bsource__BriefingSourceSettingsLists__c.getValues(InstanceName); 
         if(BriefingSourceSettingsList== null){
-        ApexPages.addmessage(new ApexPages.message(ApexPages.severity.FATAL,'The provided instance name does not exist, please check your instance name and try again. The BriefingSource instances are configured under Admin Settings.'));
-        instanceNameExists = false;   }        else{     instanceNameExists = true;   }
+            ApexPages.addmessage(new ApexPages.message(ApexPages.severity.FATAL,'The provided instance name does not exist, please check your instance name and try again. The BriefingSource instances are configured under Admin Settings.'));
+            instanceNameExists = false;   }        else{     instanceNameExists = true;   }
     }
 }

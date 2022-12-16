@@ -198,20 +198,31 @@ public class NewDSRCreationFlowControllerTest {
     public static void showToastMsgTest(){
         String instanceName = apexpages.currentpage().getparameters().get('InstanceName');
         //bsource__BriefingSourceSettingsLists__c BriefingSourceSettingsList = [Select id, bsource__API_Username__c, bsource__API_Password__c, bsource__Client_Id__c from bsource__BriefingSourceSettingsLists__c order by createddate desc limit 1 ]; 
-         // Perform test below
+        // Perform test below
         NewDSRCreationFlowController.showToastMsg();
         system.assert(instanceName !='', 'Record found');
-       
+        
     }
     
     @isTest
     public static void NewDSRCreationFlowController(){
         String instanceName = apexpages.currentpage().getparameters().get('InstanceName');
         //bsource__BriefingSourceSettingsLists__c BriefingSourceSettingsList = [Select id, bsource__API_Username__c, bsource__API_Password__c, bsource__Client_Id__c from bsource__BriefingSourceSettingsLists__c order by createddate desc limit 1 ]; 
-         // Perform test below
+        // Perform test below
         NewDSRCreationFlowController newdsr= new NewDSRCreationFlowController();
         system.assert(instanceName !='', 'Record found');
-       
+        
     }
+    
+    @isTest
+    Public static void Testgetpackagedetails(){
+        bsource__OauthHandshakeUser__c bssOauth=new bsource__OauthHandshakeUser__c();
+        bssOauth.bsource__profileName__c='profileName';
+        bssOauth.bsource__Username__c='Username';
+        upsert  bssOauth;
+        NewDSRCreationFlowController.getpackagedetails();
+        system.assert(bssOauth !=null, 'Record found');
+    }
+  
     
 }

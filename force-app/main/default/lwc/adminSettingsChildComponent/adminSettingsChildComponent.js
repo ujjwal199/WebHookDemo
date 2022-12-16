@@ -157,10 +157,11 @@ export default class AdminSettingsChildComponent extends LightningElement {
                     this.state = `/services/oauth2/authorize?response_type=code&client_id=3MVG98SW_UPr.JFhOGyUyfetR4zDK3UJPd2jLL148uqD.QQeXkvKZktdENMugBDesyNo.zPcFX0jlzbwvQWER&redirect_uri=https%3A%2F%2Fsfdc.briefingsource.com%2Fauth%2Fcallback&state=${result}`;
                     console.log('check 1');
                    //setoauthuser();
-                    console.log('check 2');
+                   
                     resolve();
                 })
                 .catch((err) => {
+                    console.log('check 2');
                     reject(err);
                 });
         });
@@ -170,9 +171,9 @@ export default class AdminSettingsChildComponent extends LightningElement {
                 getStatePromise,
             ])
             .then(() => {
-               
+               console.log('check 1 in then promise');
             }).catch((err) => {
-               
+                console.log('check 2 in then promise',ex);
             })
             .finally(() => {
                 this.loadedCompletely = true;
@@ -548,7 +549,7 @@ export default class AdminSettingsChildComponent extends LightningElement {
         // New code for Popup modal and save Helpdesk data ends here 
     clearMappingHandler() {
         this.isloading(true);
-       
+           console.log('this.briefingInstanceName >>0',this.briefingInstanceName );
         clearBriefingSourceMapping({ instanceName: this.briefingInstanceName })
             .then((data) => {
                
@@ -562,9 +563,10 @@ export default class AdminSettingsChildComponent extends LightningElement {
                 }
             })
             .catch((err) => {
-               
+               console.log('rejected err');
             })
             .finally(() => {
+                console.log('final inside');
                 this.isloading(false);
             });
     }
