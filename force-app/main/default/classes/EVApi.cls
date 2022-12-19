@@ -166,7 +166,7 @@ public with sharing class EVApi {
         bsource__BriefingSourceSettingsLists__c bss = bsource__BriefingSourceSettingsLists__c.getValues(InstanceName); 
         
         if(!Test.isRunningTest()){
-            if(minutes == 0 || minutes > 45 || bss.bsource__API_Username__c != briefingSourceSettings.bsource__API_Username__c && briefingSourceSettings.bsource__Access_Token__c != null){
+            if(minutes == 0 || minutes > 600 || bss.bsource__API_Username__c != briefingSourceSettings.bsource__API_Username__c && briefingSourceSettings.bsource__Access_Token__c != null){
                 HttpResponse httpResponse = getToken(briefingSourceSettings);         Map<String,Object> resultMap = (Map<String,Object>) JSON.deserializeUntyped(httpResponse.getBody());
                 system.debug('resultMap>>'+resultMap);
                 token = String.valueOf(resultMap.get('access_token'));             refreshToken = String.valueOf(resultMap.get('refresh_token'));
@@ -245,9 +245,18 @@ public with sharing class EVApi {
         if(Test.isRunningTest()){
             response.setBody('{"token_type":"Bearer","expires_in":86400,"access_token":"eyJ0eXAiOiJKV1QiLCJh","refresh_token":"def50200ff4068766a28"}');
         }
-        Map<String,Object> resultMap = (Map<String,Object>) JSON.deserializeUntyped(response.getBody()); 
-        String token = String.valueOf(resultMap.get('access_token'));
+        SYstem.debug('response ' + response.getStatusCode());
         
+        
+        if(response.getStatusCode() >= 200 && response.getStatusCode() <= 300){
+            System.debug('success while making callout ' + response.getBody());
+            Map<String,Object> resultMap = (Map<String,Object>) JSON.deserializeUntyped(response.getBody()); 
+            String token = String.valueOf(resultMap.get('access_token'));
+            
+        }else{
+            System.debug('error while making callout ' + response.getBody());
+        }
+      
         return response;
     }
     private static HttpRequest createFieldRequest(bsource__BriefingSourceSettingsLists__c briefingSourceSettings,String token,String Url) {                     
@@ -279,7 +288,7 @@ public with sharing class EVApi {
     public static List<Center> getCenters(bsource__BriefingSourceSettingsLists__c briefingSourceSettings) {
         Decimal minutes = getRefreshedTime(briefingSourceSettings);
         String token='',refreshToken='';
-        if(minutes == 0 || minutes > 45){
+        if(minutes == 0 || minutes > 600){
             HttpResponse httpResponse = getToken(briefingSourceSettings);
             Map<String,Object> resultMap = (Map<String,Object>) JSON.deserializeUntyped(httpResponse.getBody());
             token = String.valueOf(resultMap.get('access_token'));

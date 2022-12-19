@@ -43,17 +43,17 @@ public with sharing class BriefingSourceCanvasLifecyleHandler implements Canvas.
                }
                String soql = 'SELECT ' + String.escapeSingleQuotes(String.join(new List<String>(uniqueFieldNames), ',')) + ' FROM ' + String.escapeSingleQuotes(objectName) + ' WHERE Id = \'' + String.escapeSingleQuotes(objectId) + '\'';
                String dsrValues = FetchDSRValues.fetchDSRvalues(dsrID, objectName); 
-               
+              
              
                SObject record = Database.query(soql);
-                
+               
                Map<String, Object> data = new Map<String, Object>();
                //  List<bsource__Briefing_Source_Field_Mapping_List__c> BriefingSourceFieldMappingList = bsource__Briefing_Source_Field_Mapping_List__c.getAll().values();
                //List<bsource__Briefing_Source_Field_Mapping_List__c> BriefingSourceFieldMappingList =  [SELECT ID,bsource__Salesforce_Field__c,bsource__Briefing_Source_Field__c,bsource__Instance_Name__c 
                                                                                                  //      FROM bsource__Briefing_Source_Field_Mapping_List__c WHERE bsource__Instance_Name__c =:instanceName];
                for (bsource__Briefing_Source_Field_Mapping_Lists__c briefingSourceFieldMapping : BriefingSourceFieldMappingLists) {
                    String salesforceField = briefingSourceFieldMapping.Salesforce_Field__c.toLowerCase();
-                 
+              
                    if (objectName == 'Account') {
                        salesforceField = salesforceField.replace('account.', '');
                    }	
@@ -67,7 +67,7 @@ public with sharing class BriefingSourceCanvasLifecyleHandler implements Canvas.
                if(dsrValues != null){
                    parameters.put('dsr', (Object)JSON.deserializeUntyped(dsrValues));
                }
-              
+             
                environmentContext.setParametersAsJSON(JSON.serialize(parameters));
            }
         

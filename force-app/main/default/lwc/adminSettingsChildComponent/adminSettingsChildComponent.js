@@ -92,10 +92,10 @@ export default class AdminSettingsChildComponent extends LightningElement {
         return this.Connected == false ? false : true;
     }
      setOauthdata(){
-        console.log('setdata-oauth is working');
+        
          setoauthuser()
          .then(data=>{
-            console.log('response ',data);
+        
          })
          .catch(error=>{
             showError(this, error, 'SettingsController,setoauthuser');
@@ -153,15 +153,15 @@ export default class AdminSettingsChildComponent extends LightningElement {
         const getStatePromise = new Promise((resolve, reject) => {
             getState()
                 .then((result) => { 
-                    console.log('test running');
+            
                     this.state = `/services/oauth2/authorize?response_type=code&client_id=3MVG98SW_UPr.JFhOGyUyfetR4zDK3UJPd2jLL148uqD.QQeXkvKZktdENMugBDesyNo.zPcFX0jlzbwvQWER&redirect_uri=https%3A%2F%2Fsfdc.briefingsource.com%2Fauth%2Fcallback&state=${result}`;
-                    console.log('check 1');
+                   
                    //setoauthuser();
                    
                     resolve();
                 })
                 .catch((err) => {
-                    console.log('check 2');
+                 
                     reject(err);
                 });
         });
@@ -171,9 +171,9 @@ export default class AdminSettingsChildComponent extends LightningElement {
                 getStatePromise,
             ])
             .then(() => {
-               console.log('check 1 in then promise');
+            
             }).catch((err) => {
-                console.log('check 2 in then promise',ex);
+               
             })
             .finally(() => {
                 this.loadedCompletely = true;
@@ -393,7 +393,10 @@ export default class AdminSettingsChildComponent extends LightningElement {
             loadBriefingSourceFieldMapping({ InstanceName: instanceName })
                 .then((data) => {
                     if (data) {
+                       
                         const result = JSON.parse(data);
+                      
+
                         var objArray = [];
                         for (var obj in result) {
                             let second = result[obj];
@@ -419,7 +422,7 @@ export default class AdminSettingsChildComponent extends LightningElement {
                     resolve();
                 })
                 .catch((err) => {
-                   
+                  
                     reject(err);
                 })
                 .finally(() => {
@@ -549,7 +552,7 @@ export default class AdminSettingsChildComponent extends LightningElement {
         // New code for Popup modal and save Helpdesk data ends here 
     clearMappingHandler() {
         this.isloading(true);
-           console.log('this.briefingInstanceName >>0',this.briefingInstanceName );
+         
         clearBriefingSourceMapping({ instanceName: this.briefingInstanceName })
             .then((data) => {
                
@@ -563,10 +566,10 @@ export default class AdminSettingsChildComponent extends LightningElement {
                 }
             })
             .catch((err) => {
-               console.log('rejected err');
+             
             })
             .finally(() => {
-                console.log('final inside');
+              
                 this.isloading(false);
             });
     }

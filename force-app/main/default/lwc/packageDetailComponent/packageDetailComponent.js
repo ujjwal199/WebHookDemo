@@ -8,7 +8,7 @@ export default class PackageDetailComponent extends LightningElement {
  connectedCallback(){
     getpackagedetails().then((result)=>{
 
-        console.log('result>>>>>'+result);
+       
         this.oauth=result;
         this.version='1.59';
         

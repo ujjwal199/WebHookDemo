@@ -163,7 +163,7 @@ export default class LookupSearchComponent extends LightningElement {
                     }
                 })
                 .catch(error => {
-                    console.error('error>>' + error)
+                   
                     this.error = error;
                     this.items = undefined;
                     this.isDialogDisplay = false;
@@ -223,7 +223,7 @@ export default class LookupSearchComponent extends LightningElement {
 
             })
             .catch(error => {
-                console.error('error>>' + error)
+              
                 this.error = error;
                 this.items = undefined;
                 this.isDialogDisplay = false;
