@@ -147,6 +147,9 @@ Database.insert(dsrRelationsList);
                    if( bssOauth.size() > 0){
                        UserName=bssOauth[0].bsource__Username__c+' ('+bssOauth[0].bsource__profileName__c+')';
                    }
+                   else{
+                    UserName=' Please complete the OAuth handshake to load this information. You can use the Grant BriefingSource Access to Salesforce to initiate OAuth handshake.';
+                   }
                }Catch(Exception ex){
                    System.debug(ex);
                }

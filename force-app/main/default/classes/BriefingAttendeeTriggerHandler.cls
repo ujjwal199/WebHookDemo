@@ -1,6 +1,6 @@
 public with sharing class BriefingAttendeeTriggerHandler {
     public static void insertContact(List<bsource__Briefing_Attendee__c> attendeeList){
-        system.debug('attendeeList>>'+attendeeList);
+   
         List<bsource__Briefing_Attendee__c> attendeeListToUpdate = new List<bsource__Briefing_Attendee__c>();
         Map<String,List<Contact>> contactMap = new Map<String,List<Contact>>();
         Set<String> emailSet = new Set<String>();

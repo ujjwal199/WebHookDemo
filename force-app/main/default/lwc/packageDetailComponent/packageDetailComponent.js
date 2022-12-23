@@ -10,7 +10,7 @@ export default class PackageDetailComponent extends LightningElement {
 
        
         this.oauth=result;
-        this.version='1.59';
+        this.version='1.60';
         
     }).catch((error)=>{
 
